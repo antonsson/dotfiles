@@ -1,0 +1,9 @@
+[user]
+	email = henrik.antonsson@gmail.com
+	name = Henrik Antonsson
+[color]
+	ui = auto
+[core]
+	editor = vim
+[alias]
+	lol = log --graph --decorate --pretty=oneline --abbrev-commit --all
