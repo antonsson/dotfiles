@@ -5,5 +5,7 @@
 	ui = auto
 [core]
 	editor = vim
+	excludesfile = ~/.gitignore
 [alias]
 	lol = log --graph --decorate --pretty=oneline --abbrev-commit --all
+	sir = submodule update --init --recursive
