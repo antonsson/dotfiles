@@ -19,6 +19,7 @@ alias grep='grep --color'
 alias cgrep='grep --color -r --include=*.{c,cpp,h,hpp}'
 alias jgrep='grep --color -r --include=*.java'
 alias xmlgrep='grep --color -r --include=*.xml'
+alias fcopy="fzf | tr -d '\n' | xclip"
 
 eval "$(dircolors ~/.dircolors)";
 
@@ -37,5 +38,8 @@ export LESS_TERMCAP_ue=$'\E[0m'
 export LESS_TERMCAP_us=$'\E[01;36m'
 
 # History settings
+export HISTSIZE=10000
+export HISTFILESIZE=10000
+export HISTCONTROL=ignorespace:erasedups
 shopt -s histappend
 PROMPT_COMMAND='history -a'
