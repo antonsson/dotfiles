@@ -12,7 +12,7 @@ fi
 
 source /usr/share/git/completion/git-completion.bash
 source /usr/share/git/completion/git-prompt.sh
-source ~/.dotfiles/h.sh
+source ~/.config/dotfiles/h.sh
 
 alias ls='ls --color=auto'
 alias grep='grep --color'
@@ -21,8 +21,6 @@ alias jgrep='grep --color -r --include=*.java'
 alias xmlgrep='grep --color -r --include=*.xml'
 alias fcopy="fzf | tr -d '\n' | xclip"
 alias xnclip="tr -d '\n' | xclip"
-
-#eval "$(dircolors ~/.dircolors)";
 
 export PS1='[\u@\h \[\e[1;34m\]\w\[\e[1;33m\]$(__git_ps1 " (%s)")\[\e[0m\]]\$ '
 export VISUAL="nvim"
