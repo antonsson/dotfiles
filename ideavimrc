@@ -1,0 +1,35 @@
+set ignorecase
+set smartcase
+set scrolloff=4
+set ideajoin
+
+" Integrate with system clipboard
+set clipboard=unnamedplus,unnamed
+
+let mapleader = ","
+
+" Use Q for formatting the current paragraph (or visual selection)
+vmap Q gq
+nmap Q gqap
+
+" These create newlines like o and O but stay in normal mode
+nmap zj o<Esc>k
+nmap zk O<Esc>j
+
+nmap gd :action GotoDeclaration<cr>
+nmap <c-o> :action Back<cr>
+nmap <c-i> :action Forward<cr>
+
+nmap <leader>t :action ToogleDistractionFreeMode<cr>
+nmap <leader>e :action RecentFiles<cr>
+nmap <leader>j :action GotoFile<cr>
+nmap <leader>c :action GotoClass<cr>
+nmap <leader>ns :action GotoSymbol<cr>
+nmap <leader>nm :action FileStructurePopup<cr>
+nmap <leader>d :action ShowErrorDescription<cr>
+nmap == :action ReformatCode<cr>
+
+nmap - /
+nmap _ ?
+
+set clipboard+=ideaput
