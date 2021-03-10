@@ -11,11 +11,13 @@ export NPM_PACKAGES="$HOME/.npm-packages"
 export NODE_PATH="$NPM_PACKAGES/lib/node_modules:$NODE_PATH"
 
 # Wayland backend
+export XDG_CURRENT_DESKTOP=sway
 export BEMENU_BACKEND=wayland
+export MOZ_ENABLE_WAYLAND=1
 export QT_QPA_PLATFORM=wayland
 export QT_WAYLAND_FORCE_DPI=physical
-export MOZ_ENABLE_WAYLAND=1
 export QT_QPA_PLATFORMTHEME=gtk3
+export DESKTOP_APP_DISABLE_GTK_INTEGRATION=1
 
 # Unset manpath so we can inherit from /etc/manpath via the `manpath` command
 #unset MANPATH  # delete if you already modified MANPATH elsewhere in your configuration

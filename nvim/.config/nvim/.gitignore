@@ -1,0 +1,7 @@
+undodir/*
+sessions/
+swaps/*
+swapfiles/*
+bundle
+.netrwhist
+plugged/

@@ -25,10 +25,19 @@
 	ff = only
 
 [delta]
+    line-numbers = false
     plus-color = "#012800"
     minus-color = "#340001"
-    syntax-theme = Monokai Extended
-    side-by-side = true
+    syntax-theme = OneHalfDark
+    hunk-header-style = omit
+    file-style = blue bold
+    side-by-side = false
 
 [interactive]
     diffFilter = delta --color-only
+[filesystem "N/A|11.0.8|/dev/nvme0n1p3"]
+	timestampResolution = 32000 nanoseconds
+	minRacyThreshold = 3911 microseconds
+[filesystem "N/A|15.0.2|/dev/nvme0n1p3"]
+	timestampResolution = 9520 nanoseconds
+	minRacyThreshold = 5840 microseconds
