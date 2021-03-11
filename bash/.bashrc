@@ -12,7 +12,6 @@ fi
 
 source /usr/share/git/completion/git-completion.bash
 source /usr/share/git/completion/git-prompt.sh
-source ~/.config/dotfiles/h.sh
 
 alias ls='ls --color=auto'
 alias grep='grep --color'
