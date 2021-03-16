@@ -15,6 +15,7 @@ local on_attach_lsp = function()
         }
     )
 
+    map("n", "ga", ":lua vim.lsp.buf.code_action()<cr>")
     map("n", "gd", ":lua vim.lsp.buf.definition()<cr>")
     map("n", "gD", ":lua vim.lsp.buf.declaration()<cr>")
     map("n", "gw", ":lua vim.lsp.buf.workspace_symbol()<cr>")
