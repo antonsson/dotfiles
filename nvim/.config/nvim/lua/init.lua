@@ -42,7 +42,13 @@ nvim_lsp.clangd.setup {on_attach = on_attach_lsp}
 nvim_lsp.pyls.setup {on_attach = on_attach_lsp}
 nvim_lsp.texlab.setup {on_attach = on_attach_lsp}
 nvim_lsp.jsonls.setup {on_attach = on_attach_lsp}
-nvim_lsp.html.setup {on_attach = on_attach_lsp}
+nvim_lsp.html.setup {
+    on_attach = on_attach_lsp,
+    cmd = { "vscode-html-languageserver", "--stdio" },
+    init_options = {
+        configurationSection = { "html", "css" }
+    }
+}
 nvim_lsp.bashls.setup {on_attach = on_attach_lsp}
 -- nvim_lsp.kotlin_language_server.setup {
 --     on_attach = on_attach_lsp,
