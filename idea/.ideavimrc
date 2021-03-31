@@ -12,10 +12,6 @@ let mapleader = ","
 vmap Q gq
 nmap Q gqap
 
-" These create newlines like o and O but stay in normal mode
-nmap zj o<Esc>k
-nmap zk O<Esc>j
-
 nmap gd :action GotoDeclaration<cr>
 nmap <c-o> :action Back<cr>
 nmap <c-i> :action Forward<cr>
