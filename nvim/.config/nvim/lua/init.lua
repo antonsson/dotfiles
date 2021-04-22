@@ -19,6 +19,7 @@ local on_attach_lsp = function()
     map("n", "gd", ":lua vim.lsp.buf.definition()<cr>")
     map("n", "gD", ":lua vim.lsp.buf.declaration()<cr>")
     map("n", "gw", ":lua vim.lsp.buf.workspace_symbol()<cr>")
+    map("n", "gr", ":lua vim.lsp.buf.references()<cr>")
     map("n", "K", ":lua vim.lsp.buf.hover()<cr>")
     map("n", "gi", ":lua vim.lsp.buf.implementation()<cr>")
     map("n", "<c-k>", ":lua vim.lsp.buf.signature_help()<cr>")
@@ -62,7 +63,7 @@ require'nvim-treesitter.configs'.setup {
     ensure_installed = "kotlin", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
     highlight = {
         enable = true,              -- false will disable the whole extension
-        disable = { "c", "rust" },  -- list of language that will be disabled
+        disable = { "c", "cpp", "rust" },  -- list of language that will be disabled
     },
 }
 

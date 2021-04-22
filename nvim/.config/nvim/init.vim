@@ -34,7 +34,7 @@ Plug 'keith/swift.vim'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
 " Neovim bultin lsp
-Plug 'neovim/nvim-lsp'
+Plug 'neovim/nvim-lspconfig'
 Plug 'nvim-lua/completion-nvim'
 
 " Fuzzy search
@@ -61,7 +61,11 @@ endif
 let g:equinusocio_material_style = 'darker'
 "colorscheme equinusocio_material
 
-let g:onedark_color_overrides = { "black": {"gui": "#1f1f1f", "cterm": "235", "cterm16": "0" } }
+let g:onedark_color_overrides = { "black": {"gui": "#121212" }, "white": {"gui": "#f8f8f8" } }
+let g:onedark_color_overrides = {
+\ "black": { "gui": "#121212", "cterm": "235", "cterm16": "0" },
+\ "white": { "gui": "#f8f8f8", "cterm": "15", "cterm16": "15" }
+\}
 colorscheme onedark
 
 " Disable colorscheme background

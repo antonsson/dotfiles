@@ -9,7 +9,7 @@ font:
 colors:
   # Default colors
   primary:
-    background: '#1f1f1f'
+    background: '#121212'
     foreground: '#f8f8f8'
 
   # Normal colors
