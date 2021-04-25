@@ -27,16 +27,8 @@ local on_attach_lsp = function()
     map("n", "<leader>n", ":lua vim.lsp.diagnostic.goto_next()<cr>")
     map("n", "<leader>p", ":lua vim.lsp.diagnostic.goto_prev()<cr>")
     map("n", "<leader>i", ":lua vim.lsp.diagnostic.show_line_diagnostics()<cr>")
+    map("n", "<leader>d", ":LspTroubleToggle")
 end
-
--- nvim_lsp.ccls.setup {
---     on_attach = on_attach,
---     init_options = {
---         highlight = {
---             lsRanges = true
---         }
---     }
--- }
 
 nvim_lsp.sumneko_lua.setup {on_attach = on_attach_lsp}
 nvim_lsp.clangd.setup {on_attach = on_attach_lsp}
@@ -86,6 +78,12 @@ require "telescope".setup {
         }
     }
 }
+
+require("trouble").setup {
+    -- your configuration comes here
+    -- or leave it empty to use the default settings
+    -- refer to the configuration section below
+  }
 
 function init.attach_lsp()
     on_attach_lsp()

@@ -36,6 +36,8 @@ Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 " Neovim bultin lsp
 Plug 'neovim/nvim-lspconfig'
 Plug 'nvim-lua/completion-nvim'
+Plug 'kyazdani42/nvim-web-devicons'
+Plug 'folke/lsp-trouble.nvim'
 
 " Fuzzy search
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
@@ -51,6 +53,9 @@ Plug 'sbdchd/neoformat'
 
 " Editor config
 Plug 'editorconfig/editorconfig-vim'
+
+" Show indentation line
+Plug 'Yggdroot/indentLine'
 
 call plug#end()
 
@@ -162,6 +167,8 @@ function LargeFile()
  autocmd VimEnter *  echo "The file is larger than " . (g:LargeFile / 1024 / 1024) . " MB, so some options are changed (see .vimrc for details)."
 endfunction
 
+" Default to not show indent lines toggle with :IndentLinesToggle
+let g:indentLine_enabled = 0
 
 " Colorizer setup
 lua require'colorizer'.setup()
@@ -171,6 +178,7 @@ au TextYankPost * silent! lua require'vim.highlight'.on_yank()
 
 " Prioritize eslint-formatter for javascript
 let g:neoformat_enabled_javascript = ['prettiereslint', 'jsbeautify', 'clang-format']
+let g:neoformat_enabled_python = ['autopep8', 'yapf', 'docformatter']
 
 " FZF
 let $FZF_DEFAULT_OPTS='--layout=reverse --margin=1,3'
@@ -223,6 +231,9 @@ autocmd FileType cpp setlocal shiftwidth=2 tabstop=2
 
 " Makefiles should use tabulators
 autocmd FileType make setlocal shiftwidth=4 tabstop=4 noexpandtab
+
+" Yaml use 2 spaces
+autocmd FileType yaml setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab
 
 " Map that hard to type key
 nmap ö [
