@@ -4,17 +4,7 @@ local map = function(type, key, value)
     vim.api.nvim_buf_set_keymap(0, type, key, value, {noremap = true, silent = false})
 end
 
-local init = {}
-
 local on_attach_lsp = function()
-    require "completion".on_attach(
-        {
-            enable_auto_popup = 1,
-            matching_strategy_list = {"exact", "substring", "fuzzy"},
-            trigger_keyword_length = 2
-        }
-    )
-
     map("n", "ga", ":lua vim.lsp.buf.code_action()<cr>")
     map("n", "gd", ":lua vim.lsp.buf.definition()<cr>")
     map("n", "gD", ":lua vim.lsp.buf.declaration()<cr>")
@@ -27,7 +17,7 @@ local on_attach_lsp = function()
     map("n", "<leader>n", ":lua vim.lsp.diagnostic.goto_next()<cr>")
     map("n", "<leader>p", ":lua vim.lsp.diagnostic.goto_prev()<cr>")
     map("n", "<leader>i", ":lua vim.lsp.diagnostic.show_line_diagnostics()<cr>")
-    map("n", "<leader>d", ":LspTroubleToggle")
+    map("n", "<leader>d", ":LspTroubleToggle<cr>")
 end
 
 nvim_lsp.sumneko_lua.setup {on_attach = on_attach_lsp}
@@ -48,8 +38,32 @@ nvim_lsp.bashls.setup {on_attach = on_attach_lsp}
 --     cmd = {"/home/anton/programs/kotlin-lsp-server/bin/kotlin-language-server"},
 --     root_dir = nvim_lsp.util.root_pattern("settings.gradle.kts")
 -- }
-nvim_lsp.tsserver.setup {on_attach = on_attach_lsp}
+nvim_lsp.tsserver.setup { on_attach = on_attach_lsp }
 nvim_lsp.vimls.setup {on_attach = on_attach_lsp}
+
+require'compe'.setup {
+    enabled = true;
+    autocomplete = true;
+    debug = false;
+    min_length = 1;
+    preselect = 'enable';
+    throttle_time = 80;
+    source_timeout = 200;
+    incomplete_delay = 400;
+    max_abbr_width = 100;
+    max_kind_width = 100;
+    max_menu_width = 100;
+    documentation = true;
+
+    source = {
+        path = true;
+        buffer = true;
+        calc = true;
+        nvim_lsp = true;
+        nvim_lua = true;
+        vsnip = false;
+    };
+}
 
 require'nvim-treesitter.configs'.setup {
     ensure_installed = "kotlin", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
@@ -59,38 +73,11 @@ require'nvim-treesitter.configs'.setup {
     },
 }
 
-require "telescope".setup {
-    defaults = {
-        theme = "dropdown",
-        winblend = 20,
-        sorting_strategy = "ascending",
-        layout_strategy = "center",
-        results_title = false,
-        preview_title = "Preview",
-        preview_cutoff = 1, -- Preview should always show (unless previewer = false)
-        width = 0.7,
-        results_height = 0.7,
-        borderchars = {
-            {"─", "│", "─", "│", "╭", "╮", "╯", "╰"},
-            prompt = {"─", "│", " ", "│", "╭", "╮", "│", "│"},
-            results = {"─", "│", "─", "│", "├", "┤", "╯", "╰"},
-            preview = {"─", "│", "─", "│", "╭", "╮", "╯", "╰"}
-        }
-    }
-}
-
 require("trouble").setup {
     -- your configuration comes here
     -- or leave it empty to use the default settings
     -- refer to the configuration section below
   }
-
-function init.attach_lsp()
-    on_attach_lsp()
-    map("n", "<leader>r", ":lua require'telescope.builtin'.lsp_references{}<cr>")
-    map("n", "<leader>w", ":lua require'telescope.builtin'.lsp_workspace_symbols{ query = '*' }<cr>")
-    map("n", "<leader>d", ":lua require'telescope.builtin'.lsp_document_symbols{ query = 'main' }<cr>")
-end
 
 vim.lsp.handlers["textDocument/publishDiagnostics"] =
     vim.lsp.with(
@@ -102,4 +89,3 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] =
     }
 )
 
-return init

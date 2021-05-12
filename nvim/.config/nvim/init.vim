@@ -35,7 +35,7 @@ Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
 " Neovim bultin lsp
 Plug 'neovim/nvim-lspconfig'
-Plug 'nvim-lua/completion-nvim'
+Plug 'hrsh7th/nvim-compe'
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'folke/lsp-trouble.nvim'
 
@@ -124,34 +124,23 @@ set cmdheight=2
 set updatetime=100
 
 " Set completeopt to have a better completion experience
-set completeopt=menuone,noinsert,noselect
+set completeopt=menuone,noselect
 
 " Avoid showing message extra message when using completion
 set shortmess+=c
 
-" Tab completion. Taken from nvim-completion README.
-function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1] =~ '\s'
-endfunction
-
-inoremap <silent><expr> <TAB>
-  \ pumvisible() ? "\<C-n>" :
-  \ <SID>check_back_space() ? "\<TAB>" :
-  \ completion#trigger_completion()
-
-inoremap <silent><expr> <c-space> completion#trigger_completion()
+" compe bindings
+inoremap <silent><expr> <C-Space> compe#complete()
+inoremap <silent><expr> <CR>      compe#confirm('<CR>')
+inoremap <silent><expr> <C-e>     compe#close('<C-e>')
+inoremap <silent><expr> <C-f>     compe#scroll({ 'delta': +4 })
+inoremap <silent><expr> <C-d>     compe#scroll({ 'delta': -4 })
 
 " Highlight trailing whitespaces
 highlight ExtraWhitespace ctermbg=red guibg=#FF4060
 autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red
 autocmd InsertEnter * match ExtraWhiteSpace /\s\+\%#\@<!$/
 autocmd InsertLeave * match ExtraWhiteSpace /\s\+$/
-
-" Enter to remove search highlight or insert mode
-nnoremap <cr> :nohlsearch<cr>/<bs>
-autocmd InsertEnter * :set nohlsearch
-autocmd InsertLeave * :set hlsearch
 
 let g:LargeFile = 1024 * 1024 * 2
 augroup LargeFile
@@ -280,10 +269,6 @@ au VimLeave * set guicursor=a:block-blinkon1
 au VimSuspend * set guicursor=a:block-blinkon1
 au VimResume * set guicursor=a:block-blinkon0
 
-" Always set lsp as omnifunc
-autocmd BufEnter * lua require('init').attach_lsp()
-
-" Load Custom Modules
 lua << EOF
 require('init')
 EOF
