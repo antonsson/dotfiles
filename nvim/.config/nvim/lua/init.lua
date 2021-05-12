@@ -65,19 +65,11 @@ require'compe'.setup {
     };
 }
 
-require'nvim-treesitter.configs'.setup {
-    ensure_installed = "kotlin", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
-    highlight = {
-        enable = true,              -- false will disable the whole extension
-        disable = { "c", "cpp", "rust" },  -- list of language that will be disabled
-    },
-}
-
 require("trouble").setup {
     -- your configuration comes here
     -- or leave it empty to use the default settings
     -- refer to the configuration section below
-  }
+}
 
 vim.lsp.handlers["textDocument/publishDiagnostics"] =
     vim.lsp.with(

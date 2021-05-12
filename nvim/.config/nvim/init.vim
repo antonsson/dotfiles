@@ -30,9 +30,6 @@ Plug 'leafgarland/typescript-vim'
 Plug 'gburca/vim-logcat'
 Plug 'keith/swift.vim'
 
-" Treesitter
-Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-
 " Neovim bultin lsp
 Plug 'neovim/nvim-lspconfig'
 Plug 'hrsh7th/nvim-compe'
