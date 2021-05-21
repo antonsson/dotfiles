@@ -122,6 +122,8 @@ input * {
     bindsym $mod+F1 workspace 11
     bindsym $mod+F2 workspace 12
     bindsym $mod+F3 workspace 13
+    bindsym $mod+q workspace 20
+    bindsym $mod+w workspace 21
     # move focused container to workspace
     bindsym $mod+Shift+1 move container to workspace 1
     bindsym $mod+Shift+2 move container to workspace 2
@@ -136,6 +138,8 @@ input * {
     bindsym $mod+Shift+F1 move container to workspace 11
     bindsym $mod+Shift+F2 move container to workspace 12
     bindsym $mod+Shift+F3 move container to workspace 13
+    bindsym $mod+Shift+q move container to workspace 20
+    bindsym $mod+Shift+w move container to workspace 21
     # Note: workspaces can have any name you want, not just numbers.
     # We just use 1-10 as the default.
 #
