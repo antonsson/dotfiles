@@ -20,6 +20,8 @@ alias jgrep='grep --color -r --include=*.java'
 alias xmlgrep='grep --color -r --include=*.xml'
 alias fcopy="fzf | tr -d '\n' | xclip"
 alias xnclip="tr -d '\n' | xclip"
+alias ssh="kitty +kitten ssh"
+alias icat="kitty +kitten icat"
 
 export PS1='[\u@\h \[\e[1;34m\]\w\[\e[1;33m\]$(__git_ps1 " (%s)")\[\e[0m\]]\$ '
 export VISUAL="nvim"
