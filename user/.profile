@@ -1,5 +1,4 @@
 export ANDROID_SDK=~/sdks/android-sdk/
-export ANDROID_NDK=~/sdks/android-ndk/
 export FLUTTER_SDK=~/sdks/flutter
 export GOPATH=$HOME/.local/go
 export ANDROID_HOME=$ANDROID_SDK

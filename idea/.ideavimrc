@@ -19,11 +19,10 @@ nmap <c-i> :action Forward<cr>
 nmap <leader>t :action ToogleDistractionFreeMode<cr>
 nmap <leader>e :action RecentFiles<cr>
 nmap <leader>j :action GotoFile<cr>
-nmap <leader>c :action GotoClass<cr>
+nmap <leader>cf :action ReformatCode<cr>
 nmap <leader>ns :action GotoSymbol<cr>
 nmap <leader>nm :action FileStructurePopup<cr>
 nmap <leader>d :action ShowErrorDescription<cr>
-nmap == :action ReformatCode<cr>
 
 nmap - /
 nmap _ ?
