@@ -1,7 +1,8 @@
 local nvim_lsp = require("lspconfig")
 
 local map = function(type, key, value)
-    vim.api.nvim_buf_set_keymap(0, type, key, value, {noremap = true, silent = false})
+    vim.api.nvim_buf_set_keymap(0, type, key, value,
+                                {noremap = true, silent = false})
 end
 
 local on_attach_lsp = function()
@@ -27,24 +28,22 @@ nvim_lsp.texlab.setup {on_attach = on_attach_lsp}
 nvim_lsp.jsonls.setup {on_attach = on_attach_lsp}
 nvim_lsp.html.setup {
     on_attach = on_attach_lsp,
-    cmd = { "vscode-html-languageserver", "--stdio" },
-    init_options = {
-        configurationSection = { "html", "css" }
-    }
+    cmd = {"vscode-html-languageserver", "--stdio"},
+    init_options = {configurationSection = {"html", "css"}}
 }
-nvim_lsp.rust_analyzer.setup({ on_attach=on_attach_lsp })
+nvim_lsp.rust_analyzer.setup({on_attach = on_attach_lsp})
 nvim_lsp.bashls.setup {on_attach = on_attach_lsp}
 -- nvim_lsp.kotlin_language_server.setup {
 --     on_attach = on_attach_lsp,
 --     cmd = {"/home/anton/programs/kotlin-lsp-server/bin/kotlin-language-server"},
 --     root_dir = nvim_lsp.util.root_pattern("settings.gradle.kts")
 -- }
-nvim_lsp.tsserver.setup { on_attach = on_attach_lsp }
+nvim_lsp.tsserver.setup {on_attach = on_attach_lsp}
 nvim_lsp.vimls.setup {on_attach = on_attach_lsp}
 
 -- nvim-compe
 local t = function(str)
-  return vim.api.nvim_replace_termcodes(str, true, true, true)
+    return vim.api.nvim_replace_termcodes(str, true, true, true)
 end
 
 local check_back_space = function()
@@ -60,21 +59,21 @@ end
 --- move to prev/next item in completion menuone
 --- jump to prev/next snippet's placeholder
 _G.tab_complete = function()
-  if vim.fn.pumvisible() == 1 then
-    return t "<C-n>"
-  elseif check_back_space() then
-    return t "<Tab>"
-  else
-    return vim.fn['compe#complete']()
-  end
+    if vim.fn.pumvisible() == 1 then
+        return t "<C-n>"
+    elseif check_back_space() then
+        return t "<Tab>"
+    else
+        return vim.fn['compe#complete']()
+    end
 end
 _G.s_tab_complete = function()
-  if vim.fn.pumvisible() == 1 then
-    return t "<C-p>"
-  else
-    -- If <S-Tab> is not working in your terminal, change it to <C-h>
-    return t "<S-Tab>"
-  end
+    if vim.fn.pumvisible() == 1 then
+        return t "<C-p>"
+    else
+        -- If <S-Tab> is not working in your terminal, change it to <C-h>
+        return t "<S-Tab>"
+    end
 end
 
 vim.api.nvim_set_keymap("i", "<Tab>", "v:lua.tab_complete()", {expr = true})
@@ -83,27 +82,27 @@ vim.api.nvim_set_keymap("i", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
 vim.api.nvim_set_keymap("s", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
 
 require'compe'.setup {
-    enabled = true;
-    autocomplete = true;
-    debug = false;
-    min_length = 1;
-    preselect = 'enable';
-    throttle_time = 80;
-    source_timeout = 200;
-    incomplete_delay = 400;
-    max_abbr_width = 100;
-    max_kind_width = 100;
-    max_menu_width = 100;
-    documentation = true;
+    enabled = true,
+    autocomplete = true,
+    debug = false,
+    min_length = 1,
+    preselect = 'enable',
+    throttle_time = 80,
+    source_timeout = 200,
+    incomplete_delay = 400,
+    max_abbr_width = 100,
+    max_kind_width = 100,
+    max_menu_width = 100,
+    documentation = true,
 
     source = {
-        path = true;
-        buffer = true;
-        calc = true;
-        nvim_lsp = true;
-        nvim_lua = true;
-        vsnip = false;
-    };
+        path = true,
+        buffer = true,
+        calc = true,
+        nvim_lsp = true,
+        nvim_lua = true,
+        vsnip = false
+    }
 }
 
 require("trouble").setup {
@@ -113,12 +112,6 @@ require("trouble").setup {
 }
 
 vim.lsp.handlers["textDocument/publishDiagnostics"] =
-    vim.lsp.with(
-    vim.lsp.diagnostic.on_publish_diagnostics,
-    {
-        virtual_text = false,
-        signs = true,
-        update_in_insert = false
-    }
-)
+    vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics,
+                 {virtual_text = false, signs = true, update_in_insert = false})
 
