@@ -32,6 +32,7 @@ nvim_lsp.html.setup {
         configurationSection = { "html", "css" }
     }
 }
+nvim_lsp.rust_analyzer.setup({ on_attach=on_attach_lsp })
 nvim_lsp.bashls.setup {on_attach = on_attach_lsp}
 -- nvim_lsp.kotlin_language_server.setup {
 --     on_attach = on_attach_lsp,
@@ -41,7 +42,7 @@ nvim_lsp.bashls.setup {on_attach = on_attach_lsp}
 nvim_lsp.tsserver.setup { on_attach = on_attach_lsp }
 nvim_lsp.vimls.setup {on_attach = on_attach_lsp}
 
--- nvim-compe 
+-- nvim-compe
 local t = function(str)
   return vim.api.nvim_replace_termcodes(str, true, true, true)
 end

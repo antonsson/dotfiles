@@ -35,6 +35,7 @@ Plug 'neovim/nvim-lspconfig'
 Plug 'hrsh7th/nvim-compe'
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'folke/lsp-trouble.nvim'
+Plug 'nvim-lua/lsp_extensions.nvim'
 
 " Fuzzy search
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
@@ -132,6 +133,9 @@ inoremap <silent><expr> <CR>      compe#confirm('<CR>')
 inoremap <silent><expr> <C-e>     compe#close('<C-e>')
 inoremap <silent><expr> <C-f>     compe#scroll({ 'delta': +4 })
 inoremap <silent><expr> <C-d>     compe#scroll({ 'delta': -4 })
+
+" Inlay plugin
+nnoremap <Leader>T :lua require'lsp_extensions'.inlay_hints()
 
 " Highlight trailing whitespaces
 highlight ExtraWhitespace ctermbg=red guibg=#FF4060
