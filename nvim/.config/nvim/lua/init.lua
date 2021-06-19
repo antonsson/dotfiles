@@ -31,7 +31,16 @@ nvim_lsp.html.setup {
     cmd = {"vscode-html-languageserver", "--stdio"},
     init_options = {configurationSection = {"html", "css"}}
 }
-nvim_lsp.rust_analyzer.setup({on_attach = on_attach_lsp})
+nvim_lsp.rust_analyzer.setup {on_attach = on_attach_lsp}
+nvim_lsp.rls.setup {
+    settings = {
+        rust = {
+            unstable_features = true,
+            build_on_save = false,
+            all_features = true
+        }
+    }
+}
 nvim_lsp.bashls.setup {on_attach = on_attach_lsp}
 -- nvim_lsp.kotlin_language_server.setup {
 --     on_attach = on_attach_lsp,
