@@ -30,7 +30,7 @@ window#waybar {
 
 #mode, #backlight, #network, #pulseaudio {
     font-family: "Font Awesome 5 Free", sans-serif;
-    font-size: 20pt;
+    font-size: 14pt;
     padding: 0 4px;
     margin: 0 4px;
 }
