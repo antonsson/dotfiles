@@ -15,6 +15,7 @@ Plug 'chuling/vim-equinusocio-material'
 Plug 'norcalli/nvim-colorizer.lua'
 Plug 'tsiemens/vim-aftercolors'
 Plug 'bfrg/vim-cpp-modern'
+Plug 'folke/lsp-colors.nvim'
 
 " git
 Plug 'airblade/vim-gitgutter'
@@ -64,17 +65,18 @@ if (has("termguicolors"))
 endif
 
 let g:equinusocio_material_style = 'darker'
-"colorscheme equinusocio_material
+let g:equinusocio_material_bracket_improved = 1
+colorscheme equinusocio_material
 
-let g:onedark_color_overrides = { "black": {"gui": "#121212" }, "white": {"gui": "#f8f8f8" } }
-let g:onedark_color_overrides = {
-\ "black": { "gui": "#121212", "cterm": "235", "cterm16": "0" },
-\ "white": { "gui": "#f8f8f8", "cterm": "15", "cterm16": "15" }
-\}
-colorscheme onedark
+"let g:onedark_color_overrides = { "black": {"gui": "#121212" }, "white": {"gui": "#f8f8f8" } }
+"let g:onedark_color_overrides = {
+"\ "black": { "gui": "#121212", "cterm": "235", "cterm16": "0" },
+"\ "white": { "gui": "#f8f8f8", "cterm": "15", "cterm16": "15" }
+"\}
+"colorscheme onedark
 
 " Disable colorscheme background
-" autocmd ColorScheme * highlight Normal ctermbg=NONE guibg=NONE
+autocmd ColorScheme * highlight Normal ctermbg=NONE guibg=NONE
 
 let mapleader = ','
 syntax on
@@ -136,9 +138,6 @@ inoremap <silent><expr> <C-e>     compe#close('<C-e>')
 inoremap <silent><expr> <C-f>     compe#scroll({ 'delta': +4 })
 inoremap <silent><expr> <C-d>     compe#scroll({ 'delta': -4 })
 
-" Inlay plugin
-nnoremap <Leader>T :lua require'lsp_extensions'.inlay_hints()
-
 " Highlight trailing whitespaces
 highlight ExtraWhitespace ctermbg=red guibg=#FF4060
 autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red
@@ -162,8 +161,8 @@ endfunction
 " Default to not show indent lines toggle with :IndentLinesToggle
 let g:indentLine_enabled = 0
 
-" Colorizer setup
-lua require'colorizer'.setup()
+" Low priority on gitgutter
+let g:gitgutter_sign_priority = 0
 
 " Highlight yanked text
 au TextYankPost * silent! lua require'vim.highlight'.on_yank()
@@ -185,7 +184,7 @@ nnoremap <silent> <leader>G :Rg <c-r><c-w><cr>
 " Lightline
 set noshowmode
 let g:lightline = {
-      \ 'colorscheme': 'onedark',
+      \ 'colorscheme': 'equinusocio_material',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
       \             [ 'gitbranch', 'readonly', 'relativepath', 'modified' ] ],

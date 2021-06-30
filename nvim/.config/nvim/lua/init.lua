@@ -1,3 +1,5 @@
+require'colorizer'.setup()
+
 local nvim_lsp = require("lspconfig")
 
 local map = function(type, key, value)
@@ -20,6 +22,7 @@ local on_attach_lsp = function()
     map("n", "<leader>i", ":lua vim.lsp.diagnostic.show_line_diagnostics()<cr>")
     map("n", "<leader>d", ":LspTroubleToggle<cr>")
     require"lsp_signature".on_attach()
+    require'lsp_extensions'.inlay_hints()
 end
 
 nvim_lsp.sumneko_lua.setup {on_attach = on_attach_lsp}
@@ -121,7 +124,20 @@ require("trouble").setup {
     -- refer to the configuration section below
 }
 
+vim.fn.sign_define("LspDiagnosticsSignError",
+                   {text = "", texthl = "LspDiagnosticsError"})
+vim.fn.sign_define("LspDiagnosticsSignWarning",
+                   {text = "", texthl = "LspDiagnosticsWarning"})
+vim.fn.sign_define("LspDiagnosticsSignInformation",
+                   {text = "", texthl = "LspDiagnosticsInformation"})
+vim.fn.sign_define("LspDiagnosticsSignHint",
+                   {text = "", texthl = "LspDiagnosticsHint"})
+
 vim.lsp.handlers["textDocument/publishDiagnostics"] =
-    vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics,
-                 {virtual_text = false, signs = true, update_in_insert = false})
+    vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
+        virtual_text = {spacing = 4},
+        signs = true,
+        update_in_insert = false,
+        underline = true
+    })
 
