@@ -11,7 +11,7 @@ Plug 'milkypostman/vim-togglelist'
 
 " Color scheme and highlighter
 Plug 'joshdick/onedark.vim'
-Plug 'chuling/vim-equinusocio-material'
+Plug 'antonsson/vim-equinusocio-material'
 Plug 'norcalli/nvim-colorizer.lua'
 Plug 'tsiemens/vim-aftercolors'
 Plug 'bfrg/vim-cpp-modern'
