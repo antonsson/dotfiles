@@ -19,6 +19,7 @@ local on_attach_lsp = function()
     map("n", "<leader>p", ":lua vim.lsp.diagnostic.goto_prev()<cr>")
     map("n", "<leader>i", ":lua vim.lsp.diagnostic.show_line_diagnostics()<cr>")
     map("n", "<leader>d", ":LspTroubleToggle<cr>")
+    require"lsp_signature".on_attach()
 end
 
 nvim_lsp.sumneko_lua.setup {on_attach = on_attach_lsp}
