@@ -23,6 +23,7 @@ alias xnclip="tr -d '\n' | xclip"
 alias ssh="kitty +kitten ssh"
 alias icat="kitty +kitten icat"
 alias screencap='grim -g "$(slurp)"'
+alias cdroot='cd $(git rev-parse --show-toplevel)'
 
 export PS1='[\u@\h \[\e[1;34m\]\w\[\e[1;33m\]$(__git_ps1 " (%s)")\[\e[0m\]]\$ '
 export VISUAL="nvim"
