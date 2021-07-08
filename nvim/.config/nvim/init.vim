@@ -2,6 +2,10 @@ filetype off
 
 call plug#begin(stdpath('data') . '/plugged')
 
+" Lir file explorer
+Plug 'tamago324/lir.nvim'
+Plug 'nvim-lua/plenary.nvim'
+
 " Pimped status line
 Plug 'itchyny/lightline.vim'
 Plug 'spywhere/lightline-lsp'
