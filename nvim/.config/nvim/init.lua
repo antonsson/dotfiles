@@ -15,9 +15,6 @@ require('packer').startup(function(use)
     -- Packer can manage itself as an optional plugin
     use {'wbthomason/packer.nvim', opt = true}
 
-    -- Lua development
-    use {'tjdevries/nlua.nvim'}
-
     -- Lir file explorer
     use {'tamago324/lir.nvim', requires = {{'nvim-lua/plenary.nvim'}}}
 
@@ -53,7 +50,7 @@ require('packer').startup(function(use)
     use {'keith/swift.vim'}
 
     -- Treesitter
-    use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
+    use {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate'}
 
     -- Neovim bultin lsp
     use {'neovim/nvim-lspconfig'}
@@ -79,27 +76,31 @@ end)
 -- Map leader to space
 vim.g.mapleader = ','
 
+-- Enable more mouse controls
 vim.opt.mouse = 'a'
+-- More color to the people
 vim.opt.termguicolors = true
+-- Backspace to remove indents
 vim.opt.backspace = {'indent', 'eol', 'start'}
 vim.opt.smartcase = true
-vim.opt.ruler = true
+-- Scroll before reaching end
 vim.opt.scrolloff = 4
-vim.opt.conceallevel = 0
+-- Default tab handling
 vim.opt.tabstop = 4
 vim.opt.shiftwidth = 4
 vim.opt.expandtab = true
-vim.opt.cindent = true
+-- Searching
 vim.opt.hlsearch = true
 vim.opt.incsearch = true
 vim.opt.ignorecase = true
 vim.opt.inccommand = 'nosplit'
+-- Undo settings
 vim.opt.undofile = true
 vim.opt.undolevels = 1000
 vim.opt.undoreload = 10000
+-- Allow buffers not being saved
 vim.opt.hidden = true
-vim.opt.cmdheight = 2
-vim.opt.updatetime = 100
+-- Completion options
 vim.opt.completeopt = {'menuone', 'noselect'}
 
 -- Highlight yanked text
@@ -116,8 +117,8 @@ utils.map("v", "<leader>y", "\"+y")
 
 -- Highlight yanked text
 vim.cmd [[augroup LuaHighlight]]
-vim.cmd [[autocmd!]]
-vim.cmd [[autocmd TextYankPost * silent! lua require'vim.highlight'.on_yank()]]
+vim.cmd [[  autocmd!]]
+vim.cmd [[  autocmd TextYankPost * silent! lua require'vim.highlight'.on_yank()]]
 vim.cmd [[augroup END]]
 
 -- Navigation
