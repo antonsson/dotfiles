@@ -56,15 +56,25 @@ require('packer').startup(function(use)
     -- Fuzzy search
     use {'junegunn/fzf', dir = '~/.fzf', run = './install --all'}
     use {'junegunn/fzf.vim'}
+    use {
+        'gfanto/fzf-lsp.nvim',
+        config = function() require'fzf_lsp'.setup() end
+    }
 
     -- Format multiple file types
     use {'sbdchd/neoformat'}
 
-    -- Editor config
-    use {'editorconfig/editorconfig-vim'}
-
     -- Show indentation line
     use {'Yggdroot/indentLine'}
+
+    -- Preview markdown
+    use {"npxbr/glow.nvim", run = ":GlowInstall"}
+
+    -- Focus mode
+    use {
+        "folke/zen-mode.nvim",
+        config = function() require("zen-mode").setup() end
+    }
 end)
 
 -- Map leader to space
