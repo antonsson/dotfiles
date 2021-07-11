@@ -28,10 +28,9 @@ require('packer').startup(function(use)
     use {'milkypostman/vim-togglelist'}
 
     -- Color scheme and highlighter
-    use {'joshdick/onedark.vim'}
     use {'antonsson/equinusocio-material.vim'}
+    use {'antonsson/onedark.nvim'}
     use {'norcalli/nvim-colorizer.lua'}
-    use {'tsiemens/vim-aftercolors'}
     use {'bfrg/vim-cpp-modern'}
     use {'folke/lsp-colors.nvim'}
 
@@ -135,6 +134,9 @@ utils.map("v", "<leader>cf", ":Neoformat<CR>")
 -- For easier searching
 utils.map("n", "-", "/")
 utils.map("n", "_", "?")
+
+vim.g.onedark_style = 'blackhole'
+require('onedark').setup()
 
 --------------------------------------------------------------------------------
 -- colorizer

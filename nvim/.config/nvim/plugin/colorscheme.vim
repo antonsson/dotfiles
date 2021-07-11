@@ -1,1 +1,0 @@
-colorscheme equinusocio_material
