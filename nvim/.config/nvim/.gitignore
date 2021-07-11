@@ -5,3 +5,4 @@ swapfiles/*
 bundle
 .netrwhist
 plugged/
+packer_compiled.lua
