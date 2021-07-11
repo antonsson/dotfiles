@@ -50,6 +50,7 @@ require('packer').startup(function(use)
 
     -- Treesitter
     use {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate'}
+    use {'nvim-treesitter/nvim-treesitter-textobjects'}
 
     -- Neovim bultin lsp
     use {'neovim/nvim-lspconfig'}
