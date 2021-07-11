@@ -7,7 +7,7 @@ if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
     vim.api.nvim_command(
         '!git clone https://github.com/wbthomason/packer.nvim ' .. install_path)
 end
-vim.cmd 'packadd packer.nvim'
+vim.cmd [[packadd packer.nvim]]
 
 -- Plugins
 require('packer').startup(function(use)
@@ -31,8 +31,6 @@ require('packer').startup(function(use)
     use {'antonsson/equinusocio-material.vim'}
     use {'antonsson/onedark.nvim'}
     use {'norcalli/nvim-colorizer.lua'}
-    use {'bfrg/vim-cpp-modern'}
-    use {'folke/lsp-colors.nvim'}
 
     -- git
     use {'airblade/vim-gitgutter'}
@@ -42,11 +40,7 @@ require('packer').startup(function(use)
     use {'tpope/vim-commentary'}
 
     -- Syntax
-    use {'dart-lang/dart-vim-plugin'}
-    use {'udalov/kotlin-vim'}
-    use {'leafgarland/typescript-vim'}
     use {'gburca/vim-logcat'}
-    use {'keith/swift.vim'}
 
     -- Treesitter
     use {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate'}
@@ -168,9 +162,9 @@ vim.g.neoformat_enabled_python = {'autopep8', 'yapf', 'docformatter'}
 --------------------------------------------------------------------------------
 -- fzf
 --------------------------------------------------------------------------------
-vim.cmd "let $FZF_DEFAULT_OPTS='--layout=reverse --margin=1,3'"
-vim.cmd "let g:fzf_layout = { 'window': { 'width': 0.8, 'height': 0.8 } }"
-vim.cmd "let g:fzf_preview_window = ['up:40%', 'ctrl-/']"
+vim.fn.setenv('FZF_DEFAULT_OPTS', '--layout=reverse --margin=1,3')
+vim.api.nvim_set_var('fzf_layout', {window = {width = 0.8, height = 0.8}})
+vim.api.nvim_set_var('fzf_preview_window', {"up:40%", "ctrl-/"})
 utils.map("n", "<leader>f", ":Files<cr>")
 utils.map("n", "<leader>b", ":Buffers <cr>")
 utils.map("n", "<leader>j", ":GFiles <cr>")
