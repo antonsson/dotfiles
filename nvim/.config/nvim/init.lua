@@ -1,4 +1,49 @@
-local utils = require("utils")
+local utils = require('utils')
+
+--------------------------------------------------------------------------------
+-- General neovim configuration
+--------------------------------------------------------------------------------
+-- Map leader to space
+vim.g.mapleader = ','
+
+-- More color to the people
+vim.opt.termguicolors = true
+
+-- Enable more mouse controls
+vim.opt.mouse = 'a'
+
+-- Backspace to remove indents
+vim.opt.backspace = {'indent', 'eol', 'start'}
+vim.opt.smartcase = true
+
+-- Scroll before reaching end
+vim.opt.scrolloff = 4
+
+-- Default tab handling
+vim.opt.tabstop = 4
+vim.opt.shiftwidth = 4
+vim.opt.expandtab = true
+
+-- Searching
+vim.opt.hlsearch = true
+vim.opt.incsearch = true
+vim.opt.ignorecase = true
+vim.opt.inccommand = 'nosplit'
+
+-- Undo settings
+vim.opt.undofile = true
+vim.opt.undolevels = 1000
+vim.opt.undoreload = 10000
+
+-- Allow buffers not being saved
+vim.opt.hidden = true
+
+-- Completion options
+vim.opt.completeopt = {'menuone', 'noselect'}
+
+--------------------------------------------------------------------------------
+-- Packer
+--------------------------------------------------------------------------------
 
 -- Auto install packer.nvim if not exists
 local install_path = vim.fn.stdpath('data') ..
@@ -9,11 +54,13 @@ if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
 end
 vim.cmd [[packadd packer.nvim]]
 
-local setup = function(module)
-    return require(module).setup()
+-- Helper setup function for setup without config
+local setup = function(mod)
+    if pcall(function() require(mod).setup {} end) == false then
+        print("Error loading " .. mod)
+    end
 end
 
--- Plugins
 require('packer').startup(function(use)
 
     -- Packer can manage itself as an optional plugin
@@ -34,7 +81,7 @@ require('packer').startup(function(use)
     -- Color scheme and highlighter
     use {'antonsson/equinusocio-material.vim'}
     use {'antonsson/onedark.nvim'}
-    use {'norcalli/nvim-colorizer.lua'}
+    use {'norcalli/nvim-colorizer.lua', config = setup('colorizer')}
 
     -- git
     use {'airblade/vim-gitgutter'}
@@ -53,17 +100,14 @@ require('packer').startup(function(use)
     -- Neovim bultin lsp
     use {'neovim/nvim-lspconfig'}
     use {'hrsh7th/nvim-compe'}
-    use {'folke/lsp-trouble.nvim'}
+    use {'folke/lsp-trouble.nvim', config = setup('trouble')}
     use {'nvim-lua/lsp_extensions.nvim'}
     use {'ray-x/lsp_signature.nvim'}
 
     -- Fuzzy search
     use {'junegunn/fzf', dir = '~/.fzf', run = './install --all'}
     use {'junegunn/fzf.vim'}
-    use {
-        'gfanto/fzf-lsp.nvim',
-        config = function() require'fzf_lsp'.setup() end
-    }
+    use {'gfanto/fzf-lsp.nvim', config = setup('fzf_lsp')}
 
     -- Format multiple file types
     use {'sbdchd/neoformat'}
@@ -72,44 +116,11 @@ require('packer').startup(function(use)
     use {'Yggdroot/indentLine'}
 
     -- Preview markdown
-    use {'npxbr/glow.nvim' }
+    use {'npxbr/glow.nvim'}
 
     -- Focus mode
-    use {
-        'folke/zen-mode.nvim',
-        config = setup("zen-mode")
-    }
+    use {'folke/zen-mode.nvim', config = setup('zen-mode')}
 end)
-
--- Map leader to space
-vim.g.mapleader = ','
-
--- Enable more mouse controls
-vim.opt.mouse = 'a'
--- More color to the people
-vim.opt.termguicolors = true
--- Backspace to remove indents
-vim.opt.backspace = {'indent', 'eol', 'start'}
-vim.opt.smartcase = true
--- Scroll before reaching end
-vim.opt.scrolloff = 4
--- Default tab handling
-vim.opt.tabstop = 4
-vim.opt.shiftwidth = 4
-vim.opt.expandtab = true
--- Searching
-vim.opt.hlsearch = true
-vim.opt.incsearch = true
-vim.opt.ignorecase = true
-vim.opt.inccommand = 'nosplit'
--- Undo settings
-vim.opt.undofile = true
-vim.opt.undolevels = 1000
-vim.opt.undoreload = 10000
--- Allow buffers not being saved
-vim.opt.hidden = true
--- Completion options
-vim.opt.completeopt = {'menuone', 'noselect'}
 
 -- Highlight yanked text
 vim.cmd [[autocmd TextYankPost * silent! lua require'vim.highlight'.on_yank()]]
@@ -121,7 +132,7 @@ vim.cmd [[autocmd FileType make setlocal shiftwidth=4 tabstop=4 noexpandtab]]
 vim.cmd [[autocmd FileType yaml setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab]]
 
 -- Copy to clipboard
-utils.map("v", "<leader>y", "\"+y")
+utils.map('v', '<leader>y', '\"+y')
 
 -- Highlight yanked text
 vim.cmd [[augroup LuaHighlight]]
@@ -130,27 +141,25 @@ vim.cmd [[  autocmd TextYankPost * silent! lua require'vim.highlight'.on_yank()]
 vim.cmd [[augroup END]]
 
 -- Navigation
-utils.map("n", ".", ".`[")
-utils.map("n", "j", "gj")
-utils.map("n", "k", "gk")
-utils.map("n", "<c-h>", ":ClangdSwitchSourceHeader <cr>")
-utils.map("n", "<F4>", ":e ~/.config/nvim/init.lua <cr>")
+utils.map('n', '.', '.`[')
+utils.map('n', 'j', 'gj')
+utils.map('n', 'k', 'gk')
+utils.map('n', '<c-h>', ':ClangdSwitchSourceHeader <cr>')
+utils.map('n', '<F4>', ':e ~/.config/nvim/init.lua <cr>')
 
 -- Format file
-utils.map("n", "<leader>cf", ":Neoformat<CR>")
-utils.map("v", "<leader>cf", ":Neoformat<CR>")
+utils.map('n', '<leader>cf', ':Neoformat<CR>')
+utils.map('v', '<leader>cf', ':Neoformat<CR>')
 
 -- For easier searching
-utils.map("n", "-", "/")
-utils.map("n", "_", "?")
+utils.map('n', '-', '/')
+utils.map('n', '_', '?')
 
+--------------------------------------------------------------------------------
+-- Color scheme
+--------------------------------------------------------------------------------
 vim.g.onedark_style = 'blackhole'
 require('onedark').setup()
-
---------------------------------------------------------------------------------
--- colorizer
---------------------------------------------------------------------------------
-require'colorizer'.setup()
 
 --------------------------------------------------------------------------------
 -- indentline
@@ -178,21 +187,12 @@ vim.g.neoformat_enabled_python = {'autopep8', 'yapf', 'docformatter'}
 --------------------------------------------------------------------------------
 vim.fn.setenv('FZF_DEFAULT_OPTS', '--layout=reverse --margin=1,3')
 vim.api.nvim_set_var('fzf_layout', {window = {width = 0.8, height = 0.8}})
-vim.api.nvim_set_var('fzf_preview_window', {"up:40%", "ctrl-/"})
-utils.map("n", "<leader>f", ":Files<cr>")
-utils.map("n", "<leader>b", ":Buffers <cr>")
-utils.map("n", "<leader>j", ":GFiles <cr>")
-utils.map("n", "<leader>g", ":Rg <cr>")
-utils.map("n", "<leader>G", ":Rg <c-r><c-w><cr>")
-
---------------------------------------------------------------------------------
--- Trouble diagnstics
---------------------------------------------------------------------------------
-require("trouble").setup {
-    -- your configuration comes here
-    -- or leave it empty to use the default settings
-    -- refer to the configuration section below
-}
+vim.api.nvim_set_var('fzf_preview_window', {'up:40%', 'ctrl-/'})
+utils.map('n', '<leader>f', ':Files<cr>')
+utils.map('n', '<leader>b', ':Buffers <cr>')
+utils.map('n', '<leader>j', ':GFiles <cr>')
+utils.map('n', '<leader>g', ':Rg <cr>')
+utils.map('n', '<leader>G', ':Rg <c-r><c-w><cr>')
 
 --------------------------------------------------------------------------------
 -- External plugin configs
