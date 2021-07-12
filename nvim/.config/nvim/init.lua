@@ -9,6 +9,10 @@ if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
 end
 vim.cmd [[packadd packer.nvim]]
 
+local setup = function(module)
+    return require(module).setup()
+end
+
 -- Plugins
 require('packer').startup(function(use)
 
@@ -68,12 +72,12 @@ require('packer').startup(function(use)
     use {'Yggdroot/indentLine'}
 
     -- Preview markdown
-    use {"npxbr/glow.nvim", run = ":GlowInstall"}
+    use {'npxbr/glow.nvim' }
 
     -- Focus mode
     use {
-        "folke/zen-mode.nvim",
-        config = function() require("zen-mode").setup() end
+        'folke/zen-mode.nvim',
+        config = setup("zen-mode")
     }
 end)
 
