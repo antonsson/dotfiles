@@ -1,4 +1,4 @@
-local utils = require"utils"
+local utils = require "utils"
 
 --------------------------------------------------------------------------------
 -- General neovim configuration
@@ -121,6 +121,9 @@ require("packer").startup(function(use)
 
     -- Focus mode
     use {"folke/zen-mode.nvim", config = setup("zen-mode")}
+
+    -- Rust tools
+    use {"simrat39/rust-tools.nvim"}
 end)
 
 -- Highlight yanked text
@@ -173,6 +176,7 @@ vim.g.indentLine_enabled = 0
 --------------------------------------------------------------------------------
 -- Low priority on gitgutter
 vim.g.gitgutter_sign_priority = 0
+utils.map("n", "<leader>t", ":GitGutterToggle<cr>")
 
 --------------------------------------------------------------------------------
 -- neoformat

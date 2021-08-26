@@ -55,7 +55,7 @@ nvim_lsp.sumneko_lua.setup {
     on_attach = on_attach_lsp
 }
 nvim_lsp.clangd.setup {on_attach = on_attach_lsp}
---nvim_lsp.pyls.setup {on_attach = on_attach_lsp}
+-- nvim_lsp.pyls.setup {on_attach = on_attach_lsp}
 nvim_lsp.texlab.setup {on_attach = on_attach_lsp}
 nvim_lsp.jsonls.setup {on_attach = on_attach_lsp}
 nvim_lsp.html.setup {
