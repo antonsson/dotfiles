@@ -1,4 +1,4 @@
-local utils = require "utils"
+local utils = require("utils")
 
 --------------------------------------------------------------------------------
 -- General neovim configuration
@@ -76,7 +76,6 @@ require("packer").startup(function(use)
     use {"milkypostman/vim-togglelist"}
 
     -- Color scheme and highlighter
-    use {"antonsson/equinusocio-material.vim"}
     use {"antonsson/onedark.nvim"}
     use {"norcalli/nvim-colorizer.lua", config = setup("colorizer")}
 
@@ -162,7 +161,9 @@ utils.map("n", "_", "?")
 --------------------------------------------------------------------------------
 -- Color scheme
 --------------------------------------------------------------------------------
-vim.g.onedark_style = "blackhole"
+vim.g.onedark_style = "custom"
+vim.g.onedark_transparent_background = true
+vim.g.onedark_italic_comment = false
 require("onedark").setup()
 
 --------------------------------------------------------------------------------
