@@ -38,9 +38,6 @@ vim.opt.undoreload = 10000
 -- Allow buffers not being saved
 vim.opt.hidden = true
 
--- Completion options
-vim.opt.completeopt = {"menuone", "noselect"}
-
 --------------------------------------------------------------------------------
 -- Packer
 --------------------------------------------------------------------------------
@@ -99,10 +96,14 @@ require("packer").startup(function(use)
 
     -- Neovim bultin lsp
     use {"neovim/nvim-lspconfig"}
-    use {"hrsh7th/nvim-compe"}
     use {"folke/lsp-trouble.nvim", config = setup("trouble")}
     use {"nvim-lua/lsp_extensions.nvim"}
     use {"ray-x/lsp_signature.nvim"}
+    use {"hrsh7th/nvim-cmp"}
+    use {"hrsh7th/cmp-buffer"}
+    use {"hrsh7th/cmp-nvim-lua"}
+    use {"hrsh7th/cmp-nvim-lsp"}
+    use {"hrsh7th/cmp-path"}
 
     -- Fuzzy search
     use {"junegunn/fzf", dir = "~/.fzf", run = "./install --all"}
@@ -199,7 +200,7 @@ utils.map("n", "<leader>G", ":Rg <c-r><c-w><cr>")
 --------------------------------------------------------------------------------
 require("config.lsp")
 require("config.lir")
-require("config.compe")
+require("config.cmp")
 require("config.lualine")
 require("config.treesitter")
 
