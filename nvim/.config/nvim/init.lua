@@ -98,11 +98,22 @@ require("packer").startup(function(use)
     use {"folke/lsp-trouble.nvim", config = setup("trouble")}
     use {"nvim-lua/lsp_extensions.nvim"}
     use {"ray-x/lsp_signature.nvim"}
+
+    -- Completion
     use {"hrsh7th/nvim-cmp"}
     use {"hrsh7th/cmp-buffer"}
     use {"hrsh7th/cmp-nvim-lua"}
     use {"hrsh7th/cmp-nvim-lsp"}
     use {"hrsh7th/cmp-path"}
+
+    -- Language tools
+    use {
+        "simrat39/rust-tools.nvim",
+        requires = {
+            {'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'},
+            {'nvim-telescope/telescope.nvim'}
+        }
+    }
 
     -- Fuzzy search
     use {"junegunn/fzf", dir = "~/.fzf", run = "./install --all"}

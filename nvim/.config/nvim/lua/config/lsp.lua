@@ -55,7 +55,7 @@ nvim_lsp.sumneko_lua.setup {
     on_attach = on_attach_lsp
 }
 nvim_lsp.clangd.setup {on_attach = on_attach_lsp}
--- nvim_lsp.pyls.setup {on_attach = on_attach_lsp}
+nvim_lsp.pyright.setup {on_attach = on_attach_lsp}
 nvim_lsp.texlab.setup {on_attach = on_attach_lsp}
 nvim_lsp.jsonls.setup {on_attach = on_attach_lsp}
 nvim_lsp.html.setup {
@@ -63,7 +63,6 @@ nvim_lsp.html.setup {
     cmd = {"vscode-html-languageserver", "--stdio"},
     init_options = {configurationSection = {"html", "css"}}
 }
-nvim_lsp.rust_analyzer.setup {on_attach = on_attach_lsp}
 nvim_lsp.bashls.setup {on_attach = on_attach_lsp}
 -- nvim_lsp.kotlin_language_server.setup {
 --     on_attach = on_attach_lsp,
@@ -73,16 +72,6 @@ nvim_lsp.bashls.setup {on_attach = on_attach_lsp}
 nvim_lsp.tsserver.setup {on_attach = on_attach_lsp}
 nvim_lsp.vimls.setup {on_attach = on_attach_lsp}
 
--- LSP diagnostics
-vim.fn.sign_define("LspDiagnosticsSignError",
-                   {text = "", texthl = "LspDiagnosticsError"})
-vim.fn.sign_define("LspDiagnosticsSignWarning",
-                   {text = "", texthl = "LspDiagnosticsWarning"})
-vim.fn.sign_define("LspDiagnosticsSignInformation",
-                   {text = "", texthl = "LspDiagnosticsInformation"})
-vim.fn.sign_define("LspDiagnosticsSignHint",
-                   {text = "", texthl = "LspDiagnosticsHint"})
-
 vim.lsp.handlers["textDocument/publishDiagnostics"] =
     vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
         virtual_text = false,
@@ -91,3 +80,5 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] =
         underline = true
     })
 
+-- Rust tools will handle attaching the
+require("rust-tools").setup({server = {on_attach = on_attach_lsp}});
