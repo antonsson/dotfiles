@@ -103,6 +103,7 @@ require("packer").startup(function(use)
     use {"folke/lsp-trouble.nvim"}
     use {"nvim-lua/lsp_extensions.nvim"}
     use {"ray-x/lsp_signature.nvim"}
+    use {"nvim-lua/lsp-status.nvim"}
 
     -- Completion
     use {"hrsh7th/nvim-cmp"}
@@ -278,7 +279,7 @@ require('lualine').setup({
         lualine_a = {'mode'},
         lualine_b = {'branch'},
         lualine_c = {'filename'},
-        lualine_x = {'encoding', 'fileformat', 'filetype'},
+        lualine_x = {require("lsp-status").status, 'encoding', 'fileformat', 'filetype'},
         lualine_y = {'progress'},
         lualine_z = {'location'}
     },
@@ -458,6 +459,9 @@ nvim_lsp.bashls.setup {on_attach = on_attach_lsp}
 nvim_lsp.tsserver.setup {on_attach = on_attach_lsp}
 nvim_lsp.vimls.setup {on_attach = on_attach_lsp}
 
+-- Rust tools will handle attaching the
+require("rust-tools").setup({server = {on_attach = on_attach_lsp}});
+
 vim.lsp.handlers["textDocument/publishDiagnostics"] =
     vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
         virtual_text = false,
@@ -466,8 +470,15 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] =
         underline = true
     })
 
--- Rust tools will handle attaching the
-require("rust-tools").setup({server = {on_attach = on_attach_lsp}});
+vim.fn.sign_define("LspDiagnosticsSignError",
+                   {text = "", texthl = "LspDiagnosticsDefaultError"})
+vim.fn.sign_define("LspDiagnosticsSignWarning",
+                   {text = "", texthl = "LspDiagnosticsDefaultWarning"})
+vim.fn.sign_define("LspDiagnosticsSignInformation",
+                   {text = "", texthl = "LspDiagnosticsDefaultInformation"})
+vim.fn.sign_define("LspDiagnosticsSignHint",
+                   {text = "", texthl = "LspDiagnosticsDefaultHint"})
+
 
 map("n", "gw", ":lua vim.lsp.buf.workspace_symbol()<cr>")
 map("n", "gr", ":lua vim.lsp.buf.references()<cr>")
