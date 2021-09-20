@@ -85,11 +85,15 @@ require("packer").startup(function(use)
     use {"norcalli/nvim-colorizer.lua", config = setup("colorizer")}
 
     -- git
-    use {"airblade/vim-gitgutter"}
+    use {
+        'lewis6991/gitsigns.nvim',
+        config = setup("gitsigns"),
+        requires = {'nvim-lua/plenary.nvim'}
+    }
     use {"tpope/vim-fugitive"}
 
     -- Comment lines
-    use {"tpope/vim-commentary"}
+    use {"b3nj5m1n/kommentary"}
 
     -- Syntax
     use {"gburca/vim-logcat"}
@@ -121,6 +125,9 @@ require("packer").startup(function(use)
         }
     }
 
+    -- Motion
+    use {"phaazon/hop.nvim", config = setup("hop")}
+
     -- Fuzzy search
     use {'nvim-telescope/telescope.nvim'}
 
@@ -128,7 +135,7 @@ require("packer").startup(function(use)
     use {"sbdchd/neoformat"}
 
     -- Show indentation line
-    use {"Yggdroot/indentLine"}
+    use {"lukas-reineke/indent-blankline.nvim"}
 
     -- Preview markdown
     use {"npxbr/glow.nvim"}
@@ -167,10 +174,6 @@ map("n", "<F4>", ":e ~/.config/nvim/init.lua <cr>")
 map("n", "<leader>cf", ":Neoformat<CR>")
 map("v", "<leader>cf", ":Neoformat<CR>")
 
--- For easier searching
-map("n", "-", "/")
-map("n", "_", "?")
-
 --------------------------------------------------------------------------------
 -- Color scheme
 --------------------------------------------------------------------------------
@@ -180,17 +183,15 @@ vim.g.onedark_italic_comment = false
 require("onedark").setup()
 
 --------------------------------------------------------------------------------
+-- HOP
+--------------------------------------------------------------------------------
+map("n", "-", "<cmd>lua require'hop'.hint_words()<cr>")
+
+--------------------------------------------------------------------------------
 -- indentline
 --------------------------------------------------------------------------------
 -- Default to not show indent lines toggle with :IndentLinesToggle
 vim.g.indentLine_enabled = 0
-
---------------------------------------------------------------------------------
--- gitgutter
---------------------------------------------------------------------------------
--- Low priority on gitgutter
-vim.g.gitgutter_sign_priority = 0
-map("n", "<leader>t", ":GitGutterToggle<cr>")
 
 --------------------------------------------------------------------------------
 -- neoformat
@@ -228,7 +229,7 @@ map("n", "<leader>g", ":lua require('telescope.builtin').live_grep()<cr>")
 map("n", "<leader>b", ":lua require('telescope.builtin').buffers()<cr>")
 map("n", "<leader>h", ":lua require('telescope.builtin').help_tags()<cr>")
 map("n", "<leader>s",
-          ":lua require('telescope.builtin').current_buffer_fuzzy_find()<cr>")
+    ":lua require('telescope.builtin').current_buffer_fuzzy_find()<cr>")
 
 --------------------------------------------------------------------------------
 -- Nvim cmp
@@ -279,7 +280,9 @@ require('lualine').setup({
         lualine_a = {'mode'},
         lualine_b = {'branch'},
         lualine_c = {'filename'},
-        lualine_x = {require("lsp-status").status, 'encoding', 'fileformat', 'filetype'},
+        lualine_x = {
+            require("lsp-status").status, 'encoding', 'fileformat', 'filetype'
+        },
         lualine_y = {'progress'},
         lualine_z = {'location'}
     },
@@ -479,15 +482,15 @@ vim.fn.sign_define("LspDiagnosticsSignInformation",
 vim.fn.sign_define("LspDiagnosticsSignHint",
                    {text = "", texthl = "LspDiagnosticsDefaultHint"})
 
-
+map("n", "gD", ":lua vim.lsp.buf.declaration()<cr>")
+map("n", "gd", ":lua vim.lsp.buf.definition()<cr>")
 map("n", "gw", ":lua vim.lsp.buf.workspace_symbol()<cr>")
 map("n", "gr", ":lua vim.lsp.buf.references()<cr>")
 map("n", "K", ":lua vim.lsp.buf.hover()<cr>")
 map("n", "gi", ":lua vim.lsp.buf.implementation()<cr>")
 map("n", "<c-k>", ":lua vim.lsp.buf.signature_help()<cr>")
-map("n", "1gD", ":lua vim.lsp.buf.type_definition()<cr>")
+map("n", "<leader>ca", ":lua vim.lsp.buf.code_action()<cr>")
 map("n", "<leader>n", ":lua vim.lsp.diagnostic.goto_next()<cr>")
 map("n", "<leader>p", ":lua vim.lsp.diagnostic.goto_prev()<cr>")
-map("n", "<leader>i",
-          ":lua vim.lsp.diagnostic.show_line_diagnostics()<cr>")
+map("n", "<leader>i", ":lua vim.lsp.diagnostic.show_line_diagnostics()<cr>")
 
