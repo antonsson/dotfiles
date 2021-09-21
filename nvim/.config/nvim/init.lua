@@ -157,12 +157,6 @@ vim.cmd [[autocmd FileType yaml setlocal tabstop=2 softtabstop=2 shiftwidth=2 ex
 -- Copy to clipboard
 map("v", "<leader>y", '"+y')
 
--- Highlight yanked text
-vim.cmd [[augroup LuaHighlight]]
-vim.cmd [[  autocmd!]]
-vim.cmd [[  autocmd TextYankPost * silent! lua require"vim.highlight".on_yank()]]
-vim.cmd [[augroup END]]
-
 -- Navigation
 map("n", ".", ".`[")
 map("n", "j", "gj")
