@@ -1,7 +1,7 @@
 * {
     border: none;
     border-radius: 0;
-    font-family: "Inconsolata", sans-serif;
+    font-family: "Liberation Mono", "Inconsolata", sans-serif;
     font-size: 16pt;
 }
 
@@ -29,7 +29,7 @@ window#waybar {
 }
 
 #mode, #backlight, #network, #pulseaudio {
-    font-family: "Inconsolata", sans-serif;
+    font-family: "Liberation Mono", "Inconsolata", sans-serif;
     font-size: 24pt;
     padding: 0 4px;
     margin: 0 4px;
