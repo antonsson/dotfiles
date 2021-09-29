@@ -176,7 +176,8 @@ vim.g.tokyonight_colors = {
     bg = "#161618",
     bg_dark = "#08080a",
     bg_statusline = "#202022",
-    border = "#3d59a1"
+    border = "#3d59a1",
+    yellow = "#fffa87"
 }
 vim.cmd [[colorscheme tokyonight]]
 
