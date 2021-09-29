@@ -105,7 +105,6 @@ require("packer").startup(function(use)
     -- Neovim bultin lsp
     use {"neovim/nvim-lspconfig"}
     use {"folke/lsp-trouble.nvim"}
-    use {"nvim-lua/lsp_extensions.nvim"}
     use {"ray-x/lsp_signature.nvim"}
 
     -- Completion
@@ -169,12 +168,13 @@ map("v", "<leader>cf", ":Neoformat<CR>")
 --------------------------------------------------------------------------------
 -- Color scheme
 --------------------------------------------------------------------------------
-vim.g.tokyonight_style = "night"
 vim.g.tokyonight_italic_functions = true
+vim.g.tokyonight_dark_float = true
 vim.g.tokyonight_colors = {
     fg = "#d7dae0",
     bg = "#161618",
     bg_dark = "#08080a",
+    bg_float = "#161618",
     bg_statusline = "#202022",
     border = "#3d59a1",
     yellow = "#e5c07b"
@@ -231,7 +231,7 @@ map("n", "<leader>s",
     ":lua require('telescope.builtin').current_buffer_fuzzy_find()<cr>")
 
 --------------------------------------------------------------------------------
--- Nvim cmp
+-- Nvim-cmp
 --------------------------------------------------------------------------------
 local cmp = require("cmp")
 cmp.setup {
@@ -398,10 +398,7 @@ require"nvim-treesitter.configs".setup {
 --------------------------------------------------------------------------------
 local nvim_lsp = require("lspconfig")
 
-local on_attach_lsp = function()
-    require("lsp_signature").on_attach()
-    require("lsp_extensions").inlay_hints()
-end
+local on_attach_lsp = function() require("lsp_signature").on_attach() end
 
 local runtime_path = vim.split(package.path, ";")
 table.insert(runtime_path, "lua/?.lua")
@@ -461,6 +458,11 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] =
         signs = true,
         update_in_insert = false,
         underline = true
+    })
+vim.lsp.handlers["textDocument/hover"] =
+    vim.lsp.with(vim.lsp.handlers.hover, {
+        -- Use a sharp border with `FloatBorder` highlights
+        border = "single"
     })
 
 vim.fn.sign_define("LspDiagnosticsSignError",
