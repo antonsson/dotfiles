@@ -64,7 +64,6 @@ local setup = function(mod)
 end
 
 require("packer").startup(function(use)
-
     -- Packer can manage itself as an optional plugin
     use {"wbthomason/packer.nvim", opt = true}
 
@@ -83,12 +82,13 @@ require("packer").startup(function(use)
     -- Color scheme and highlighter
     use {"folke/tokyonight.nvim"}
     use {"norcalli/nvim-colorizer.lua", config = setup("colorizer")}
+    use {"sainnhe/sonokai"}
 
     -- git
     use {
-        'lewis6991/gitsigns.nvim',
+        "lewis6991/gitsigns.nvim",
         config = setup("gitsigns"),
-        requires = {'nvim-lua/plenary.nvim'}
+        requires = {"nvim-lua/plenary.nvim"}
     }
     use {"tpope/vim-fugitive"}
 
@@ -107,7 +107,6 @@ require("packer").startup(function(use)
     use {"folke/lsp-trouble.nvim"}
     use {"nvim-lua/lsp_extensions.nvim"}
     use {"ray-x/lsp_signature.nvim"}
-    use {"nvim-lua/lsp-status.nvim"}
 
     -- Completion
     use {"hrsh7th/nvim-cmp"}
@@ -120,8 +119,8 @@ require("packer").startup(function(use)
     use {
         "simrat39/rust-tools.nvim",
         requires = {
-            {'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'},
-            {'nvim-telescope/telescope.nvim'}
+            {"nvim-lua/popup.nvim"}, {"nvim-lua/plenary.nvim"},
+            {"nvim-telescope/telescope.nvim"}
         }
     }
 
@@ -129,7 +128,7 @@ require("packer").startup(function(use)
     use {"phaazon/hop.nvim", config = setup("hop")}
 
     -- Fuzzy search
-    use {'nvim-telescope/telescope.nvim'}
+    use {"nvim-telescope/telescope.nvim"}
 
     -- Format multiple file types
     use {"sbdchd/neoformat"}
@@ -142,7 +141,6 @@ require("packer").startup(function(use)
 
     -- Focus mode
     use {"folke/zen-mode.nvim", config = setup("zen-mode")}
-    use {"folke/twilight.nvim", config = setup("twilight")}
 end)
 
 -- Highlight yanked text
@@ -172,10 +170,15 @@ map("v", "<leader>cf", ":Neoformat<CR>")
 -- Color scheme
 --------------------------------------------------------------------------------
 vim.g.tokyonight_style = "night"
-vim.g.tokyonight_transparent = true
 vim.g.tokyonight_italic_functions = true
-vim.g.tokyonight_colors = { fg = "#d7dae0" }
-vim.cmd[[colorscheme tokyonight]]
+vim.g.tokyonight_colors = {
+    fg = "#d7dae0",
+    bg = "#161618",
+    bg_dark = "#08080a",
+    bg_statusline = "#202022",
+    border = "#3d59a1"
+}
+vim.cmd [[colorscheme tokyonight]]
 
 --------------------------------------------------------------------------------
 -- HOP
@@ -229,28 +232,27 @@ map("n", "<leader>s",
 --------------------------------------------------------------------------------
 -- Nvim cmp
 --------------------------------------------------------------------------------
-local cmp = require('cmp')
+local cmp = require("cmp")
 cmp.setup {
     -- You must set mapping if you want.
     mapping = {
-        ['<C-p>'] = cmp.mapping.select_prev_item(),
-        ['<S-Tab>'] = cmp.mapping.select_prev_item(),
-        ['<C-n>'] = cmp.mapping.select_next_item(),
-        ['<Tab>'] = cmp.mapping.select_next_item(),
-        ['<C-d>'] = cmp.mapping.scroll_docs(-4),
-        ['<C-f>'] = cmp.mapping.scroll_docs(4),
-        ['<C-Space>'] = cmp.mapping.complete(),
-        ['<C-e>'] = cmp.mapping.close(),
-        ['<CR>'] = cmp.mapping.confirm({
+        ["<C-p>"] = cmp.mapping.select_prev_item(),
+        ["<S-Tab>"] = cmp.mapping.select_prev_item(),
+        ["<C-n>"] = cmp.mapping.select_next_item(),
+        ["<Tab>"] = cmp.mapping.select_next_item(),
+        ["<C-d>"] = cmp.mapping.scroll_docs(-4),
+        ["<C-f>"] = cmp.mapping.scroll_docs(4),
+        ["<C-Space>"] = cmp.mapping.complete(),
+        ["<C-e>"] = cmp.mapping.close(),
+        ["<CR>"] = cmp.mapping.confirm({
             behavior = cmp.ConfirmBehavior.Insert,
             select = true
         })
     },
-
     -- You should specify your *installed* sources.
     sources = {
-        {name = 'nvim_lsp'}, {name = 'path'}, {name = 'buffer'},
-        {name = 'nvim_lua'}
+        {name = "nvim_lsp"}, {name = "path"}, {name = "buffer"},
+        {name = "nvim_lua"}
     }
 }
 
@@ -263,29 +265,27 @@ map("n", "<leader>d", ":LspTroubleToggle<cr>")
 --------------------------------------------------------------------------------
 -- Lualine
 --------------------------------------------------------------------------------
-require('lualine').setup({
+require("lualine").setup({
     options = {
         icons_enabled = true,
-        theme = 'tokyonight',
-        component_separators = {'', ''},
-        section_separators = {'', ''},
+        theme = "tokyonight",
+        component_separators = {"", ""},
+        section_separators = {"", ""},
         disabled_filetypes = {}
     },
     sections = {
-        lualine_a = {'mode'},
-        lualine_b = {'branch'},
-        lualine_c = {'filename'},
-        lualine_x = {
-            require("lsp-status").status, 'encoding', 'fileformat', 'filetype'
-        },
-        lualine_y = {'progress'},
-        lualine_z = {'location'}
+        lualine_a = {"mode"},
+        lualine_b = {"branch"},
+        lualine_c = {"filename"},
+        lualine_x = {"encoding", "fileformat", "filetype"},
+        lualine_y = {"progress"},
+        lualine_z = {"location"}
     },
     inactive_sections = {
         lualine_a = {},
         lualine_b = {},
-        lualine_c = {'filename'},
-        lualine_x = {'location'},
+        lualine_c = {"filename"},
+        lualine_x = {"location"},
         lualine_y = {},
         lualine_z = {}
     },
@@ -296,44 +296,40 @@ require('lualine').setup({
 --------------------------------------------------------------------------------
 -- LIR
 --------------------------------------------------------------------------------
-local actions = require('lir.actions')
-local mark_actions = require('lir.mark.actions')
-local clipboard_actions = require('lir.clipboard.actions')
+local actions = require("lir.actions")
+local mark_actions = require("lir.mark.actions")
+local clipboard_actions = require("lir.clipboard.actions")
 
-require'lir'.setup {
+require"lir".setup {
     show_hidden_files = true,
     devicons_enable = false,
     mappings = {
-        ['l'] = actions.edit,
-        ['<CR>'] = actions.edit,
-        ['<C-s>'] = actions.split,
-        ['<C-v>'] = actions.vsplit,
-        ['<C-t>'] = actions.tabedit,
-
-        ['h'] = actions.up,
-        ['-'] = actions.up,
-        ['q'] = actions.quit,
-        ['<ESC>'] = actions.quit,
-
-        ['K'] = actions.mkdir,
-        ['N'] = actions.newfile,
-        ['R'] = actions.rename,
-        ['@'] = actions.cd,
-        ['Y'] = actions.yank_path,
-        ['.'] = actions.toggle_show_hidden,
-        ['D'] = actions.delete,
-
-        ['J'] = function()
+        ["l"] = actions.edit,
+        ["<CR>"] = actions.edit,
+        ["<C-s>"] = actions.split,
+        ["<C-v>"] = actions.vsplit,
+        ["<C-t>"] = actions.tabedit,
+        ["h"] = actions.up,
+        ["-"] = actions.up,
+        ["q"] = actions.quit,
+        ["<ESC>"] = actions.quit,
+        ["K"] = actions.mkdir,
+        ["N"] = actions.newfile,
+        ["R"] = actions.rename,
+        ["@"] = actions.cd,
+        ["Y"] = actions.yank_path,
+        ["."] = actions.toggle_show_hidden,
+        ["D"] = actions.delete,
+        ["J"] = function()
             mark_actions.toggle_mark()
-            vim.cmd('normal! j')
+            vim.cmd("normal! j")
         end,
-        ['C'] = clipboard_actions.copy,
-        ['X'] = clipboard_actions.cut,
-        ['P'] = clipboard_actions.paste
+        ["C"] = clipboard_actions.copy,
+        ["X"] = clipboard_actions.cut,
+        ["P"] = clipboard_actions.paste
     },
     float = {
         winblend = 0,
-
         -- -- You can define a function that returns a table to be passed as the third
         -- -- argument of nvim_open_win().
         win_opts = function()
@@ -355,7 +351,7 @@ require'lir'.setup {
 -- use visual mode
 function _G.LirSettings()
     -- echo cwd
-    vim.api.nvim_echo({{vim.fn.expand('%:p'), 'Normal'}}, false, {})
+    vim.api.nvim_echo({{vim.fn.expand("%:p"), "Normal"}}, false, {})
 end
 
 vim.cmd [[augroup lir-settings]]
@@ -368,17 +364,15 @@ map("n", "<leader>e", ":lua require'lir.float'.toggle()<cr>")
 --------------------------------------------------------------------------------
 -- Treesitter
 --------------------------------------------------------------------------------
-require'nvim-treesitter.configs'.setup {
+require"nvim-treesitter.configs".setup {
     ensure_installed = "maintained",
     ignore_install = {"javascript"},
     highlight = {enable = true},
     textobjects = {
         select = {
             enable = true,
-
             -- Automatically jump forward to textobj, similar to targets.vim
             lookahead = true,
-
             keymaps = {
                 -- You can use the capture groups defined in textobjects.scm
                 ["af"] = "@function.outer",
@@ -408,7 +402,7 @@ local on_attach_lsp = function()
     require("lsp_extensions").inlay_hints()
 end
 
-local runtime_path = vim.split(package.path, ';')
+local runtime_path = vim.split(package.path, ";")
 table.insert(runtime_path, "lua/?.lua")
 table.insert(runtime_path, "lua/?/init.lua")
 
@@ -421,13 +415,13 @@ nvim_lsp.sumneko_lua.setup {
         Lua = {
             runtime = {
                 -- Tell the language server which version of Lua
-                version = 'LuaJIT',
+                version = "LuaJIT",
                 -- Setup your lua path
                 path = runtime_path
             },
             diagnostics = {
                 -- Get the language server to recognize the `vim` global
-                globals = {'vim'}
+                globals = {"vim"}
             },
             workspace = {
                 -- Make the server aware of Neovim runtime files
@@ -458,7 +452,7 @@ nvim_lsp.tsserver.setup {on_attach = on_attach_lsp}
 nvim_lsp.vimls.setup {on_attach = on_attach_lsp}
 
 -- Rust tools will handle attaching the
-require("rust-tools").setup({server = {on_attach = on_attach_lsp}});
+require("rust-tools").setup({server = {on_attach = on_attach_lsp}})
 
 vim.lsp.handlers["textDocument/publishDiagnostics"] =
     vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
