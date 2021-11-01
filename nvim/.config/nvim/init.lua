@@ -66,6 +66,8 @@ end
 require("packer").startup(function(use)
     -- Packer can manage itself as an optional plugin
     use {"wbthomason/packer.nvim", opt = true}
+    -- Add commands to reload config
+    use {"famiu/nvim-reload"}
 
     -- Lir file explorer
     use {"tamago324/lir.nvim", requires = {{"nvim-lua/plenary.nvim"}}}
@@ -82,7 +84,7 @@ require("packer").startup(function(use)
     -- Color scheme and highlighter
     use {"folke/tokyonight.nvim"}
     use {"norcalli/nvim-colorizer.lua", config = setup("colorizer")}
-    use {"sainnhe/sonokai"}
+    use {"rmehri01/onenord.nvim"}
 
     -- git
     use {
@@ -113,6 +115,7 @@ require("packer").startup(function(use)
     use {"hrsh7th/cmp-nvim-lua"}
     use {"hrsh7th/cmp-nvim-lsp"}
     use {"hrsh7th/cmp-path"}
+    use {"weilbith/nvim-code-action-menu", cmd = "CodeActionMenu"}
 
     -- Language tools
     use {
@@ -168,7 +171,7 @@ map("v", "<leader>cf", ":Neoformat<CR>")
 --------------------------------------------------------------------------------
 -- Color scheme
 --------------------------------------------------------------------------------
-vim.g.tokyonight_italic_functions = true
+vim.g.tokyonight_italic_functions = false
 vim.g.tokyonight_dark_float = true
 vim.g.tokyonight_colors = {
     fg = "#d7dae0",
@@ -180,6 +183,24 @@ vim.g.tokyonight_colors = {
     yellow = "#e5c07b"
 }
 vim.cmd [[colorscheme tokyonight]]
+
+require('onenord').setup({
+  borders = true, -- Split window borders
+  italics = {
+    comments = false, -- Italic comments
+    strings = false, -- Italic strings
+    keywords = true, -- Italic keywords
+    functions = false, -- Italic functions
+    variables = false, -- Italic variables
+  },
+  disable = {
+    background = false, -- Disable setting the background color
+    cursorline = false, -- Disable the cursorline
+    eob_lines = true, -- Hide the end-of-buffer lines
+  },
+  custom_highlights = {}, -- Overwrite default highlight groups
+})
+--vim.cmd [[colorscheme onenord]]
 
 --------------------------------------------------------------------------------
 -- HOP
@@ -481,7 +502,7 @@ map("n", "gr", ":lua vim.lsp.buf.references()<cr>")
 map("n", "K", ":lua vim.lsp.buf.hover()<cr>")
 map("n", "gi", ":lua vim.lsp.buf.implementation()<cr>")
 map("n", "<c-k>", ":lua vim.lsp.buf.signature_help()<cr>")
-map("n", "<leader>ca", ":lua vim.lsp.buf.code_action()<cr>")
+map("n", "<leader>ca", ":CodeActionMenu<cr>")
 map("n", "<leader>n", ":lua vim.lsp.diagnostic.goto_next()<cr>")
 map("n", "<leader>p", ":lua vim.lsp.diagnostic.goto_prev()<cr>")
 map("n", "<leader>i", ":lua vim.lsp.diagnostic.show_line_diagnostics()<cr>")
