@@ -55,6 +55,7 @@ exec swayidle -w \
 
 input * {
     xkb_layout "se"
+    xkb_options caps:escape
 }
 ### Key bindings
 #
