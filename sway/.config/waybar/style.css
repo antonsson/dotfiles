@@ -1,7 +1,7 @@
 * {
     border: none;
     border-radius: 0;
-    font-family: "Fira", "Inconsolata", sans-serif;
+    font-family: "Ubuntu", "Fira", "Inconsolata", sans-serif;
 }
 
 window#waybar {
@@ -25,13 +25,13 @@ window#waybar {
 #clock {
     padding: 0 4px;
     margin: 0 0px 0px 6px;
+    font-size: 14pt;
 }
 
 #mode, #backlight, #network, #pulseaudio {
-    font-family: sans-serif;
     font-size: 24pt;
     padding: 0 4px;
-    margin: 0 4px;
+    margin: 0 0px 0px 6px;
 }
 
 #clock {
