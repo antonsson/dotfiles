@@ -43,6 +43,9 @@ vim.opt.undoreload = 10000
 -- Allow buffers not being saved
 vim.opt.hidden = true
 
+-- Time for cursor hold
+vim.o.updatetime = 250
+
 --------------------------------------------------------------------------------
 -- Packer
 --------------------------------------------------------------------------------
@@ -84,7 +87,6 @@ require("packer").startup(function(use)
     -- Color scheme and highlighter
     use {"folke/tokyonight.nvim"}
     use {"norcalli/nvim-colorizer.lua", config = setup("colorizer")}
-    use {"rmehri01/onenord.nvim"}
 
     -- git
     use {
@@ -184,24 +186,6 @@ vim.g.tokyonight_colors = {
 }
 vim.cmd [[colorscheme tokyonight]]
 
-require('onenord').setup({
-  borders = true, -- Split window borders
-  italics = {
-    comments = false, -- Italic comments
-    strings = false, -- Italic strings
-    keywords = true, -- Italic keywords
-    functions = false, -- Italic functions
-    variables = false, -- Italic variables
-  },
-  disable = {
-    background = false, -- Disable setting the background color
-    cursorline = false, -- Disable the cursorline
-    eob_lines = true, -- Hide the end-of-buffer lines
-  },
-  custom_highlights = {}, -- Overwrite default highlight groups
-})
---vim.cmd [[colorscheme onenord]]
-
 --------------------------------------------------------------------------------
 -- HOP
 --------------------------------------------------------------------------------
@@ -282,7 +266,7 @@ cmp.setup {
 -- LSPTrouble
 --------------------------------------------------------------------------------
 require("trouble")
-map("n", "<leader>d", ":LspTroubleToggle<cr>")
+map("n", "<leader>d", ":TroubleToggle<cr>")
 
 --------------------------------------------------------------------------------
 -- Lualine
@@ -486,15 +470,6 @@ vim.lsp.handlers["textDocument/hover"] =
         border = "single"
     })
 
-vim.fn.sign_define("LspDiagnosticsSignError",
-                   {text = "", texthl = "LspDiagnosticsDefaultError"})
-vim.fn.sign_define("LspDiagnosticsSignWarning",
-                   {text = "", texthl = "LspDiagnosticsDefaultWarning"})
-vim.fn.sign_define("LspDiagnosticsSignInformation",
-                   {text = "", texthl = "LspDiagnosticsDefaultInformation"})
-vim.fn.sign_define("LspDiagnosticsSignHint",
-                   {text = "", texthl = "LspDiagnosticsDefaultHint"})
-
 map("n", "gD", ":lua vim.lsp.buf.declaration()<cr>")
 map("n", "gd", ":lua vim.lsp.buf.definition()<cr>")
 map("n", "gw", ":lua vim.lsp.buf.workspace_symbol()<cr>")
@@ -502,8 +477,27 @@ map("n", "gr", ":lua vim.lsp.buf.references()<cr>")
 map("n", "K", ":lua vim.lsp.buf.hover()<cr>")
 map("n", "gi", ":lua vim.lsp.buf.implementation()<cr>")
 map("n", "<c-k>", ":lua vim.lsp.buf.signature_help()<cr>")
-map("n", "<leader>ca", ":CodeActionMenu<cr>")
+map("n", "<leader>ca", ":lua vim.lsp.buf.code_action()<cr>")
 map("n", "<leader>n", ":lua vim.lsp.diagnostic.goto_next()<cr>")
 map("n", "<leader>p", ":lua vim.lsp.diagnostic.goto_prev()<cr>")
 map("n", "<leader>i", ":lua vim.lsp.diagnostic.show_line_diagnostics()<cr>")
 
+--------------------------------------------------------------------------------
+-- Diagnostics
+--------------------------------------------------------------------------------
+
+vim.cmd [[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false})]]
+
+vim.diagnostic.config({
+    virtual_text = true,
+    signs = true,
+    underline = true,
+    update_in_insert = false,
+    severity_sort = false
+})
+
+local signs = {Error = " ", Warn = " ", Hint = " ", Info = " "}
+for type, icon in pairs(signs) do
+    local hl = "DiagnosticSign" .. type
+    vim.fn.sign_define(hl, {text = icon, texthl = hl, numhl = hl})
+end
