@@ -106,10 +106,16 @@ require("packer").startup(function(use)
     use {"nvim-treesitter/nvim-treesitter", run = ":TSUpdate"}
     use {"nvim-treesitter/nvim-treesitter-textobjects"}
 
-    -- Neovim bultin lsp
+    -- Neovim lsp
     use {"neovim/nvim-lspconfig"}
     use {"folke/lsp-trouble.nvim"}
     use {"ray-x/lsp_signature.nvim"}
+
+    -- Flutter
+    use {
+        "akinsho/flutter-tools.nvim",
+        requires = "nvim-lua/plenary.nvim"
+    }
 
     -- Completion
     use {"hrsh7th/nvim-cmp"}
@@ -117,7 +123,6 @@ require("packer").startup(function(use)
     use {"hrsh7th/cmp-nvim-lua"}
     use {"hrsh7th/cmp-nvim-lsp"}
     use {"hrsh7th/cmp-path"}
-    use {"weilbith/nvim-code-action-menu", cmd = "CodeActionMenu"}
 
     -- Language tools
     use {
@@ -457,13 +462,12 @@ nvim_lsp.vimls.setup {on_attach = on_attach_lsp}
 -- Rust tools will handle attaching the
 require("rust-tools").setup({server = {on_attach = on_attach_lsp}})
 
-vim.lsp.handlers["textDocument/publishDiagnostics"] =
-    vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
-        virtual_text = false,
-        signs = true,
-        update_in_insert = false,
-        underline = true
-    })
+vim.diagnostic.config({
+    virtual_text = false,
+    signs = true,
+    update_in_insert = false
+})
+
 vim.lsp.handlers["textDocument/hover"] =
     vim.lsp.with(vim.lsp.handlers.hover, {
         -- Use a sharp border with `FloatBorder` highlights
@@ -486,6 +490,7 @@ map("n", "<leader>i", ":lua vim.lsp.diagnostic.show_line_diagnostics()<cr>")
 -- Diagnostics
 --------------------------------------------------------------------------------
 
+vim.o.updatetime = 250
 vim.cmd [[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false})]]
 
 vim.diagnostic.config({
