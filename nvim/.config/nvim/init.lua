@@ -86,7 +86,7 @@ require("packer").startup(function(use)
 
     -- Color scheme and highlighter
     use {"folke/tokyonight.nvim"}
-    use {"norcalli/nvim-colorizer.lua", config = setup("colorizer")}
+    use {"norcalli/nvim-colorizer.lua"}
 
     -- git
     use {
@@ -179,6 +179,8 @@ map("v", "<leader>cf", ":Neoformat<CR>")
 -- Color scheme
 --------------------------------------------------------------------------------
 vim.g.tokyonight_italic_functions = false
+vim.g.tokyonight_italic_keywords = false
+vim.g.tokyonight_italic_comments = true
 vim.g.tokyonight_dark_float = true
 vim.g.tokyonight_colors = {
     fg = "#d7dae0",
@@ -189,7 +191,11 @@ vim.g.tokyonight_colors = {
     border = "#3d59a1",
     yellow = "#e5c07b"
 }
+
 vim.cmd [[colorscheme tokyonight]]
+
+-- Add the colorizer plugin at this stage must be done after all plugins are loaded
+require("colorizer").setup()
 
 --------------------------------------------------------------------------------
 -- HOP
@@ -461,12 +467,6 @@ nvim_lsp.vimls.setup {on_attach = on_attach_lsp}
 
 -- Rust tools will handle attaching the
 require("rust-tools").setup({server = {on_attach = on_attach_lsp}})
-
-vim.diagnostic.config({
-    virtual_text = false,
-    signs = true,
-    update_in_insert = false
-})
 
 vim.lsp.handlers["textDocument/hover"] =
     vim.lsp.with(vim.lsp.handlers.hover, {
