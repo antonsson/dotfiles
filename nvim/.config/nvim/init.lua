@@ -110,11 +110,18 @@ require("packer").startup(function(use)
     use {"neovim/nvim-lspconfig"}
     use {"folke/lsp-trouble.nvim"}
     use {"ray-x/lsp_signature.nvim"}
+    use {"weilbith/nvim-code-action-menu", cmd = "CodeActionMenu"}
+
+    -- Snippits
+    use {"L3MON4D3/LuaSnip"}
+    use {"saadparwaiz1/cmp_luasnip"}
 
     -- Flutter
+    use {"dart-lang/dart-vim-plugin"}
     use {
         "akinsho/flutter-tools.nvim",
-        requires = "nvim-lua/plenary.nvim"
+        requires = "nvim-lua/plenary.nvim",
+        config = setup("flutter-tools")
     }
 
     -- Completion
@@ -150,6 +157,13 @@ require("packer").startup(function(use)
 
     -- Focus mode
     use {"folke/zen-mode.nvim", config = setup("zen-mode")}
+
+    -- Clipboard manager
+    use {
+        "AckslD/nvim-neoclip.lua",
+        requires = {{'nvim-telescope/telescope.nvim'}},
+        config = setup("neoclip")
+    }
 end)
 
 -- Highlight yanked text
@@ -158,8 +172,8 @@ vim.cmd [[autocmd TextYankPost * silent! lua require"vim.highlight".on_yank()]]
 -- Makefiles should use tabulators
 vim.cmd [[autocmd FileType make setlocal shiftwidth=4 tabstop=4 noexpandtab]]
 
--- Yaml use 2 spaces
-vim.cmd [[autocmd FileType yaml setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab]]
+-- 2 spaces for selected filetypes
+vim.cmd [[autocmd FileType yaml,dart setlocal shiftwidth=2 softtabstop=2 tabstop=2]]
 
 -- Copy to clipboard
 map("v", "<leader>y", '"+y')
@@ -176,6 +190,11 @@ map("n", "<leader>cf", ":Neoformat<CR>")
 map("v", "<leader>cf", ":Neoformat<CR>")
 
 --------------------------------------------------------------------------------
+-- Dart tools
+--------------------------------------------------------------------------------
+vim.g.dart_style_guide = true
+
+--------------------------------------------------------------------------------
 -- Color scheme
 --------------------------------------------------------------------------------
 vim.g.tokyonight_italic_functions = false
@@ -186,7 +205,7 @@ vim.g.tokyonight_colors = {
     fg = "#d7dae0",
     bg = "#161618",
     bg_dark = "#08080a",
-    bg_float = "#161618",
+    bg_float = "#1a1a1c",
     bg_statusline = "#202022",
     border = "#3d59a1",
     yellow = "#e5c07b"
@@ -232,12 +251,16 @@ map("n", "<leader>G", ":Rg <c-r><c-w><cr>")
 --------------------------------------------------------------------------------
 -- Telescope
 --------------------------------------------------------------------------------
-require("telescope").setup({
+local telescope = require("telescope")
+
+telescope.setup({
     defaults = {
         layout_strategy = "vertical",
         layout_config = {width = 0.7, height = 0.8}
     }
 })
+telescope.load_extension('neoclip')
+
 map("n", "<leader>f", ":lua require('telescope.builtin').find_files()<cr>")
 map("n", "<leader>j", ":lua require('telescope.builtin').git_files()<cr>")
 map("n", "<leader>g", ":lua require('telescope.builtin').live_grep()<cr>")
@@ -260,11 +283,10 @@ cmp.setup {
         ["<C-d>"] = cmp.mapping.scroll_docs(-4),
         ["<C-f>"] = cmp.mapping.scroll_docs(4),
         ["<C-Space>"] = cmp.mapping.complete(),
-        ["<C-e>"] = cmp.mapping.close(),
-        ["<CR>"] = cmp.mapping.confirm({
-            behavior = cmp.ConfirmBehavior.Insert,
-            select = true
-        })
+        ["<C-e>"] = cmp.mapping.close()
+    },
+    snippet = {
+        expand = function(args) require('luasnip').lsp_expand(args.body) end
     },
     -- You should specify your *installed* sources.
     sources = {
@@ -416,6 +438,9 @@ local nvim_lsp = require("lspconfig")
 
 local on_attach_lsp = function() require("lsp_signature").on_attach() end
 
+local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp
+                                                                     .protocol
+                                                                     .make_client_capabilities())
 local runtime_path = vim.split(package.path, ";")
 table.insert(runtime_path, "lua/?.lua")
 table.insert(runtime_path, "lua/?/init.lua")
@@ -445,7 +470,8 @@ nvim_lsp.sumneko_lua.setup {
             telemetry = {enable = false}
         }
     },
-    on_attach = on_attach_lsp
+    on_attach = on_attach_lsp,
+    capabilities = capabilities
 }
 nvim_lsp.clangd.setup {on_attach = on_attach_lsp}
 nvim_lsp.pyright.setup {on_attach = on_attach_lsp}
@@ -486,15 +512,16 @@ map("n", "<leader>n", ":lua vim.lsp.diagnostic.goto_next()<cr>")
 map("n", "<leader>p", ":lua vim.lsp.diagnostic.goto_prev()<cr>")
 map("n", "<leader>i", ":lua vim.lsp.diagnostic.show_line_diagnostics()<cr>")
 
+map("n", "<a-cr>", ":CodeActionMenu<cr>")
+
 --------------------------------------------------------------------------------
 -- Diagnostics
 --------------------------------------------------------------------------------
 
-vim.o.updatetime = 250
-vim.cmd [[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false})]]
+vim.cmd [[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false, border="single"})]]
 
 vim.diagnostic.config({
-    virtual_text = true,
+    virtual_text = false,
     signs = true,
     underline = true,
     update_in_insert = false,
