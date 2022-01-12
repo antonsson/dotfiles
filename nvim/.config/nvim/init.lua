@@ -69,11 +69,20 @@ end
 require("packer").startup(function(use)
     -- Packer can manage itself as an optional plugin
     use {"wbthomason/packer.nvim", opt = true}
+
     -- Add commands to reload config
     use {"famiu/nvim-reload"}
 
     -- Lir file explorer
     use {"tamago324/lir.nvim", requires = {{"nvim-lua/plenary.nvim"}}}
+
+    -- File tree
+    use {
+        "kyazdani42/nvim-tree.lua",
+        requires = {
+            "kyazdani42/nvim-web-devicons" -- optional, for file icon
+        }
+    }
 
     -- Pimped status line
     use {
@@ -116,14 +125,6 @@ require("packer").startup(function(use)
     use {"L3MON4D3/LuaSnip"}
     use {"saadparwaiz1/cmp_luasnip"}
 
-    -- Flutter
-    use {"dart-lang/dart-vim-plugin"}
-    use {
-        "akinsho/flutter-tools.nvim",
-        requires = "nvim-lua/plenary.nvim",
-        config = setup("flutter-tools")
-    }
-
     -- Completion
     use {"hrsh7th/nvim-cmp"}
     use {"hrsh7th/cmp-buffer"}
@@ -138,6 +139,12 @@ require("packer").startup(function(use)
             {"nvim-lua/popup.nvim"}, {"nvim-lua/plenary.nvim"},
             {"nvim-telescope/telescope.nvim"}
         }
+    }
+    use {"dart-lang/dart-vim-plugin"}
+    use {
+        "akinsho/flutter-tools.nvim",
+        requires = "nvim-lua/plenary.nvim",
+        config = setup("flutter-tools")
     }
 
     -- Motion
@@ -226,6 +233,7 @@ map("n", "-", "<cmd>lua require'hop'.hint_words()<cr>")
 --------------------------------------------------------------------------------
 -- Default to not show indent lines toggle with :IndentLinesToggle
 vim.g.indent_blankline_enabled = false
+map("n", "<F2>", "<cmd>IndentBlanklineToggle<cr>")
 
 --------------------------------------------------------------------------------
 -- neoformat
@@ -333,6 +341,32 @@ require("lualine").setup({
 })
 
 --------------------------------------------------------------------------------
+-- Nvim-tree
+--------------------------------------------------------------------------------
+local tree_cb = require'nvim-tree.config'.nvim_tree_callback
+local list = {{key = {"<2-RightMouse>", "<C-CR>", "C"}, cb = tree_cb("cd")}}
+require("nvim-tree").setup {
+    diagnostics = {
+        enable = false,
+        icons = {hint = "", info = "", warning = "", error = ""}
+    },
+    git = {enable = false},
+    view = {
+        width = 40,
+        height = 40,
+        hide_root_folder = false,
+        side = 'left',
+        auto_resize = false,
+        mappings = {custom_only = false, list = list},
+        number = false,
+        relativenumber = false,
+        signcolumn = "yes"
+    }
+}
+
+map("n", "<F1>", ":NvimTreeToggle<cr>")
+
+--------------------------------------------------------------------------------
 -- LIR
 --------------------------------------------------------------------------------
 local actions = require("lir.actions")
@@ -398,7 +432,7 @@ vim.cmd [[  autocmd!]]
 vim.cmd [[  autocmd Filetype lir :lua LirSettings()]]
 vim.cmd [[augroup END]]
 
-map("n", "<leader>e", ":lua require'lir.float'.toggle()<cr>")
+-- map("n", "<leader>e", ":lua require'lir.float'.toggle()<cr>")
 
 --------------------------------------------------------------------------------
 -- Treesitter
