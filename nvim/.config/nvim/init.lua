@@ -120,6 +120,7 @@ require("packer").startup(function(use)
     use {"folke/lsp-trouble.nvim"}
     use {"ray-x/lsp_signature.nvim"}
     use {"weilbith/nvim-code-action-menu", cmd = "CodeActionMenu"}
+    use {"j-hui/fidget.nvim", config = setup("fidget")}
 
     -- Snippits
     use {"L3MON4D3/LuaSnip"}
