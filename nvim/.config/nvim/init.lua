@@ -381,6 +381,8 @@ map("n", "<F1>", ":NvimTreeToggle<cr>")
 local actions = require("lir.actions")
 local mark_actions = require("lir.mark.actions")
 local clipboard_actions = require("lir.clipboard.actions")
+vim.cmd [[hi LirFloatNormal guibg=#1a1a1c]]
+vim.cmd [[hi LirFloatCurdirWindowNormal guibg=#1a1a1c]]
 
 require"lir".setup {
     show_hidden_files = true,
