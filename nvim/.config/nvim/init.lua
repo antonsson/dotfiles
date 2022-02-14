@@ -263,10 +263,16 @@ map("n", "<leader>G", ":Rg <c-r><c-w><cr>")
 --------------------------------------------------------------------------------
 local telescope = require("telescope")
 
+local theme = "dropdown"
+local border = {" ", " ", " ", " ", " ", " ", " ", " "}
 telescope.setup({
-    defaults = {
-        layout_strategy = "vertical",
-        layout_config = {width = 0.7, height = 0.8}
+    pickers = {
+        find_files = {borderchars = border, theme = theme},
+        git_files = {borderchars = border, theme = theme},
+        live_grep = {borderchars = border, theme = theme},
+        buffers = {borderchars = border, theme = theme},
+        help_tags = {borderchars = border, theme = theme},
+        current_buffer_fuzzy_find = {borderchars = border, theme = theme}
     }
 })
 telescope.load_extension('neoclip')
@@ -348,6 +354,7 @@ require("lualine").setup({
 local tree_cb = require'nvim-tree.config'.nvim_tree_callback
 local list = {{key = {"<2-RightMouse>", "<C-CR>", "C"}, cb = tree_cb("cd")}}
 require("nvim-tree").setup {
+    update_to_buf_dir = {enable = false, auto_open = true},
     diagnostics = {
         enable = false,
         icons = {hint = "", info = "", warning = "", error = ""}
@@ -415,8 +422,10 @@ require"lir".setup {
                 height = height,
                 row = math.floor((vim.o.lines - height) / 2),
                 col = math.floor((vim.o.columns - width) / 2),
-                border = "rounded",
-                style = "minimal"
+                style = "minimal",
+                border = require("lir.float.helper").make_border_opts({
+                    " ", " ", " ", " ", " ", " ", " ", " "
+                }, "Normal")
             }
         end
     },
@@ -434,7 +443,7 @@ vim.cmd [[  autocmd!]]
 vim.cmd [[  autocmd Filetype lir :lua LirSettings()]]
 vim.cmd [[augroup END]]
 
--- map("n", "<leader>e", ":lua require'lir.float'.toggle()<cr>")
+map("n", "<leader>e", ":lua require'lir.float'.toggle()<cr>")
 
 --------------------------------------------------------------------------------
 -- Treesitter
@@ -520,8 +529,9 @@ nvim_lsp.html.setup {
 }
 nvim_lsp.bashls.setup {on_attach = on_attach_lsp}
 nvim_lsp.kotlin_language_server.setup {
-     on_attach = on_attach_lsp,
-     root_dir = nvim_lsp.util.root_pattern("settings.gradle.kts", "settings.gradle")
+    on_attach = on_attach_lsp,
+    root_dir = nvim_lsp.util.root_pattern("settings.gradle.kts",
+                                          "settings.gradle")
 }
 nvim_lsp.tsserver.setup {on_attach = on_attach_lsp}
 nvim_lsp.vimls.setup {on_attach = on_attach_lsp}
