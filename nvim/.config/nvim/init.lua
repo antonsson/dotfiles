@@ -451,7 +451,7 @@ map("n", "<leader>e", ":lua require'lir.float'.toggle()<cr>")
 -- Treesitter
 --------------------------------------------------------------------------------
 require"nvim-treesitter.configs".setup {
-    ensure_installed = "maintained",
+    ensure_installed = "all",
     ignore_install = {"javascript"},
     highlight = {enable = true},
     textobjects = {
