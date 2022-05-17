@@ -20,8 +20,6 @@ alias jgrep='grep --color -r --include=*.java'
 alias xmlgrep='grep --color -r --include=*.xml'
 alias fcopy="fzf | tr -d '\n' | xclip"
 alias xnclip="tr -d '\n' | xclip"
-alias ssh="kitty +kitten ssh"
-alias icat="kitty +kitten icat"
 alias screencap='grim -g "$(slurp)"'
 alias gitroot='cd $(git rev-parse --show-toplevel)'
 
