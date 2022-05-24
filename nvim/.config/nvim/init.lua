@@ -95,6 +95,7 @@ require("packer").startup(function(use)
 
     -- Color scheme and highlighter
     use {"folke/tokyonight.nvim"}
+    use {"marko-cerovac/material.nvim"}
     use {"norcalli/nvim-colorizer.lua"}
 
     -- git
@@ -220,7 +221,55 @@ vim.g.tokyonight_colors = {
     yellow = "#e5c07b"
 }
 
-vim.cmd [[colorscheme tokyonight]]
+--vim.cmd [[colorscheme tokyonight]]
+
+require('material').setup({
+	contrast = {
+		sidebars = false, -- Enable contrast for sidebar-like windows ( for example Nvim-Tree )
+		floating_windows = true, -- Enable contrast for floating windows
+		line_numbers = false, -- Enable contrast background for line numbers
+		sign_column = false, -- Enable contrast background for the sign column
+		cursor_line = false, -- Enable darker background for the cursor line
+		non_current_windows = false, -- Enable darker background for non-current windows
+		popup_menu = false, -- Enable lighter background for the popup menu
+	},
+
+	italics = {
+		comments = true, -- Enable italic comments
+		keywords = false, -- Enable italic keywords
+		functions = false, -- Enable italic functions
+		strings = false, -- Enable italic strings
+		variables = false -- Enable italic variables
+	},
+
+	contrast_filetypes = { -- Specify which filetypes get the contrasted (darker) background
+		"terminal", -- Darker terminal background
+		"packer", -- Darker packer background
+		"qf" -- Darker qf list background
+	},
+
+	high_visibility = {
+		lighter = false, -- Enable higher contrast text for lighter style
+		darker = false -- Enable higher contrast text for darker style
+	},
+
+	disable = {
+		colored_cursor = false, -- Disable the colored cursor
+		borders = false, -- Disable borders between verticaly split windows
+		background = true, -- Prevent the theme from setting the background (NeoVim then uses your teminal background)
+		term_colors = false, -- Prevent the theme from setting terminal colors
+		eob_lines = false -- Hide the end-of-buffer lines
+	},
+
+	lualine_style = "default", -- Lualine style ( can be 'stealth' or 'default' )
+
+	async_loading = true, -- Load parts of the theme asyncronously for faster startup (turned on by default)
+
+	custom_highlights = {} -- Overwrite highlights with your own
+})
+
+vim.api.nvim_set_keymap('n', '<leader>mm', [[<Cmd>lua require('material.functions').toggle_style()<CR>]], { noremap = true, silent = true })
+vim.cmd [[colorscheme material]]
 
 -- Add the colorizer plugin at this stage must be done after all plugins are loaded
 require("colorizer").setup()
@@ -323,7 +372,7 @@ map("n", "<leader>d", ":TroubleToggle<cr>")
 require("lualine").setup({
     options = {
         icons_enabled = true,
-        theme = "tokyonight",
+        theme = "material-stealth",
         component_separators = {"", ""},
         section_separators = {"", ""},
         disabled_filetypes = {}
