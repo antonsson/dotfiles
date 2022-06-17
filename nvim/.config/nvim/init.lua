@@ -133,6 +133,7 @@ require("packer").startup(function(use)
     use {"hrsh7th/cmp-nvim-lua"}
     use {"hrsh7th/cmp-nvim-lsp"}
     use {"hrsh7th/cmp-path"}
+    use {"onsails/lspkind.nvim"}
 
     -- Language tools
     use {
@@ -271,7 +272,7 @@ require('material').setup({
 vim.api.nvim_set_keymap('n', '<leader>mm',
                         [[<Cmd>lua require('material.functions').toggle_style()<CR>]],
                         {noremap = true, silent = true})
-vim.g.material_style = "deep ocean"
+vim.g.material_style = "palenight"
 vim.cmd [[colorscheme material]]
 
 -- Add the colorizer plugin at this stage must be done after all plugins are loaded
@@ -340,14 +341,14 @@ map("n", "<leader>s",
 --------------------------------------------------------------------------------
 -- Nvim-cmp
 --------------------------------------------------------------------------------
+local lspkind = require('lspkind')
 local cmp = require("cmp")
 cmp.setup {
     -- You must set mapping if you want.
     mapping = {
         ["<C-p>"] = cmp.mapping.select_prev_item(),
-        ["<S-Tab>"] = cmp.mapping.select_prev_item(),
         ["<C-n>"] = cmp.mapping.select_next_item(),
-        ["<Tab>"] = cmp.mapping.select_next_item(),
+        ["<Tab>"] = cmp.mapping.confirm({select = true}),
         ["<C-d>"] = cmp.mapping.scroll_docs(-4),
         ["<C-f>"] = cmp.mapping.scroll_docs(4),
         ["<C-Space>"] = cmp.mapping.complete(),
@@ -360,6 +361,16 @@ cmp.setup {
     sources = {
         {name = "nvim_lsp"}, {name = "path"}, {name = "buffer"},
         {name = "nvim_lua"}
+    },
+    formatting = {
+        format = lspkind.cmp_format({
+            mode = 'symbol', -- show only symbol annotations
+            maxwidth = 50, -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
+
+            -- The function below will be called before any actual modifications from lspkind
+            -- so that you can provide more controls on popup customization. (See [#30](https://github.com/onsails/lspkind-nvim/pull/30))
+            before = function(entry, vim_item) return vim_item end
+        })
     }
 }
 
@@ -607,9 +618,9 @@ map("n", "K", ":lua vim.lsp.buf.hover()<cr>")
 map("n", "gi", ":lua vim.lsp.buf.implementation()<cr>")
 map("n", "<c-k>", ":lua vim.lsp.buf.signature_help()<cr>")
 map("n", "<leader>ca", ":lua vim.lsp.buf.code_action()<cr>")
-map("n", "<leader>n", ":lua vim.lsp.diagnostic.goto_next()<cr>")
-map("n", "<leader>p", ":lua vim.lsp.diagnostic.goto_prev()<cr>")
-map("n", "<leader>i", ":lua vim.lsp.diagnostic.show_line_diagnostics()<cr>")
+map("n", "<leader>n", ":lua vim.diagnostic.goto_next()<cr>")
+map("n", "<leader>p", ":lua vim.diagnostic.goto_prev()<cr>")
+map("n", "<leader>i", ":lua vim.diagnostic.show_line_diagnostics()<cr>")
 
 map("n", "<a-cr>", ":CodeActionMenu<cr>")
 
