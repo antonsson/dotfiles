@@ -2,7 +2,7 @@
 -- Helpers
 --------------------------------------------------------------------------------
 local map = function(type, key, value)
-    vim.api.nvim_set_keymap(type, key, value, {noremap = true, silent = false})
+    vim.api.nvim_set_keymap(type, key, value, {noremap = true, silent = true})
 end
 
 --------------------------------------------------------------------------------
@@ -449,7 +449,7 @@ vim.cmd [[hi LirFloatCurdirWindowNormal guibg=#1a1a1c]]
 
 require"lir".setup {
     show_hidden_files = true,
-    devicons_enable = false,
+    devicons_enable = true,
     mappings = {
         ["l"] = actions.edit,
         ["<CR>"] = actions.edit,
@@ -643,3 +643,12 @@ for type, icon in pairs(signs) do
     local hl = "DiagnosticSign" .. type
     vim.fn.sign_define(hl, {text = icon, texthl = hl, numhl = hl})
 end
+
+--------------------------------------------------------------------------------
+-- Neovide
+--------------------------------------------------------------------------------
+vim.g.neovide_refresh_rate = 140
+vim.g.neovide_floating_blur_amount_x = 2.0
+vim.g.neovide_floating_blur_amount_y = 2.0
+vim.g.neovide_cursor_animation_length = 0.0
+vim.g.neovide_cursor_trail_length = 0.0
