@@ -76,14 +76,6 @@ require("packer").startup(function(use)
     -- Lir file explorer
     use {"tamago324/lir.nvim", requires = {{"nvim-lua/plenary.nvim"}}}
 
-    -- File tree
-    use {
-        "kyazdani42/nvim-tree.lua",
-        requires = {
-            "kyazdani42/nvim-web-devicons" -- optional, for file icon
-        }
-    }
-
     -- Pimped status line
     use {
         "hoob3rt/lualine.nvim",
@@ -410,33 +402,6 @@ require("lualine").setup({
     tabline = {},
     extensions = {}
 })
-
---------------------------------------------------------------------------------
--- Nvim-tree
---------------------------------------------------------------------------------
-local tree_cb = require'nvim-tree.config'.nvim_tree_callback
-local list = {{key = {"<2-RightMouse>", "<C-CR>", "C"}, cb = tree_cb("cd")}}
-require("nvim-tree").setup {
-    update_to_buf_dir = {enable = false, auto_open = true},
-    diagnostics = {
-        enable = false,
-        icons = {hint = "", info = "", warning = "", error = ""}
-    },
-    git = {enable = false},
-    view = {
-        width = 40,
-        height = 40,
-        hide_root_folder = false,
-        side = 'left',
-        auto_resize = false,
-        mappings = {custom_only = false, list = list},
-        number = false,
-        relativenumber = false,
-        signcolumn = "yes"
-    }
-}
-
-map("n", "<F1>", ":NvimTreeToggle<cr>")
 
 --------------------------------------------------------------------------------
 -- LIR
