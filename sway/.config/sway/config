@@ -8,7 +8,8 @@
 ### Variables
 #
 # Logo key. Use Mod1 for Alt.
-set $mod Escape
+set $mod Mod4
+
 # Home row direction keys, like vim
 set $left h
 set $down j
@@ -55,8 +56,11 @@ exec swayidle -w \
 
 input * {
     xkb_layout "se"
-    xkb_options caps:escape
+    xkb_options caps:super
 }
+
+input * xkb_numlock enable
+
 ### Key bindings
 #
 # Basics:
