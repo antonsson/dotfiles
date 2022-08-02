@@ -8,7 +8,7 @@
 ### Variables
 #
 # Logo key. Use Mod1 for Alt.
-set $mod Mod4
+set $mod Escape
 # Home row direction keys, like vim
 set $left h
 set $down j
@@ -75,7 +75,7 @@ input * {
     # Despite the name, also works for non-floating windows.
     # Change normal to inverse to use left mouse button for resizing and right
     # mouse button for dragging.
-    floating_modifier $mod normal
+    floating_modifier Mod4 normal
 
     # Reload the configuration file
     bindsym $mod+Shift+r reload
