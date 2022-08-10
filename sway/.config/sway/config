@@ -74,6 +74,9 @@ input * xkb_numlock enable
     # Start your launcher
     bindsym $mod+d exec wofi --show run
 
+    # Toggle waybar
+    bindsym $mod+o exec killall -SIGUSR1 waybar
+
     # Drag floating windows by holding down $mod and left mouse button.
     # Resize them with right mouse button + $mod.
     # Despite the name, also works for non-floating windows.
