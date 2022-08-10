@@ -82,9 +82,6 @@ require("packer").startup(function(use)
         requires = {"kyazdani42/nvim-web-devicons", opt = true}
     }
 
-    -- Toggle quick/location list
-    use {"milkypostman/vim-togglelist"}
-
     -- Color scheme and highlighter
     use {"folke/tokyonight.nvim"}
     use {"marko-cerovac/material.nvim"}
@@ -114,6 +111,10 @@ require("packer").startup(function(use)
     use {"ray-x/lsp_signature.nvim"}
     use {"weilbith/nvim-code-action-menu", cmd = "CodeActionMenu"}
     use {"j-hui/fidget.nvim", config = setup("fidget")}
+    use({
+        "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
+        config = setup("lsp_lines")
+    })
 
     -- Snippits
     use {"L3MON4D3/LuaSnip"}
@@ -593,13 +594,13 @@ map("n", "<a-cr>", ":CodeActionMenu<cr>")
 -- Diagnostics
 --------------------------------------------------------------------------------
 
-vim.cmd [[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false, border="single"})]]
+-- vim.cmd [[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false, border="single"})]]
 
 vim.diagnostic.config({
     virtual_text = false,
     signs = true,
-    underline = true,
-    update_in_insert = false,
+    underline = false,
+    update_in_insert = true,
     severity_sort = false
 })
 
@@ -608,6 +609,8 @@ for type, icon in pairs(signs) do
     local hl = "DiagnosticSign" .. type
     vim.fn.sign_define(hl, {text = icon, texthl = hl, numhl = hl})
 end
+
+vim.keymap.set("n", "<leader>l", require("lsp_lines").toggle, {desc = "Toggle lsp_lines"})
 
 --------------------------------------------------------------------------------
 -- Neovide
