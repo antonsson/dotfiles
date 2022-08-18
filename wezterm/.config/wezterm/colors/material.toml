@@ -1,0 +1,33 @@
+[colors]
+ansi = [
+    '#000000',
+    '#f7768e',
+    '#9ece6a',
+    '#e5c07b',
+    '#7aa2f7',
+    '#bb9af7',
+    '#7dcfff',
+    '#d7dae0',
+]
+background = '#000000'
+brights = [
+    '#000000',
+    '#f7768e',
+    '#9ece6a',
+    '#e5c07b',
+    '#7aa2f7',
+    '#bb9af7',
+    '#7dcfff',
+    '#d7dae0',
+]
+cursor_bg = '#bbbbbb'
+cursor_border = '#bbbbbb'
+cursor_fg = '#ffffff'
+foreground = '#d7dae0'
+selection_bg = '#b5d5ff'
+selection_fg = '#000000'
+
+[colors.indexed]
+
+[metadata]
+name = 'My Material'
