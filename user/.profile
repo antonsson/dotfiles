@@ -17,8 +17,6 @@ export VISUAL="nvim"
 export EDITOR="$VISUAL"
 export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
 
-export PAGER=/usr/bin/most
-
 # History settings
 export HISTSIZE=10000
 export HISTFILESIZE=10000
