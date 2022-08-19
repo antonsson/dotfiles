@@ -588,6 +588,7 @@ map("n", "<leader>n", ":lua vim.diagnostic.goto_next()<cr>")
 map("n", "<leader>p", ":lua vim.diagnostic.goto_prev()<cr>")
 map("n", "<leader>i", ":lua vim.diagnostic.show_line_diagnostics()<cr>")
 
+map("n", "<leader>a", ":CodeActionMenu<cr>")
 map("n", "<a-cr>", ":CodeActionMenu<cr>")
 
 --------------------------------------------------------------------------------
