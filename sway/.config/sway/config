@@ -21,15 +21,15 @@ set $term wezterm
 set $bg #000000
 set $fg #f8f8f2
 
-default_border pixel 1
+default_border none
+gaps inner 4
 
 ### Output configuration
 #
 # Default wallpaper (more resolutions are available in /usr/share/sway/)
 # You can get the names of your outputs by running swaymsg -t get_outputs
 #
-output * bg /home/anton/.config/sway/wallpaper.png fill
-output HDMI-A-1 subpixel rgb
+output * bg #101010 solid_color
 
 ### Idle configuration
 exec swayidle -w \
@@ -57,9 +57,13 @@ exec swayidle -w \
 input * {
     xkb_layout "se"
     xkb_options caps:super
+    xkb_numlock enable
 }
 
-input * xkb_numlock enable
+input type:touchpad {
+    accel_profile adaptive
+    pointer_accel 0.5
+}
 
 ### Key bindings
 #
