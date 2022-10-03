@@ -16,7 +16,7 @@ set $down j
 set $up k
 set $right l
 # Your preferred terminal emulator
-set $term wezterm
+set $term foot
 
 set $bg #000000
 set $fg #f8f8f2
