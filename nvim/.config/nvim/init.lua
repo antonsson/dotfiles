@@ -74,7 +74,10 @@ require("packer").startup(function(use)
     use {"famiu/nvim-reload"}
 
     -- Lir file explorer
-    use {"tamago324/lir.nvim", requires = {{"nvim-lua/plenary.nvim"}}}
+    use {
+        "tamago324/lir.nvim",
+        requires = {{"nvim-lua/plenary.nvim"}, {"kyazdani42/nvim-web-devicons"}}
+    }
 
     -- Pimped status line
     use {
@@ -111,10 +114,6 @@ require("packer").startup(function(use)
     use {"ray-x/lsp_signature.nvim"}
     use {"weilbith/nvim-code-action-menu", cmd = "CodeActionMenu"}
     use {"j-hui/fidget.nvim", config = setup("fidget")}
-    use({
-        "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
-        config = setup("lsp_lines")
-    })
 
     -- Snippits
     use {"L3MON4D3/LuaSnip"}
@@ -222,24 +221,17 @@ require('material').setup({
         sidebars = false, -- Enable contrast for sidebar-like windows ( for example Nvim-Tree )
         floating_windows = true, -- Enable contrast for floating windows
         line_numbers = false, -- Enable contrast background for line numbers
-        sign_column = false, -- Enable contrast background for the sign column
         cursor_line = false, -- Enable darker background for the cursor line
         non_current_windows = false, -- Enable darker background for non-current windows
-        popup_menu = false -- Enable lighter background for the popup menu
+        filetypes = { -- Specify which filetypes get the contrasted (darker) background
+            "packer" -- Darker packer background
+        }
     },
 
-    italics = {
-        comments = true, -- Enable italic comments
-        keywords = false, -- Enable italic keywords
-        functions = false, -- Enable italic functions
-        strings = false, -- Enable italic strings
-        variables = false -- Enable italic variables
-    },
+    plugins = {"hop", "gitsigns", "nvim-cmp", "telescope", "trouble"},
 
-    contrast_filetypes = { -- Specify which filetypes get the contrasted (darker) background
-        "terminal", -- Darker terminal background
-        "packer", -- Darker packer background
-        "qf" -- Darker qf list background
+    styles = {
+        comments = {italic = true} -- Enable italic comments
     },
 
     high_visibility = {
@@ -514,9 +506,9 @@ local nvim_lsp = require("lspconfig")
 
 local on_attach_lsp = function() require("lsp_signature").on_attach() end
 
-local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp
-                                                                     .protocol
-                                                                     .make_client_capabilities())
+local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp
+                                                                      .protocol
+                                                                      .make_client_capabilities())
 local runtime_path = vim.split(package.path, ";")
 table.insert(runtime_path, "lua/?.lua")
 table.insert(runtime_path, "lua/?/init.lua")
@@ -559,11 +551,6 @@ nvim_lsp.html.setup {
     init_options = {configurationSection = {"html", "css"}}
 }
 nvim_lsp.bashls.setup {on_attach = on_attach_lsp}
-nvim_lsp.kotlin_language_server.setup {
-    on_attach = on_attach_lsp,
-    root_dir = nvim_lsp.util.root_pattern("settings.gradle.kts",
-                                          "settings.gradle")
-}
 nvim_lsp.tsserver.setup {on_attach = on_attach_lsp}
 nvim_lsp.vimls.setup {on_attach = on_attach_lsp}
 
@@ -586,7 +573,6 @@ map("n", "<c-k>", ":lua vim.lsp.buf.signature_help()<cr>")
 map("n", "<leader>ca", ":lua vim.lsp.buf.code_action()<cr>")
 map("n", "<leader>n", ":lua vim.diagnostic.goto_next()<cr>")
 map("n", "<leader>p", ":lua vim.diagnostic.goto_prev()<cr>")
-map("n", "<leader>i", ":lua vim.diagnostic.show_line_diagnostics()<cr>")
 
 map("n", "<leader>a", ":CodeActionMenu<cr>")
 map("n", "<a-cr>", ":CodeActionMenu<cr>")
@@ -611,8 +597,6 @@ for type, icon in pairs(signs) do
     vim.fn.sign_define(hl, {text = icon, texthl = hl, numhl = hl})
 end
 
-vim.keymap.set("n", "<leader>l", require("lsp_lines").toggle, {desc = "Toggle lsp_lines"})
-
 --------------------------------------------------------------------------------
 -- Neovide
 --------------------------------------------------------------------------------
@@ -621,4 +605,4 @@ vim.g.neovide_floating_blur_amount_x = 2.0
 vim.g.neovide_floating_blur_amount_y = 2.0
 vim.g.neovide_cursor_animation_length = 0.0
 vim.g.neovide_cursor_trail_length = 0.0
-vim.opt.guifont = { "JetBrains Mono", "h15" }
+vim.opt.guifont = {"JetBrains Mono", "h15"}
