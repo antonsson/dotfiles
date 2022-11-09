@@ -222,7 +222,7 @@ require('material').setup({
         floating_windows = true, -- Enable contrast for floating windows
         line_numbers = false, -- Enable contrast background for line numbers
         cursor_line = false, -- Enable darker background for the cursor line
-        non_current_windows = false, -- Enable darker background for non-current windows
+        non_current_windows = true, -- Enable darker background for non-current windows
         filetypes = { -- Specify which filetypes get the contrasted (darker) background
             "packer" -- Darker packer background
         }
@@ -251,7 +251,12 @@ require('material').setup({
 
     async_loading = true, -- Load parts of the theme asyncronously for faster startup (turned on by default)
 
-    custom_highlights = {} -- Overwrite highlights with your own
+    custom_highlights = {}, -- Overwrite highlights with your own
+
+    -- Remove inactive window background color
+    custom_colors = function(colors)
+        colors.backgrounds.non_current_windows = "NONE"
+    end
 })
 
 vim.api.nvim_set_keymap('n', '<leader>mm',
