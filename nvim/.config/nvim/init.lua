@@ -217,7 +217,10 @@ vim.g.tokyonight_colors = {
 
 -- vim.cmd [[colorscheme tokyonight]]
 
-require('material').setup({
+local material_colors = require('material.colors')
+local material = require('material')
+
+material.setup({
     contrast = {
         sidebars = false, -- Enable contrast for sidebar-like windows ( for example Nvim-Tree )
         floating_windows = true, -- Enable contrast for floating windows
@@ -252,7 +255,10 @@ require('material').setup({
 
     async_loading = true, -- Load parts of the theme asyncronously for faster startup (turned on by default)
 
-    custom_highlights = {}, -- Overwrite highlights with your own
+    custom_highlights = {
+        LirFloatNormal = {bg = "NONE"},
+        LirFloatCursorLine = {bg = material_colors.editor.bg}
+    },
 
     -- Remove inactive window background color
     custom_colors = function(colors)
@@ -338,15 +344,18 @@ map("n", "<leader>G", ":Rg <c-r><c-w><cr>")
 local telescope = require("telescope")
 
 local theme = "dropdown"
-local border = {" ", " ", " ", " ", " ", " ", " ", " "}
 telescope.setup({
+    defaults = {
+        layout_strategy = 'vertical',
+        layout_config = {vertical = {width = 0.8}}
+    },
     pickers = {
-        find_files = {borderchars = border, theme = theme},
-        git_files = {borderchars = border, theme = theme},
-        live_grep = {borderchars = border, theme = theme},
-        buffers = {borderchars = border, theme = theme},
-        help_tags = {borderchars = border, theme = theme},
-        current_buffer_fuzzy_find = {borderchars = border, theme = theme}
+        -- find_files = {theme = theme},
+        -- git_files = {theme = theme},
+        -- live_grep = {theme = theme},
+        -- buffers = {theme = theme},
+        -- help_tags = {theme = theme},
+        -- current_buffer_fuzzy_find = {theme = theme}
     }
 })
 telescope.load_extension('neoclip')
@@ -483,7 +492,7 @@ require"lir".setup {
                 col = math.floor((vim.o.columns - width) / 2),
                 style = "minimal",
                 border = require("lir.float.helper").make_border_opts({
-                    " ", " ", " ", " ", " ", " ", " ", " "
+                    "╭", "─", "╮", "│", "╯", "─", "╰", "│"
                 }, "Normal")
             }
         end
