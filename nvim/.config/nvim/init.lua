@@ -79,7 +79,7 @@ require("lazy").setup({
                     floating_windows = true, -- Enable contrast for floating windows
                     line_numbers = false, -- Enable contrast background for line numbers
                     cursor_line = false, -- Enable darker background for the cursor line
-                    non_current_windows = true, -- Enable darker background for non-current windows
+                    non_current_windows = false, -- Enable darker background for non-current windows
                     filetypes = { -- Specify which filetypes get the contrasted (darker) background
                         "packer" -- Darker packer background
                     }
@@ -106,8 +106,6 @@ require("lazy").setup({
 
                 lualine_style = "default", -- Lualine style ( can be 'stealth' or 'default' )
 
-                async_loading = true, -- Load parts of the theme asyncronously for faster startup (turned on by default)
-
                 custom_highlights = {
                     LirFloatNormal = {bg = "NONE"},
                     LirFloatCursorLine = {bg = material_colors.editor.bg}
@@ -127,21 +125,21 @@ require("lazy").setup({
     -- Show colors
     {
         "norcalli/nvim-colorizer.lua",
-        priority = -100,
+        priority = 0,
         config = function()
             require("colorizer").setup()
         end,
     },
-
-    -- Reload neovim config command
-    "famiu/nvim-reload",
 
     -- File browser
     {
         "tamago324/lir.nvim",
         dependencies = {
             "nvim-lua/plenary.nvim",
-            "kyazdani42/nvim-web-devicons",
+            "nvim-tree/nvim-web-devicons",
+        },
+        keys = {
+            {"<leader>e", ":lua require'lir.float'.toggle()<cr>"},
         },
         config = function()
             local actions = require("lir.actions")
@@ -201,19 +199,6 @@ require("lazy").setup({
                 },
                 hide_cursor = true
             }
-
-            -- use visual mode
-            function _G.LirSettings()
-                -- echo cwd
-                vim.api.nvim_echo({{vim.fn.expand("%:p"), "Normal"}}, false, {})
-            end
-
-            vim.cmd [[augroup lir-settings]]
-            vim.cmd [[  autocmd!]]
-            vim.cmd [[  autocmd Filetype lir :lua LirSettings()]]
-            vim.cmd [[augroup END]]
-
-            map("n", "<leader>e", ":lua require'lir.float'.toggle()<cr>")
         end,
     },
 
@@ -221,7 +206,7 @@ require("lazy").setup({
     {
         "hoob3rt/lualine.nvim",
         dependencies = {
-            "kyazdani42/nvim-web-devicons",
+            "nvim-tree/nvim-web-devicons",
             "arkav/lualine-lsp-progress",
         },
         config = function()
@@ -261,15 +246,6 @@ require("lazy").setup({
             require("gitsigns")
         end,
     },
-    {
-        "tpope/vim-fugitive"
-    },
-
-    -- gcc to comment block
-    "b3nj5m1n/kommentary",
-
-    -- Syntax for logcat files
-    "gburca/vim-logcat",
 
     -- Treesitter
     {
@@ -309,8 +285,18 @@ require("lazy").setup({
         end,
     },
 
+    -- Git commands
+    "tpope/vim-fugitive",
+
+    -- gcc to comment block
+    "b3nj5m1n/kommentary",
+
+    -- Syntax for logcat files
+    "gburca/vim-logcat",
+
     {
-        "weilbith/nvim-code-action-menu", cmd = "CodeActionMenu"
+        "weilbith/nvim-code-action-menu",
+        cmd = "CodeActionMenu"
     },
 
     -- Completion
@@ -487,6 +473,7 @@ require("lazy").setup({
             "nvim-lua/plenary.nvim",
             "nvim-telescope/telescope.nvim",
         },
+        lazy = false,
         keys = {
             {"gD", ":lua vim.lsp.buf.declaration()<cr>"},
             {"gd", ":lua vim.lsp.buf.definition()<cr>"},
@@ -499,7 +486,7 @@ require("lazy").setup({
             {"<leader>n", ":lua vim.diagnostic.goto_next()<cr>"},
             {"<leader>p", ":lua vim.diagnostic.goto_prev()<cr>"},
         },
-        init = function()
+        config = function()
             local nvim_lsp = require("lspconfig")
             local on_attach_lsp = function() require("lsp_signature").on_attach() end
             local client_caps = vim.lsp.protocol.make_client_capabilities()
@@ -508,7 +495,7 @@ require("lazy").setup({
             table.insert(runtime_path, "lua/?.lua")
             table.insert(runtime_path, "lua/?/init.lua")
 
-            nvim_lsp.sumneko_lua.setup {
+            nvim_lsp.lua_ls.setup {
                 cmd = {
                     "/usr/bin/lua-language-server", "-E",
                     "/usr/share/lua-language-server/main.lua"
