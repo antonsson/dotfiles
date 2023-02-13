@@ -207,7 +207,6 @@ require("lazy").setup({
         "hoob3rt/lualine.nvim",
         dependencies = {
             "nvim-tree/nvim-web-devicons",
-            "arkav/lualine-lsp-progress",
         },
         config = function()
             require("lualine").setup({
@@ -221,7 +220,7 @@ require("lazy").setup({
                 sections = {
                     lualine_a = {"mode"},
                     lualine_b = {"branch"},
-                    lualine_c = {"filename", "lsp_progress"},
+                    lualine_c = {"filename"},
                     lualine_x = {"encoding", "fileformat", "filetype"},
                     lualine_y = {"progress"},
                     lualine_z = {"location"}
@@ -460,6 +459,14 @@ require("lazy").setup({
         dependencies = {{'nvim-telescope/telescope.nvim'}},
         config = function()
             require("neoclip")
+        end,
+    },
+
+    {
+        "j-hui/fidget.nvim",
+        lazy = false,
+        config = function()
+            require("fidget").setup{}
         end,
     },
 
