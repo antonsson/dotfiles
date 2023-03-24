@@ -49,6 +49,9 @@ vim.o.updatetime = 250
 -- Removes blinking of the sign column
 vim.opt.signcolumn = "yes:1"
 
+-- Highlight trailing whitespace
+vim.fn.matchadd("SpellBad", [[\s\+$]])
+
 --------------------------------------------------------------------------------
 -- Lazy package
 --------------------------------------------------------------------------------
@@ -85,7 +88,7 @@ require("lazy").setup({
                     }
                 },
 
-                plugins = {"hop", "gitsigns", "nvim-cmp", "telescope", "trouble"},
+                plugins = {"hop", "gitsigns", "nvim-cmp", "telescope"},
 
                 styles = {
                     comments = {italic = true} -- Enable italic comments
@@ -138,6 +141,7 @@ require("lazy").setup({
             "nvim-lua/plenary.nvim",
             "nvim-tree/nvim-web-devicons",
         },
+        lazy = false,
         keys = {
             {"<leader>e", ":lua require'lir.float'.toggle()<cr>"},
         },
@@ -147,6 +151,10 @@ require("lazy").setup({
             local clipboard_actions = require("lir.clipboard.actions")
             vim.cmd [[hi LirFloatNormal guibg=#1a1a1c]]
             vim.cmd [[hi LirFloatCurdirWindowNormal guibg=#1a1a1c]]
+
+            -- Disable netrw
+            vim.g.loaded_netrwPlugin = 1
+            vim.g.loaded_netrw = 1
 
             require"lir".setup {
                 show_hidden_files = true,
@@ -351,17 +359,6 @@ require("lazy").setup({
         end,
     },
 
-    -- Show errors in project
-    {
-        "simrat39/lsp-trouble.nvim",
-        keys = {
-            {"<leader>d", ":TroubleToggle<cr>"},
-        },
-        config = function()
-            require("trouble")
-        end,
-    },
-
     -- Svart - jump to characters
     {
         "https://gitlab.com/madyanov/svart.nvim",
@@ -469,6 +466,31 @@ require("lazy").setup({
             require("fidget").setup{}
         end,
     },
+    -- Lsp utilities
+    {
+        "glepnir/lspsaga.nvim",
+        dependencies = {
+            {"nvim-tree/nvim-web-devicons"},
+        },
+        keys = {
+            {"<leader>ca", "<cmd> Lspsaga code_action<cr>"},
+            {"gd", "<cmd>Lspsaga goto_definition<cr>"},
+            {"K", "<cmd> Lspsaga hover_doc<cr>"},
+            {"<leader>n", "<cmd> Lspsaga diagnostic_jump_next<cr>"},
+            {"<leader>p", "<cmd> Lspsaga diagnostic_jump_prev<cr>"},
+            {"<leader>d", "<cmd> Lspsaga show_buf_diagnostics<cr>"},
+        },
+        config = function()
+            require("lspsaga").setup({
+                symbol_in_winbar = {
+                    enable = false,
+                },
+                lightbulb = {
+                    enable = false,
+                },
+            })
+        end,
+    },
 
     -- LSP setup
     {
@@ -476,6 +498,7 @@ require("lazy").setup({
         dependencies = {
             "ray-x/lsp_signature.nvim",
             "simrat39/rust-tools.nvim",
+            "glepnir/lspsaga.nvim",
             "nvim-lua/popup.nvim",
             "nvim-lua/plenary.nvim",
             "nvim-telescope/telescope.nvim",
@@ -483,15 +506,10 @@ require("lazy").setup({
         lazy = false,
         keys = {
             {"gD", ":lua vim.lsp.buf.declaration()<cr>"},
-            {"gd", ":lua vim.lsp.buf.definition()<cr>"},
             {"gw", ":lua vim.lsp.buf.workspace_symbol()<cr>"},
             {"gr", ":lua vim.lsp.buf.references()<cr>"},
-            {"K", ":lua vim.lsp.buf.hover()<cr>"},
             {"gi", ":lua vim.lsp.buf.implementation()<cr>"},
             {"<c-k>", ":lua vim.lsp.buf.signature_help()<cr>"},
-            {"<leader>ca", ":lua vim.lsp.buf.code_action()<cr>"},
-            {"<leader>n", ":lua vim.diagnostic.goto_next()<cr>"},
-            {"<leader>p", ":lua vim.diagnostic.goto_prev()<cr>"},
         },
         config = function()
             local nvim_lsp = require("lspconfig")
