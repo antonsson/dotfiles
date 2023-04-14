@@ -49,9 +49,6 @@ vim.o.updatetime = 250
 -- Removes blinking of the sign column
 vim.opt.signcolumn = "yes:1"
 
--- Highlight trailing whitespace
-vim.fn.matchadd("SpellBad", [[\s\+$]])
-
 --------------------------------------------------------------------------------
 -- Lazy package
 --------------------------------------------------------------------------------
@@ -102,7 +99,7 @@ require("lazy").setup({
                 disable = {
                     colored_cursor = false, -- Disable the colored cursor
                     borders = false, -- Disable borders between verticaly split windows
-                    background = true, -- Prevent the theme from setting the background (NeoVim then uses your teminal background)
+                    background = true, -- Prevent the theme from setting the background
                     term_colors = false, -- Prevent the theme from setting terminal colors
                     eob_lines = false -- Hide the end-of-buffer lines
                 },
@@ -597,12 +594,6 @@ require("lazy").setup({
 
 -- Highlight yanked text
 vim.cmd [[autocmd TextYankPost * silent! lua require"vim.highlight".on_yank()]]
-
--- Makefiles should use tabulators
-vim.cmd [[autocmd FileType make setlocal shiftwidth=4 tabstop=4 noexpandtab]]
-
--- 2 spaces for selected filetypes
-vim.cmd [[autocmd FileType yaml,dart setlocal shiftwidth=2 softtabstop=2 tabstop=2]]
 
 -- Copy to clipboard
 map("v", "<leader>y", '"+y')
