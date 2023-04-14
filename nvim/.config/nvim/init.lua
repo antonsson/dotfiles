@@ -1,8 +1,8 @@
 --------------------------------------------------------------------------------
 -- Helpers
 --------------------------------------------------------------------------------
-local map = function(type, key, value)
-    vim.api.nvim_set_keymap(type, key, value, {noremap = true, silent = true})
+local map = function(mode, key, value)
+    vim.keymap.set(mode, key, value, {noremap = true, silent = true})
 end
 
 --------------------------------------------------------------------------------
