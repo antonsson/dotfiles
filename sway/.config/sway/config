@@ -205,6 +205,11 @@ input type:touchpad {
     bindsym $mod+Shift+n move workspace to left
     bindsym $mod+Shift+m move workspace to right
 
+# Warpd commands
+    bindsym $mod+m exec warpd --hint
+    bindsym $mod+n exec warpd --normal
+    bindsym $mod+g exec warpd --grid
+
 # Mouse numpad
 # set $dist "20"
 # set $neg_dist "-20"
