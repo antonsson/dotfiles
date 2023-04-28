@@ -557,6 +557,7 @@ require("lazy").setup({
             nvim_lsp.bashls.setup {on_attach = on_attach_lsp}
             nvim_lsp.tsserver.setup {on_attach = on_attach_lsp}
             nvim_lsp.vimls.setup {on_attach = on_attach_lsp}
+            nvim_lsp.gopls.setup {on_attach = on_attach_lsp}
 
             -- Rust tools will handle attaching the
             require("rust-tools").setup({
