@@ -21,8 +21,8 @@ set $term wezterm
 set $bg #000000
 set $fg #f8f8f2
 
-default_border none
-gaps inner 4
+default_border pixel 1
+smart_borders on
 
 ### Output configuration
 #
