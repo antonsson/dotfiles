@@ -1,7 +1,8 @@
 * {
     border: none;
     border-radius: 0;
-    font-family: "JetBrains Mono", "Ubuntu", "Fira", "Inconsolata", sans-serif;
+    font-family: "FiraCode Nerd Font", "Ubuntu", "Fira", "Inconsolata", sans-serif;
+    font-size: 18pt;
 }
 
 window#waybar {
@@ -23,15 +24,13 @@ window#waybar {
 }
 
 #clock {
-    padding: 0 4px;
-    margin: 0 0px 0px 6px;
-    font-size: 14pt;
+    padding: 0 8px;
+    margin: 0 0px 0px 8px;
 }
 
 #mode, #backlight, #network, #pulseaudio {
-    font-size: 24pt;
-    padding: 0 4px;
-    margin: 0 0px 0px 6px;
+    padding: 0 8px;
+    margin: 0 0px 0px 8px;
 }
 
 #clock {
