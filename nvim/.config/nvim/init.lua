@@ -70,7 +70,7 @@ require("lazy").setup({
         "marko-cerovac/material.nvim",
         priority = 1000,
         config = function()
-            local material_colors = require('material.colors')
+            local c = require('material.colors')
             local material = require('material')
 
             material.setup({
@@ -81,11 +81,11 @@ require("lazy").setup({
                     cursor_line = false, -- Enable darker background for the cursor line
                     non_current_windows = false, -- Enable darker background for non-current windows
                     filetypes = { -- Specify which filetypes get the contrasted (darker) background
-                        "packer" -- Darker packer background
+                        "lazy" -- Darker packer background
                     }
                 },
 
-                plugins = {"hop", "gitsigns", "nvim-cmp", "telescope"},
+                plugins = {"gitsigns", "nvim-cmp", "telescope", "lspsaga"},
 
                 styles = {
                     comments = {italic = true} -- Enable italic comments
@@ -108,7 +108,12 @@ require("lazy").setup({
 
                 custom_highlights = {
                     LirFloatNormal = {bg = "NONE"},
-                    LirFloatCursorLine = {bg = material_colors.editor.bg}
+                    LirFloatCursorLine = {bg = c.editor.bg},
+                    Cursor = {bg = c.editor.fg_dark},
+                    Search = {bg = c.main.darkblue, fg = c.main.black},
+                    IncSearch = {bg = c.main.darkorange, fg = c.main.black},
+                    FlashBackdrop = {fg = c.syntax.comments, italic = false},
+                    FlashLabel = {bg = c.main.cyan, fg = c.main.black},
                 },
 
                 -- Remove inactive window background color
@@ -586,6 +591,9 @@ vim.cmd [[autocmd TextYankPost * silent! lua require"vim.highlight".on_yank()]]
 
 -- Copy to clipboard
 map("v", "<leader>y", '"+y')
+
+-- Escape insert mode
+map("i", "§", "<esc>")
 
 -- Navigation
 map("n", ".", ".`[")
