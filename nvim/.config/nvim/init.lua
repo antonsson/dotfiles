@@ -65,6 +65,29 @@ vim.opt.rtp:prepend(lazypath)
 
 -- LuaFormatter off
 require("lazy").setup({
+    {
+        "folke/tokyonight.nvim",
+        lazy = false,
+        priority = 1000,
+        opts = {},
+        config = function()
+            require("tokyonight").setup({
+                style = "storm",
+                transparent = true,
+
+                styles = {
+                    functions = { italic = false },
+                    keywords = { italic = false },
+                },
+
+                on_colors = function(colors)
+                    colors.fg = "#d7dae0"
+                end
+            })
+
+            vim.cmd [[colorscheme tokyonight-night]]
+        end,
+    },
     -- Color scheme
     {
         "marko-cerovac/material.nvim",
@@ -123,7 +146,6 @@ require("lazy").setup({
             })
 
             vim.g.material_style = "palenight"
-            vim.cmd [[colorscheme material]]
         end,
     },
 
@@ -222,7 +244,7 @@ require("lazy").setup({
             require("lualine").setup({
                 options = {
                     icons_enabled = true,
-                    theme = "material-stealth",
+                    theme = "tokyonight",
                     component_separators = {"", ""},
                     section_separators = {"", ""},
                     disabled_filetypes = {}
