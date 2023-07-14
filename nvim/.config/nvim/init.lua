@@ -65,11 +65,10 @@ vim.opt.rtp:prepend(lazypath)
 
 -- LuaFormatter off
 require("lazy").setup({
+    -- Color scheme
     {
         "folke/tokyonight.nvim",
-        lazy = false,
         priority = 1000,
-        opts = {},
         config = function()
             require("tokyonight").setup({
                 style = "storm",
@@ -84,78 +83,16 @@ require("lazy").setup({
                     colors.fg = "#d7dae0"
                 end
             })
-
             vim.cmd [[colorscheme tokyonight-night]]
-        end,
-    },
-    -- Color scheme
-    {
-        "marko-cerovac/material.nvim",
-        priority = 1000,
-        config = function()
-            local c = require('material.colors')
-            local material = require('material')
-
-            material.setup({
-                contrast = {
-                    sidebars = false, -- Enable contrast for sidebar-like windows ( for example Nvim-Tree )
-                    floating_windows = true, -- Enable contrast for floating windows
-                    line_numbers = false, -- Enable contrast background for line numbers
-                    cursor_line = false, -- Enable darker background for the cursor line
-                    non_current_windows = false, -- Enable darker background for non-current windows
-                    filetypes = { -- Specify which filetypes get the contrasted (darker) background
-                        "lazy" -- Darker packer background
-                    }
-                },
-
-                plugins = {"gitsigns", "nvim-cmp", "telescope", "lspsaga"},
-
-                styles = {
-                    comments = {italic = true} -- Enable italic comments
-                },
-
-                high_visibility = {
-                    lighter = false, -- Enable higher contrast text for lighter style
-                    darker = false -- Enable higher contrast text for darker style
-                },
-
-                disable = {
-                    colored_cursor = false, -- Disable the colored cursor
-                    borders = false, -- Disable borders between verticaly split windows
-                    background = true, -- Prevent the theme from setting the background
-                    term_colors = false, -- Prevent the theme from setting terminal colors
-                    eob_lines = false -- Hide the end-of-buffer lines
-                },
-
-                lualine_style = "default", -- Lualine style ( can be 'stealth' or 'default' )
-
-                custom_highlights = {
-                    LirFloatNormal = {bg = "NONE"},
-                    LirFloatCursorLine = {bg = c.editor.bg},
-                    Cursor = {bg = c.editor.fg_dark},
-                    Search = {bg = c.main.darkblue, fg = c.main.black},
-                    IncSearch = {bg = c.main.darkorange, fg = c.main.black},
-                    FlashBackdrop = {fg = c.syntax.comments, italic = false},
-                    FlashLabel = {bg = c.main.cyan, fg = c.main.black},
-                },
-
-                -- Remove inactive window background color
-                custom_colors = function(colors)
-                    colors.backgrounds.non_current_windows = "NONE"
-                end
-            })
-
-            vim.g.material_style = "palenight"
         end,
     },
 
     -- Show colors
     {
         "norcalli/nvim-colorizer.lua",
-        priority = 0,
         config = function()
             require("colorizer").setup()
-        end,
+        end
     },
 
     -- File browser
@@ -165,7 +102,6 @@ require("lazy").setup({
             "nvim-lua/plenary.nvim",
             "nvim-tree/nvim-web-devicons",
         },
-        lazy = false,
         keys = {
             {"<leader>e", ":lua require'lir.float'.toggle()<cr>"},
         },
@@ -240,42 +176,40 @@ require("lazy").setup({
         dependencies = {
             "nvim-tree/nvim-web-devicons",
         },
-        config = function()
-            require("lualine").setup({
-                options = {
-                    icons_enabled = true,
-                    theme = "tokyonight",
-                    component_separators = {"", ""},
-                    section_separators = {"", ""},
-                    disabled_filetypes = {}
-                },
-                sections = {
-                    lualine_a = {"mode"},
-                    lualine_b = {"branch"},
-                    lualine_c = {"filename"},
-                    lualine_x = {"encoding", "fileformat", "filetype"},
-                    lualine_y = {"progress"},
-                    lualine_z = {"location"}
-                },
-                inactive_sections = {
-                    lualine_a = {},
-                    lualine_b = {},
-                    lualine_c = {"filename"},
-                    lualine_x = {"location"},
-                    lualine_y = {},
-                    lualine_z = {}
-                },
-                tabline = {},
-                extensions = {}
-            })
-        end
+        opts = {
+            options = {
+                icons_enabled = true,
+                theme = "tokyonight",
+                component_separators = {"", ""},
+                section_separators = {"", ""},
+                disabled_filetypes = {}
+            },
+            sections = {
+                lualine_a = {"mode"},
+                lualine_b = {"branch"},
+                lualine_c = {"filename"},
+                lualine_x = {"encoding", "fileformat", "filetype"},
+                lualine_y = {"progress"},
+                lualine_z = {"location"}
+            },
+            inactive_sections = {
+                lualine_a = {},
+                lualine_b = {},
+                lualine_c = {"filename"},
+                lualine_x = {"location"},
+                lualine_y = {},
+                lualine_z = {}
+            },
+            tabline = {},
+            extensions = {}
+        }
     },
+
+    -- Git signs
     {
         "lewis6991/gitsigns.nvim",
         dependencies = {"nvim-lua/plenary.nvim"},
-        config = function()
-            require("gitsigns")
-        end,
+        config = true,
     },
 
     -- Treesitter
@@ -286,7 +220,7 @@ require("lazy").setup({
             "nvim-treesitter/nvim-treesitter-textobjects",
         },
         config = function()
-            require"nvim-treesitter.configs".setup {
+            require("nvim-treesitter.configs").setup {
                 ensure_installed = "all",
                 ignore_install = {"javascript"},
                 highlight = {enable = true},
@@ -313,17 +247,25 @@ require("lazy").setup({
                     }
                 }
             }
-        end,
+        end
     },
 
     -- Git commands
     "tpope/vim-fugitive",
 
     -- gcc to comment block
-    "b3nj5m1n/kommentary",
+    {
+        "b3nj5m1n/kommentary",
+        keys = {
+             {"gcc"},
+        },
+    },
 
     -- Syntax for logcat files
-    "gburca/vim-logcat",
+    {
+        "gburca/vim-logcat",
+        ft = "logcat",
+    },
 
     {
         "weilbith/nvim-code-action-menu",
@@ -333,6 +275,7 @@ require("lazy").setup({
     -- Completion
     {
         "hrsh7th/nvim-cmp",
+        event = "InsertEnter",
         dependencies = {
             "hrsh7th/cmp-nvim-lua",
             "hrsh7th/cmp-buffer",
@@ -343,8 +286,11 @@ require("lazy").setup({
             "onsails/lspkind.nvim",
         },
         config = function()
+            require("lspconfig.ui.windows").default_options.border = "single"
+
             local lspkind = require('lspkind')
             local cmp = require("cmp")
+
             cmp.setup {
                 -- You must set mapping if you want.
                 mapping = {
@@ -381,31 +327,6 @@ require("lazy").setup({
                 }
             }
         end,
-    },
-
-    -- Flash - search with tags
-    {
-        "folke/flash.nvim",
-        event = "VeryLazy",
-        opts = {},
-        keys = {
-            {
-                "-",
-                mode = { "n", "x", "o" },
-                function()
-                    require("flash").jump()
-                end,
-                desc = "Flash",
-            },
-            {
-                "_",
-                mode = { "n", "o", "x" },
-                function()
-                    require("flash").treesitter()
-                end,
-                desc = "Flash Treesitter",
-            },
-        },
     },
 
     -- Telescope
@@ -460,7 +381,11 @@ require("lazy").setup({
     },
 
     -- Markdown preview
-    "npxbr/glow.nvim",
+    {
+        "ellisonleao/glow.nvim",
+        cmd = "Glow",
+        config = true,
+    },
 
     -- Clipboard manager
     {
@@ -471,13 +396,12 @@ require("lazy").setup({
         end,
     },
 
+    -- Progress for lsp operations
     {
         "j-hui/fidget.nvim",
-        lazy = false,
-        config = function()
-            require("fidget").setup{}
-        end,
+        config = true,
     },
+
     -- Lsp utilities
     {
         "glepnir/lspsaga.nvim",
@@ -515,7 +439,6 @@ require("lazy").setup({
             "nvim-lua/plenary.nvim",
             "nvim-telescope/telescope.nvim",
         },
-        lazy = false,
         keys = {
             {"gD", ":lua vim.lsp.buf.declaration()<cr>"},
             {"gw", ":lua vim.lsp.buf.workspace_symbol()<cr>"},
@@ -523,6 +446,7 @@ require("lazy").setup({
             {"gi", ":lua vim.lsp.buf.implementation()<cr>"},
             {"<c-k>", ":lua vim.lsp.buf.signature_help()<cr>"},
         },
+        lazy = false,
         config = function()
             local nvim_lsp = require("lspconfig")
             local on_attach_lsp = function() require("lsp_signature").on_attach() end
