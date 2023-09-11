@@ -102,6 +102,7 @@ require("lazy").setup({
             "nvim-lua/plenary.nvim",
             "nvim-tree/nvim-web-devicons",
         },
+        lazy = false,
         keys = {
             {"<leader>e", ":lua require'lir.float'.toggle()<cr>"},
         },
@@ -167,6 +168,22 @@ require("lazy").setup({
                 },
                 hide_cursor = true
             }
+            vim.api.nvim_create_autocmd({'FileType'}, {
+                pattern = {"lir"},
+                callback = function()
+                    -- use visual mode
+                    vim.api.nvim_buf_set_keymap(
+                    0,
+                    "x",
+                    "J",
+                    ':<C-u>lua require"lir.mark.actions".toggle_mark("v")<CR>',
+                    { noremap = true, silent = true }
+                    )
+
+                    -- echo cwd
+                    vim.api.nvim_echo({ { vim.fn.expand("%:p"), "Normal" } }, false, {})
+                end
+            })
         end,
     },
 
@@ -306,12 +323,14 @@ require("lazy").setup({
                     expand = function(args) require('luasnip').lsp_expand(args.body) end
                 },
                 -- You should specify your *installed* sources.
-                sources = {
-                    {name = "nvim_lsp"},
-                    {name = "path"},
-                    {name = "buffer"},
-                    {name = "nvim_lua"}
-                },
+                sources = cmp.config.sources({
+                    { name = "nvim_lsp" },
+                    { name = "luasnip" },
+                    { name = "path" },
+                    { name = "nvim_lua" }
+                }, {
+                    { name = "buffer" },
+                }),
                 formatting = {
                     format = lspkind.cmp_format({
                         mode = 'symbol', -- show only symbol annotations
@@ -405,6 +424,7 @@ require("lazy").setup({
     -- Lsp utilities
     {
         "glepnir/lspsaga.nvim",
+        lazy = false,
         dependencies = {
             {"nvim-tree/nvim-web-devicons"},
         },
@@ -529,6 +549,47 @@ require("lazy").setup({
         end,
     },
 
+    -- Debugger
+    {
+        "mfussenegger/nvim-dap",
+        config = function()
+            local dap = require("dap")
+            dap.adapters.lldb = {
+                type = 'executable',
+                command = '/usr/bin/lldb-vscode',
+                name = 'lldb'
+            }
+            dap.configurations.rust = {
+                {
+                    name = "Launch file",
+                    type = "lldb",
+                    request = "launch",
+                    program = function()
+                        return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+                    end,
+                    cwd = '${workspaceFolder}',
+                    stopOnEntry = false,
+                }
+            }
+            vim.keymap.set('n', '<F5>', function() dap.continue() end)
+            vim.keymap.set('n', '<F10>', function() dap.step_over() end)
+            vim.keymap.set('n', '<F11>', function() dap.step_into() end)
+            vim.keymap.set('n', '<F12>', function() dap.step_out() end)
+            vim.keymap.set('n', 'gb', function() dap.toggle_breakpoint() end)
+            vim.keymap.set('n', '<Leader>dl', function() dap.run_last() end)
+            vim.keymap.set('n', '<Leader>uu', function() require("dapui").open() end)
+            vim.keymap.set('n', '<Leader>uc', function() require("dapui").close() end)
+        end
+    },
+    {
+        "rcarriga/nvim-dap-ui",
+        dependencies = {
+            "mfussenegger/nvim-dap"
+        },
+        config = function()
+            require("dapui").setup()
+        end
+    }
 })
 -- LuaFormatter on
 
