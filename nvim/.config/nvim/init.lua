@@ -71,7 +71,7 @@ require("lazy").setup({
         priority = 1000,
         config = function()
             require("tokyonight").setup({
-                style = "storm",
+                style = "night",
                 transparent = true,
 
                 styles = {
@@ -90,6 +90,7 @@ require("lazy").setup({
     -- Show colors
     {
         "norcalli/nvim-colorizer.lua",
+        lazy = false,
         config = function()
             require("colorizer").setup()
         end
@@ -117,7 +118,7 @@ require("lazy").setup({
             vim.g.loaded_netrwPlugin = 1
             vim.g.loaded_netrw = 1
 
-            require"lir".setup {
+            require("lir").setup({
                 show_hidden_files = true,
                 devicons = {
                     enable = true
@@ -167,7 +168,7 @@ require("lazy").setup({
                     end
                 },
                 hide_cursor = true
-            }
+            })
             vim.api.nvim_create_autocmd({'FileType'}, {
                 pattern = {"lir"},
                 callback = function()
@@ -273,9 +274,7 @@ require("lazy").setup({
     -- gcc to comment block
     {
         "b3nj5m1n/kommentary",
-        keys = {
-             {"gcc"},
-        },
+        lazy = false,
     },
 
     -- Syntax for logcat files
@@ -592,6 +591,10 @@ require("lazy").setup({
     }
 })
 -- LuaFormatter on
+
+require("switch_case")
+
+map("n", "<leader>s", "<cmd>lua require('switch_case').switch_case()<CR>")
 
 -- Highlight yanked text
 vim.cmd [[autocmd TextYankPost * silent! lua require"vim.highlight".on_yank()]]
