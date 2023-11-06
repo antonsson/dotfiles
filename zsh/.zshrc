@@ -66,7 +66,7 @@ zstyle ':completion:*:killall:*'   force-list always
 # Window title
 #------------------------------
 case $TERM in
-  termite|*xterm*|rxvt|rxvt-unicode|rxvt-256color|rxvt-unicode-256color|(dt|k|E)term)
+  termite|*xterm*|foot|rxvt-unicode-256color|(dt|k|E)term)
     precmd () {
       vcs_info
       print -Pn "\e]0;%n@%M:%~\a"
