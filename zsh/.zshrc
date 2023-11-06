@@ -1,13 +1,3 @@
-#-----------------------------
-# Source some stuff
-#-----------------------------
-if [[ -f /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]]; then
-  . /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-fi
-
-BASE16_SHELL="$HOME/.config/base16-shell/base16-default.dark.sh"
-[[ -s $BASE16_SHELL ]] && source $BASE16_SHELL
-
 #------------------------------
 # History stuff
 #------------------------------
@@ -38,14 +28,21 @@ bindkey "^R" history-incremental-pattern-search-backward
 #------------------------------
 # Alias stuff
 #------------------------------
-alias ls="ls --color -F"
-alias ll="ls --color -lh"
+alias ls="ls --color"
+alias grep='grep --color'
+alias screencap='grim -g "$(slurp)"'
+alias gitroot='cd $(git rev-parse --show-toplevel)'
+alias env-private='export GIT_SSH_COMMAND="ssh -o IdentitiesOnly=yes -i $HOME/.ssh/id_rsa -F /dev/null"'
+alias env-cf='export GIT_SSH_COMMAND="ssh -o IdentitiesOnly=yes -i $HOME/.ssh/id_crunchfish -F /dev/null"'
+alias imgcat='wezterm imgcat'
 
 #------------------------------
 # Comp stuff
 #------------------------------
 zmodload zsh/complist
 autoload -Uz compinit
+setopt noautomenu
+setopt nomenucomplete
 compinit
 zstyle :compinstall filename '${HOME}/.zshrc'
 
@@ -95,7 +92,9 @@ autoload -U colors zsh/terminfo
 colors
 
 autoload -Uz vcs_info
-zstyle ':vcs_info:*' enable git hg
+precmd_vcs_info() { vcs_info }
+precmd_functions+=( precmd_vcs_info )
+zstyle ':vcs_info:*' enable git
 zstyle ':vcs_info:*' check-for-changes true
 zstyle ':vcs_info:git*' formats " %{${fg[yellow]}%}(%b)%{$reset_color%}"
 
