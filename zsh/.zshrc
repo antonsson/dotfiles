@@ -10,7 +10,23 @@ SAVEHIST=5000
 #------------------------------
 export BROWSER="firefox"
 export EDITOR="nvim"
-export PATH="${PATH}:${HOME}/.local/bin:${HOME}/.cargo/bin"
+export VISUAL="nvim"
+
+# Android
+export ANDROID_SDK=~/sdks/android-sdk/
+export ANDROID_HOME=$ANDROID_SDK
+export ADB_DEFAULT="awesome:* ANTON:* BeerTime:* System.err DEBUG:* AndroidRuntime:* crunchfish:* salsa:* flutter:* *:S"
+
+# Wayland
+export XKB_DEFAULT_LAYOUT=se
+export _JAVA_AWT_WM_NONREPARENTING=1
+
+export PATH="${PATH}:${HOME}/.local/bin:${HOME}/.cargo/bin:${ANDROID_SDK}/platform-tools"
+
+#------------------------------
+# ssh agent
+#------------------------------
+export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
 
 #-----------------------------
 # Dircolors
