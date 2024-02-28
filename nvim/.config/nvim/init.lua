@@ -312,7 +312,7 @@ require("lazy").setup({
                 mapping = {
                     ["<C-p>"] = cmp.mapping.select_prev_item(),
                     ["<C-n>"] = cmp.mapping.select_next_item(),
-                    ["<Tab>"] = cmp.mapping.confirm({select = true}),
+                    ["<tab>"] = cmp.mapping.confirm({select = true}),
                     ["<C-d>"] = cmp.mapping.scroll_docs(-4),
                     ["<C-f>"] = cmp.mapping.scroll_docs(4),
                     ["<C-Space>"] = cmp.mapping.complete(),
@@ -347,9 +347,21 @@ require("lazy").setup({
         end,
     },
 
+    -- Workspaces
+    {
+        "natecraddock/workspaces.nvim",
+        keys = {
+            {"<F7>", ":Telescope workspaces<cr>"},
+        },
+        config = function()
+            require("workspaces").setup()
+        end,
+    },
+
     -- Telescope
     {
         "nvim-telescope/telescope.nvim",
+        dependencies = { "nvim-telescope/telescope-ui-select.nvim" },
         keys = {
             {"<leader>f", ":lua require('telescope.builtin').find_files()<cr>"},
             {"<leader>j", ":lua require('telescope.builtin').git_files()<cr>"},
@@ -367,7 +379,9 @@ require("lazy").setup({
                     layout_config = {vertical = {width = 0.8}}
                 },
             })
-            telescope.load_extension('neoclip')
+            telescope.load_extension("neoclip")
+            telescope.load_extension("ui-select")
+            telescope.load_extension("workspaces")
         end,
     },
 
@@ -420,55 +434,27 @@ require("lazy").setup({
         config = true,
     },
 
-    -- Lsp utilities
-    {
-        "glepnir/lspsaga.nvim",
-        lazy = false,
-        dependencies = {
-            {"nvim-tree/nvim-web-devicons"},
-        },
-        keys = {
-            {"<leader>ca", "<cmd> Lspsaga code_action<cr>"},
-            {"gd", "<cmd>Lspsaga goto_definition<cr>"},
-            {"K", "<cmd> Lspsaga hover_doc<cr>"},
-            {"<leader>n", "<cmd> Lspsaga diagnostic_jump_next<cr>"},
-            {"<leader>p", "<cmd> Lspsaga diagnostic_jump_prev<cr>"},
-            {"<leader>d", "<cmd> Lspsaga show_buf_diagnostics<cr>"},
-        },
-        config = function()
-            require("lspsaga").setup({
-                symbol_in_winbar = {
-                    enable = false,
-                },
-                lightbulb = {
-                    enable = false,
-                },
-            })
-        end,
-    },
-
     -- LSP setup
     {
         "neovim/nvim-lspconfig",
         dependencies = {
-            "ray-x/lsp_signature.nvim",
-            "simrat39/rust-tools.nvim",
-            "glepnir/lspsaga.nvim",
+            "mrcjkb/rustaceanvim",
             "nvim-lua/popup.nvim",
             "nvim-lua/plenary.nvim",
             "nvim-telescope/telescope.nvim",
         },
         keys = {
-            {"gD", ":lua vim.lsp.buf.declaration()<cr>"},
+            {"gd", ":lua vim.lsp.buf.declaration()<cr>"},
             {"gw", ":lua vim.lsp.buf.workspace_symbol()<cr>"},
             {"gr", ":lua vim.lsp.buf.references()<cr>"},
             {"gi", ":lua vim.lsp.buf.implementation()<cr>"},
+            {"K", ":lua vim.lsp.buf.hover()<cr>"},
+            {"<leader>a", ":lua vim.lsp.buf.code_action()<cr>"},
             {"<c-k>", ":lua vim.lsp.buf.signature_help()<cr>"},
         },
         lazy = false,
         config = function()
             local nvim_lsp = require("lspconfig")
-            local on_attach_lsp = function() require("lsp_signature").on_attach() end
             local client_caps = vim.lsp.protocol.make_client_capabilities()
             local capabilities = require('cmp_nvim_lsp').default_capabilities(client_caps)
             local runtime_path = vim.split(package.path, ";")
@@ -500,31 +486,20 @@ require("lazy").setup({
                         telemetry = {enable = false}
                     }
                 },
-                on_attach = on_attach_lsp,
                 capabilities = capabilities
             }
-            nvim_lsp.clangd.setup {on_attach = on_attach_lsp}
-            nvim_lsp.pylsp.setup {on_attach = on_attach_lsp}
-            nvim_lsp.texlab.setup {on_attach = on_attach_lsp}
-            nvim_lsp.jsonls.setup {on_attach = on_attach_lsp}
+            nvim_lsp.clangd.setup {}
+            nvim_lsp.pylsp.setup {}
+            nvim_lsp.texlab.setup {}
+            nvim_lsp.jsonls.setup {}
             nvim_lsp.html.setup {
-                on_attach = on_attach_lsp,
                 cmd = {"vscode-html-languageserver", "--stdio"},
                 init_options = {configurationSection = {"html", "css"}}
             }
-            nvim_lsp.bashls.setup {on_attach = on_attach_lsp}
-            nvim_lsp.tsserver.setup {on_attach = on_attach_lsp}
-            nvim_lsp.vimls.setup {on_attach = on_attach_lsp}
-            nvim_lsp.gopls.setup {on_attach = on_attach_lsp}
-
-            -- Rust tools will handle attaching the
-            require("rust-tools").setup({
-                server = {
-                    on_attach = function()
-                        on_attach_lsp()
-                    end,
-                }
-            })
+            nvim_lsp.bashls.setup {}
+            nvim_lsp.tsserver.setup {}
+            nvim_lsp.vimls.setup {}
+            nvim_lsp.gopls.setup {}
 
             vim.lsp.handlers["textDocument/hover"] =
                 vim.lsp.with(vim.lsp.handlers.hover, {
@@ -545,6 +520,38 @@ require("lazy").setup({
                 local hl = "DiagnosticSign" .. type
                 vim.fn.sign_define(hl, {text = icon, texthl = hl, numhl = hl})
             end
+        end,
+    },
+    {
+        "mrcjkb/rustaceanvim",
+        dependencies = {
+            {
+                "lvimuser/lsp-inlayhints.nvim",
+                opts = {}
+            },
+        },
+        version = '^4', -- Recommended
+        ft = { 'rust' },
+        config = function()
+            vim.g.rustaceanvim = {
+                -- Plugin configuration
+                tools = {
+                },
+                -- LSP configuration
+                server = {
+                    on_attach = function(_client, _bufnr)
+                        vim.keymap.set('n', 'ga', function() vim.cmd.RustLsp('codeAction') end)
+                    end,
+                    default_settings = {
+                        -- rust-analyzer language server configuration
+                        ['rust-analyzer'] = {
+                        },
+                    },
+                },
+                -- DAP configuration
+                dap = {
+                },
+            }
         end,
     },
 
@@ -594,7 +601,7 @@ require("lazy").setup({
 
 require("switch_case")
 
-map("n", "<leader>s", "<cmd>lua require('switch_case').switch_case()<CR>")
+map("n", "<leader>c", "<cmd>lua require('switch_case').switch_case()<CR>")
 
 -- Highlight yanked text
 vim.cmd [[autocmd TextYankPost * silent! lua require"vim.highlight".on_yank()]]
@@ -610,3 +617,18 @@ map("n", ".", ".`[")
 map("n", "j", "gj")
 map("n", "k", "gk")
 map("n", "<F4>", ":e ~/.config/nvim/init.lua <cr>")
+
+-- Diagnostics
+vim.keymap.set('n', '<leader>d', vim.diagnostic.open_float)
+vim.keymap.set('n', '<leader>p', vim.diagnostic.goto_prev)
+vim.keymap.set('n', '<leader>n', vim.diagnostic.goto_next)
+
+-- Neovide
+vim.o.guifont = "FiraCode Nerd Font Ret:h14"
+
+if vim.g.neovide then
+    vim.g.neovide_cursor_animation_length = 0.04
+    vim.g.neovide_cursor_trail_size = 0.3
+    vim.g.neovide_cursor_animate_in_insert_mode = true
+    vim.g.neovide_hide_mouse_when_typing = true
+end
