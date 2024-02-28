@@ -2,7 +2,7 @@
 # ~/.bashrc
 #
 
-source /usr/share/git/completion/git-completion.bash
+source /usr/share/bash-completion/bash_completion
 source /usr/share/git/completion/git-prompt.sh
 
 alias ls='ls --color=auto'
