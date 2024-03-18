@@ -18,7 +18,7 @@ window#waybar {
     border-bottom: 1px solid transparent;
 }
 
-#workspaces button.focused {
+#workspaces button.active {
     background: #64727D;
     border-bottom: 1px solid white;
 }

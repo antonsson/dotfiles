@@ -1,56 +1,54 @@
-{
-    "layer": "bottom",
-    "height": 40,
-    "position": "top",
-    "modules-left": ["sway/workspaces", "sway/mode"],
-    "modules-center": ["sway/window"],
-    "modules-right": ["pulseaudio", "network", "tray", "clock"],
-    "sway/mode": {
-        "format": "<span style=\"italic\">{}</span>"
+[
+    {
+        "layer": "top",
+        "output": "DP-1",
+        "height": 54,
+        "name": "main",
+        "position": "top",
+        "modules-left": ["hyprland/workspaces"],
+        "modules-center": ["hyprland/window"],
+        "modules-right": ["pulseaudio", "network", "tray", "clock"],
+        "tray": {
+            "icon-size": 30,
+            "spacing": 4
+        },
+        "clock": {
+            "tooltip-format": "{:%Y-%m-%d | %H:%M}",
+            "format-alt": "{:%Y-%m-%d}"
+        },
+        "network": {
+            // "interface": "wlp2*", // (Optional) To force the use of this interface
+            "format-wifi": " ",
+            "format-ethernet": "󰛳 ",
+            "format-linked": "{ifname} 󰱟 ",
+            "format-disconnected": "󰱟 ",
+            "format-alt": "{ifname}: {ipaddr}/{cidr}",
+            "tooltip-format-wifi": "{essid} ({signalStrength}%)  ",
+            "tooltip-format-ethernet": "{ifname}: {ipaddr}/{cidr} 󰛳 "
+        },
+        "pulseaudio": {
+            // "scroll-step": 1, // %, can be a float
+            "format": "{icon}",
+            "format-bluetooth": "{volume}% {icon} {format_source}",
+            "format-muted": "󰖁 {format_source}",
+            "format-icons": {
+                "headphones": " ",
+                "default": ["", "", "󰕾"]
+            },
+            "on-click": "pavucontrol"
+        },
     },
-    "idle_inhibitor": {
-        "format": "{icon}",
-        "format-icons": {
-            "activated": "",
-            "deactivated": ""
-        }
-    },
-    "tray": {
-        "icon-size": 18,
-        "spacing": 2
-    },
-    "clock": {
-        "tooltip-format": "{:%Y-%m-%d | %H:%M}",
-        "format-alt": "{:%Y-%m-%d}"
-    },
-    "backlight": {
-        // "device": "acpi_video1",
-        "format": "{percent}% {icon}",
-        "format-icons": ["", ""]
-    },
-    "network": {
-        // "interface": "wlp2*", // (Optional) To force the use of this interface
-        "format-wifi": "",
-        "format-ethernet": "",
-        "format-linked": "{ifname} (No IP) ",
-        "format-disconnected": "⚠",
-        "format-alt": "{ifname}: {ipaddr}/{cidr}",
-        "tooltip-format-wifi": "{essid} ({signalStrength}%) ",
-        "tooltip-format-ethernet": "{ifname}: {ipaddr}/{cidr} "
-    },
-    "pulseaudio": {
-        // "scroll-step": 1, // %, can be a float
-        "format": "{icon}",
-        "format-bluetooth": "{volume}% {icon} {format_source}",
-        "format-muted": " {format_source}",
-        "format-icons": {
-            "headphones": "",
-            "handsfree": "",
-            "headset": "",
-            "phone": "",
-            "portable": "",
-            "car": "",
-            "default": ["", "", ""]
+    {
+        "layer": "top",
+        "output": "HDMI-A-1",
+        "height": 40,
+        "name": "side",
+        "position": "top",
+        "modules-left": ["hyprland/workspaces"],
+        "modules-center": ["hyprland/window"],
+        "modules-right": [],
+        "hyprland/mode": {
+            "format": "<span style=\"italic\">{}</span>"
         },
         "on-click": "pavucontrol"
     },
