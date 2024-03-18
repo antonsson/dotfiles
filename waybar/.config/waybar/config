@@ -2,20 +2,46 @@
     {
         "layer": "top",
         "output": "DP-1",
-        "height": 54,
+        "margin": "20 20 0 20",
         "name": "main",
         "position": "top",
         "modules-left": ["hyprland/workspaces"],
         "modules-center": ["hyprland/window"],
-        "modules-right": ["pulseaudio", "network", "tray", "clock"],
+        "modules-right": ["pulseaudio", "custom/mem", "network", "tray", "clock"],
+
+        "hyprland/workspaces": {
+            "disable-scroll": true,
+            "persistent-workspaces": {
+                "1": [],
+                "2": [],
+                "3": [],
+                "4": [],
+                "5": [],
+                "6": [],
+                "7": [],
+                "8": [],
+                "9": [],
+                "10": [],
+                "21": [],
+                "22": [],
+            },
+        },
+
+        "hyprland/window": {
+            "max-length": 200,
+            "separate-outputs": true
+        },
+
         "tray": {
             "icon-size": 30,
             "spacing": 4
         },
+
         "clock": {
             "tooltip-format": "{:%Y-%m-%d | %H:%M}",
             "format-alt": "{:%Y-%m-%d}"
         },
+
         "network": {
             // "interface": "wlp2*", // (Optional) To force the use of this interface
             "format-wifi": " ",
@@ -26,8 +52,8 @@
             "tooltip-format-wifi": "{essid} ({signalStrength}%)  ",
             "tooltip-format-ethernet": "{ifname}: {ipaddr}/{cidr} 󰛳 "
         },
+
         "pulseaudio": {
-            // "scroll-step": 1, // %, can be a float
             "format": "{icon}",
             "format-bluetooth": "{volume}% {icon} {format_source}",
             "format-muted": "󰖁 {format_source}",
@@ -37,18 +63,36 @@
             },
             "on-click": "pavucontrol"
         },
+
+        "custom/mem": {
+            "format": "{}",
+            "interval": 3,
+            "exec": "free -h | awk '/Mem:/{printf $3}'",
+            "tooltip": false,
+        },
     },
     {
         "layer": "top",
         "output": "HDMI-A-1",
-        "height": 40,
+        "margin": "20 20 0 20",
         "name": "side",
         "position": "top",
         "modules-left": ["hyprland/workspaces"],
         "modules-center": ["hyprland/window"],
         "modules-right": [],
-        "hyprland/mode": {
-            "format": "<span style=\"italic\">{}</span>"
+
+        "hyprland/workspaces": {
+            "disable-scroll": true,
+            "persistent-workspaces": {
+                "31": [],
+                "32": [],
+                "33": [],
+            },
+        },
+
+        "hyprland/window": {
+            "max-length": 200,
+            "separate-outputs": true
         },
         "on-click": "pavucontrol"
     },
