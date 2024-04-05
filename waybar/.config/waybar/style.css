@@ -4,6 +4,11 @@
     font-family: "FiraCode Nerd Font Ret", "Ubuntu", "Fira", "Inconsolata", sans-serif;
 }
 
+.laptop {
+    font-size: 10pt;
+    background: #000000;
+}
+
 .main {
     font-size: 14pt;
 }
@@ -13,7 +18,7 @@
 }
 
 window#waybar {
-    background: transparent;
+    background: #000000;
     color: white;
     border-bottom: 1px solid transparent;
 }
@@ -59,7 +64,7 @@ window#waybar {
     background: #7c818c;
 }
 
-#window, #pulseaudio, #network, #tray, #custom-mem {
+#battery, #window, #pulseaudio, #network, #tray, #custom-mem {
     margin-right: 8px;
     padding-left: 16px;
     padding-right: 16px;
