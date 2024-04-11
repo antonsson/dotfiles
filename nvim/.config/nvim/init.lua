@@ -404,12 +404,18 @@ require("lazy").setup({
     --  Indentation lines
     {
         "lukas-reineke/indent-blankline.nvim",
+        main = "ibl",
+        opts = { enabled = false },
+        lazy = false,
         keys = {
-            {"<F2>", "<cmd>IndentBlanklineToggle<cr>"},
+            { "<F2>",
+                function()
+                    require('ibl').setup_buffer(0, {
+                        enabled = not require('ibl.config').get_config(0).enabled,
+                    })
+                end,
+            },
         },
-        config = function()
-            vim.g.indent_blankline_enabled = false
-        end,
     },
 
     -- Markdown preview
@@ -450,7 +456,9 @@ require("lazy").setup({
             {"gi", ":lua vim.lsp.buf.implementation()<cr>"},
             {"K", ":lua vim.lsp.buf.hover()<cr>"},
             {"<leader>a", ":lua vim.lsp.buf.code_action()<cr>"},
+            {"<a-cr>", ":lua vim.lsp.buf.code_action()<cr>"},
             {"<c-k>", ":lua vim.lsp.buf.signature_help()<cr>"},
+            {"<F3>", ":lua vim.lsp.inlay_hint.enable(0, not vim.lsp.inlay_hint.is_enabled(0))<cr>"},
         },
         lazy = false,
         config = function()
