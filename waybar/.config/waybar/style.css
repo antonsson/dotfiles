@@ -11,10 +11,12 @@
 
 .main {
     font-size: 14pt;
+    background: #000000;
 }
 
 .side {
-    font-size: 12pt;
+    font-size: 10pt;
+    background: #000000;
 }
 
 window#waybar {
@@ -28,6 +30,10 @@ window#waybar {
     border-radius: 10px;
     transition: none;
     background: #383c4a;
+}
+
+#waybar.empty #window {
+    background: transparent;
 }
 
 #workspaces {
@@ -52,6 +58,10 @@ window#waybar {
 }
 
 #workspaces button.active {
+    color: white;
+}
+
+#workspaces button.focused {
     color: white;
 }
 

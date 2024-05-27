@@ -31,6 +31,8 @@ smart_borders on
 #
 output * bg #000000 solid_color
 output eDP-1 scale 1
+output HDMI-A-1 scale 1 pos 3840 0 transform 270 subpixel rgb
+output DP-1 scale 1 pos 0 0 transform 0 subpixel rgb
 
 ### Idle configuration
 exec swayidle -w \
@@ -42,6 +44,8 @@ exec swayidle -w \
 # This will lock your screen after 300 seconds of inactivity, then turn off
 # your displays after another 300 seconds, and turn your screens back on when
 # resumed. It will also lock your screen before your computer goes to sleep.
+
+gaps inner 10
 
 ### Input configuration
 #
