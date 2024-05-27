@@ -81,6 +81,16 @@ require("lazy").setup({
 
                 on_colors = function(colors)
                     colors.fg = "#d7dae0"
+                end,
+
+                on_highlights = function(hl, c)
+                     hl.LspInlayHint = {
+                         bg = c.none,
+                         fg = "#545c7e",
+                         style = {
+                             italic = true
+                         },
+                     }
                 end
             })
             vim.cmd [[colorscheme tokyonight-night]]
@@ -284,8 +294,10 @@ require("lazy").setup({
     },
 
     {
-        "weilbith/nvim-code-action-menu",
-        cmd = "CodeActionMenu"
+        "aznhe21/actions-preview.nvim",
+        keys = {
+            {"<a-cr>", ":lua require('actions-preview').code_actions()<cr>"}
+        },
     },
 
     -- Completion
@@ -456,9 +468,8 @@ require("lazy").setup({
             {"gi", ":lua vim.lsp.buf.implementation()<cr>"},
             {"K", ":lua vim.lsp.buf.hover()<cr>"},
             {"<leader>a", ":lua vim.lsp.buf.code_action()<cr>"},
-            {"<a-cr>", ":lua vim.lsp.buf.code_action()<cr>"},
+            {"<leader>i", ":lua vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())<cr>"},
             {"<c-k>", ":lua vim.lsp.buf.signature_help()<cr>"},
-            {"<F3>", ":lua vim.lsp.inlay_hint.enable(0, not vim.lsp.inlay_hint.is_enabled(0))<cr>"},
         },
         lazy = false,
         config = function()
@@ -523,6 +534,8 @@ require("lazy").setup({
                 severity_sort = false
             })
 
+            vim.lsp.inlay_hint.enable(true)
+
             local signs = {Error = "", Warn = "", Hint = "", Info = ""}
             for type, icon in pairs(signs) do
                 local hl = "DiagnosticSign" .. type
@@ -539,7 +552,7 @@ require("lazy").setup({
             },
         },
         version = '^4', -- Recommended
-        ft = { 'rust' },
+        lazy = false,
         config = function()
             vim.g.rustaceanvim = {
                 -- Plugin configuration
@@ -547,7 +560,7 @@ require("lazy").setup({
                 },
                 -- LSP configuration
                 server = {
-                    on_attach = function(_client, _bufnr)
+                    on_attach = function()
                         vim.keymap.set('n', 'ga', function() vim.cmd.RustLsp('codeAction') end)
                     end,
                     default_settings = {
