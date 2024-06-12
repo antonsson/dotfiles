@@ -2,7 +2,7 @@
     {
         "layer": "top",
         "output": "DP-1",
-        "margin": "20 20 10 20",
+        "margin": "10 20 10 20",
         "name": "main",
         "position": "top",
         "modules-left": ["hyprland/workspaces", "sway/workspaces"],
@@ -11,20 +11,6 @@
 
         "sway/workspaces": {
             "disable-scroll": true,
-            "persistent-workspaces": {
-                "1": [],
-                "2": [],
-                "3": [],
-                "4": [],
-                "5": [],
-                "6": [],
-                "7": [],
-                "8": [],
-                "9": [],
-                "10": [],
-                "21": [],
-                "22": [],
-            },
         },
 
         "sway/window": {
@@ -34,20 +20,6 @@
 
         "hyprland/workspaces": {
             "disable-scroll": true,
-            "persistent-workspaces": {
-                "1": [],
-                "2": [],
-                "3": [],
-                "4": [],
-                "5": [],
-                "6": [],
-                "7": [],
-                "8": [],
-                "9": [],
-                "10": [],
-                "21": [],
-                "22": [],
-            },
         },
 
         "tray": {
@@ -92,7 +64,7 @@
     {
         "layer": "top",
         "output": "HDMI-A-1",
-        "margin": "20 20 10 20",
+        "margin": "10 20 10 20",
         "name": "side",
         "position": "top",
         "modules-left": ["hyprland/workspaces", "sway/workspaces"],
@@ -101,19 +73,9 @@
 
         "sway/workspaces": {
             "disable-scroll": true,
-            "persistent-workspaces": {
-                "11": [],
-                "12": [],
-                "13": [],
-            },
         },
         "hyprland/workspaces": {
             "disable-scroll": true,
-            "persistent-workspaces": {
-                "31": [],
-                "32": [],
-                "33": [],
-            },
         },
 
         "sway/window": {
