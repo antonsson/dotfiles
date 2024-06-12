@@ -29,7 +29,7 @@ window#waybar {
     margin-right: 8px;
     border-radius: 10px;
     transition: none;
-    background: #383c4a;
+    background: #282c3a;
 }
 
 #waybar.empty #window {
@@ -40,7 +40,7 @@ window#waybar {
     margin-right: 8px;
     border-radius: 10px;
     transition: none;
-    background: #383c4a;
+    background: #282c3a;
 }
 
 #workspaces button {
@@ -70,7 +70,7 @@ window#waybar {
     box-shadow: inherit;
     text-shadow: inherit;
     border-radius: inherit;
-    color: #383c4a;
+    color: #282c3a;
     background: #7c818c;
 }
 
@@ -80,8 +80,8 @@ window#waybar {
     padding-right: 16px;
     border-radius: 10px;
     transition: none;
-    color: #ffffff;
-    background: #383c4a;
+    color: #f0f0f0;
+    background: #282c3a;
 }
 
 #pulseaudio.muted {
@@ -94,6 +94,6 @@ window#waybar {
     padding-right: 16px;
     border-radius: 10px;
     transition: none;
-    color: #ffffff;
-    background: #383c4a;
+    color: #f0f0f0;
+    background: #282c3a;
 }
