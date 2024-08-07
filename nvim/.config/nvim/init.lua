@@ -69,6 +69,7 @@ require("lazy").setup({
     {
         "folke/tokyonight.nvim",
         priority = 1000,
+        lazy = false,
         config = function()
             require("tokyonight").setup({
                 style = "night",
@@ -77,6 +78,7 @@ require("lazy").setup({
                 styles = {
                     functions = { italic = false },
                     keywords = { italic = false },
+                    comments = { italic = false },
                 },
 
                 on_colors = function(colors)
@@ -87,9 +89,7 @@ require("lazy").setup({
                      hl.LspInlayHint = {
                          bg = c.none,
                          fg = "#545c7e",
-                         style = {
-                             italic = true
-                         },
+                         italic = true,
                      }
                 end
             })
@@ -508,7 +508,7 @@ require("lazy").setup({
                 capabilities = capabilities
             }
             nvim_lsp.clangd.setup {}
-            nvim_lsp.pylsp.setup {}
+            nvim_lsp.jedi_language_server.setup{}
             nvim_lsp.texlab.setup {}
             nvim_lsp.jsonls.setup {}
             nvim_lsp.html.setup {
