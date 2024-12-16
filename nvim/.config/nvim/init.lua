@@ -106,6 +106,15 @@ require("lazy").setup({
         end
     },
 
+    -- Terminal
+    {
+        "voldikss/vim-floaterm",
+        cmd = "FloatTermNew",
+        keys = {
+            {"<leader>t", ":FloatermToggle<cr>"},
+            {"<F8>", ":FloatermToggle<cr>"},
+        }
+    },
     -- File browser
     {
         "tamago324/lir.nvim",
@@ -516,7 +525,7 @@ require("lazy").setup({
                 init_options = {configurationSection = {"html", "css"}}
             }
             nvim_lsp.bashls.setup {}
-            nvim_lsp.tsserver.setup {}
+            nvim_lsp.ts_ls.setup {}
             nvim_lsp.vimls.setup {}
             nvim_lsp.gopls.setup {}
 
@@ -639,6 +648,10 @@ map("n", ".", ".`[")
 map("n", "j", "gj")
 map("n", "k", "gk")
 map("n", "<F4>", ":e ~/.config/nvim/init.lua <cr>")
+
+
+-- Float term toggle in terminal
+vim.cmd [[tnoremap <silent> <F8> <C-\><C-n>:FloatermToggle<CR>]]
 
 -- Diagnostics
 vim.keymap.set('n', '<leader>d', vim.diagnostic.open_float)

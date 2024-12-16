@@ -5,7 +5,7 @@ export XKB_DEFAULT_LAYOUT=se
 export _JAVA_AWT_WM_NONREPARENTING=1
 
 # Wayland backend
-export XDG_CURRENT_DESKTOP=sway
+#export XDG_CURRENT_DESKTOP=sway
 export MOZ_ENABLE_WAYLAND=1
 export MOZ_DBUS_REMOTE=1
 export QT_QPA_PLATFORM=wayland
