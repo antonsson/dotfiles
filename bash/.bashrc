@@ -23,3 +23,5 @@ shopt -s histappend
 export HISTCONTROL=ignoredups:erasedups:ignorespace
 
 export PS1='[\u@\h \[\e[1;34m\]\w\[\e[1;33m\]$(__git_ps1 " (%s)")\[\e[0m\]]\$ '
+
+eval "$(fzf --bash)"
