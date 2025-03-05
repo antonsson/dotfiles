@@ -2,22 +2,8 @@
     border: none;
     border-radius: 4px;
     font-family: "FiraCode Nerd Font Ret", "Ubuntu", "Fira", "Inconsolata", sans-serif;
+    font-size: 10pt;
     min-height: 0;
-}
-
-.laptop {
-    font-size: 10pt;
-    background: #000000;
-}
-
-.main {
-    font-size: 14pt;
-    background: #000000;
-}
-
-.side {
-    font-size: 10pt;
-    background: #000000;
 }
 
 window#waybar {

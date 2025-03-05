@@ -2,29 +2,20 @@
     {
         "layer": "top",
         "output": "DP-1",
-        "margin": "10 20 10 20",
+        "margin": "10 10 10 10",
         "name": "main",
         "position": "top",
-        "modules-left": ["hyprland/workspaces", "sway/workspaces"],
-        "modules-center": ["hyprland/window", "sway/window"],
+        "modules-left": ["hyprland/workspaces"],
+        "modules-center": ["hyprland/window"],
         "modules-right": ["pulseaudio", "custom/mem", "network", "tray", "clock"],
-
-        "sway/workspaces": {
-            "disable-scroll": true,
-        },
-
-        "sway/window": {
-            "max-length": 200,
-            "separate-outputs": true
-        },
 
         "hyprland/workspaces": {
             "disable-scroll": true,
         },
 
         "tray": {
-            "icon-size": 30,
-            "spacing": 4
+            "icon-size": 20,
+            "spacing": 8
         },
 
         "clock": {
@@ -64,38 +55,27 @@
     {
         "layer": "top",
         "output": "HDMI-A-1",
-        "margin": "10 20 10 20",
+        "margin": "10 10 10 10",
         "name": "side",
         "position": "top",
-        "modules-left": ["hyprland/workspaces", "sway/workspaces"],
-        "modules-center": ["hyprland/window", "sway/window"],
+        "modules-left": ["hyprland/workspaces"],
+        "modules-center": ["hyprland/window"],
         "modules-right": [],
 
-        "sway/workspaces": {
-            "disable-scroll": true,
-        },
         "hyprland/workspaces": {
             "disable-scroll": true,
-        },
-
-        "sway/window": {
-            "max-length": 200,
-            "separate-outputs": true
         },
     },
     {
         "layer": "top",
         "output": "eDP-1",
-        "margin": "10 20 10 20",
+        "margin": "10 10 10 10",
         "name": "laptop",
         "position": "top",
-        "modules-left": ["hyprland/workspaces", "sway/workspaces"],
-        "modules-center": ["hyprland/window", "sway/window"],
+        "modules-left": ["hyprland/workspaces"],
+        "modules-center": ["hyprland/window"],
         "modules-right": ["pulseaudio", "custom/mem", "network", "tray", "battery", "clock"],
 
-        "sway/workspaces": {
-            "disable-scroll": true,
-        },
         "hyprland/workspaces": {
             "disable-scroll": true,
         },
