@@ -309,6 +309,10 @@ require("lazy").setup({
         },
     },
 
+    -- Javascript syntax
+    "yuezk/vim-js",
+    "maxmellon/vim-jsx-pretty",
+
     -- Completion
     {
         "hrsh7th/nvim-cmp",
@@ -560,7 +564,7 @@ require("lazy").setup({
                 opts = {}
             },
         },
-        version = '^4', -- Recommended
+        version = '^5', -- Recommended
         lazy = false,
         config = function()
             vim.g.rustaceanvim = {
