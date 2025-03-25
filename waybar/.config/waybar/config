@@ -140,4 +140,78 @@
             "tooltip": false,
         },
     },
+    {
+        "layer": "top",
+        "output": "DP-3",
+        "margin": "10 10 10 10",
+        "name": "laptop",
+        "position": "top",
+        "modules-left": ["hyprland/workspaces"],
+        "modules-center": ["hyprland/window"],
+        "modules-right": ["pulseaudio", "custom/mem", "network", "tray", "battery", "clock"],
+
+        "hyprland/workspaces": {
+            "disable-scroll": true,
+        },
+
+        "hyprland/window": {
+            "max-length": 200,
+        },
+
+        "battery": {
+            "bat": "BAT0",
+            "format": "<span font='Font Awesome 5 Free 11'>{icon}</span>  {capacity}%",
+            "format-charging": "<span font='Font Awesome 5 Free'></span>  <span font='Font Awesome 5 Free 11'>{icon}</span>  {capacity}% - {time}",
+            "format-full": "<span font='Font Awesome 5 Free'></span>  <span font='Font Awesome 5 Free 11'>{icon}</span>  Charged",
+            "format-charging": "<span font='Font Awesome 5 Free 11'>{icon}</span>  {capacity}%",
+            "format-icons": ["", "", "", "", ""],
+            "interval": 30,
+            "states": {
+                "warning": 25,
+                "critical": 10
+            },
+            "tooltip-format-full": "{capacity}% - {time}",
+            "tooltip-format-charging": "Charging {capacity}% - {time}",
+            "tooltip-format": "{capacity}% - {time}",
+        },
+
+        "tray": {
+            "icon-size": 30,
+            "spacing": 4
+        },
+
+        "clock": {
+            "tooltip-format": "{:%Y-%m-%d | %H:%M}",
+            "format-alt": "{:%Y-%m-%d}"
+        },
+
+        "network": {
+            // "interface": "wlp2*", // (Optional) To force the use of this interface
+            "format-wifi": " ",
+            "format-ethernet": "󰛳 ",
+            "format-linked": "{ifname} 󰱟 ",
+            "format-disconnected": "󰱟 ",
+            "format-alt": "{ifname}: {ipaddr}/{cidr}",
+            "tooltip-format-wifi": "{essid} ({signalStrength}%)  ",
+            "tooltip-format-ethernet": "{ifname}: {ipaddr}/{cidr} 󰛳 "
+        },
+
+        "pulseaudio": {
+            "format": "{icon}",
+            "format-bluetooth": "{volume}% {icon} {format_source}",
+            "format-muted": "󰖁 {format_source}",
+            "format-icons": {
+                "headphones": " ",
+                "default": ["", "", "󰕾"]
+            },
+            "on-click": "pavucontrol"
+        },
+
+        "custom/mem": {
+            "format": "{}",
+            "interval": 3,
+            "exec": "free -h | awk '/Mem:/{printf $3}'",
+            "tooltip": false,
+        },
+    },
 ]
