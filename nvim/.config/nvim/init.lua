@@ -53,13 +53,20 @@ vim.opt.signcolumn = "yes:1"
 -- Lazy package
 --------------------------------------------------------------------------------
 
+-- Bootstrap lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not vim.loop.fs_stat(lazypath) then
-    vim.fn.system({
-        "git", "clone", "--filter=blob:none",
-        "https://github.com/folke/lazy.nvim.git", "--branch=stable", -- latest stable release
-        lazypath
-    })
+if not (vim.uv or vim.loop).fs_stat(lazypath) then
+  local lazyrepo = "https://github.com/folke/lazy.nvim.git"
+  local out = vim.fn.system({ "git", "clone", "--filter=blob:none", "--branch=stable", lazyrepo, lazypath })
+  if vim.v.shell_error ~= 0 then
+    vim.api.nvim_echo({
+      { "Failed to clone lazy.nvim:\n", "ErrorMsg" },
+      { out, "WarningMsg" },
+      { "\nPress any key to exit..." },
+    }, true, {})
+    vim.fn.getchar()
+    os.exit(1)
+  end
 end
 vim.opt.rtp:prepend(lazypath)
 
@@ -533,27 +540,29 @@ require("lazy").setup({
             nvim_lsp.vimls.setup {}
             nvim_lsp.gopls.setup {}
 
-            vim.lsp.handlers["textDocument/hover"] =
-                vim.lsp.with(vim.lsp.handlers.hover, {
+            vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
+                vim.lsp.handlers.hover, {
                     -- Use a sharp border with `FloatBorder` highlights
                     border = "single"
-                })
+                }
+            )
 
             vim.diagnostic.config({
                 virtual_text = false,
-                signs = true,
                 underline = false,
                 update_in_insert = true,
-                severity_sort = false
+                severity_sort = false,
+                signs = {
+                    text = {
+                        [vim.diagnostic.severity.ERROR] = "✘",
+                        [vim.diagnostic.severity.WARN] = "▲",
+                        [vim.diagnostic.severity.HINT] = "⚑",
+                        [vim.diagnostic.severity.INFO] = "»",
+                    },
+  }
             })
 
             vim.lsp.inlay_hint.enable(true)
-
-            local signs = {Error = "", Warn = "", Hint = "", Info = ""}
-            for type, icon in pairs(signs) do
-                local hl = "DiagnosticSign" .. type
-                vim.fn.sign_define(hl, {text = icon, texthl = hl, numhl = hl})
-            end
         end,
     },
     {
@@ -652,6 +661,7 @@ map("n", ".", ".`[")
 map("n", "j", "gj")
 map("n", "k", "gk")
 map("n", "<F4>", ":e ~/.config/nvim/init.lua <cr>")
+map("n", "C-,", ",")
 
 
 -- Float term toggle in terminal
@@ -659,8 +669,8 @@ vim.cmd [[tnoremap <silent> <F8> <C-\><C-n>:FloatermToggle<CR>]]
 
 -- Diagnostics
 vim.keymap.set('n', '<leader>d', vim.diagnostic.open_float)
-vim.keymap.set('n', '<leader>p', vim.diagnostic.goto_prev)
-vim.keymap.set('n', '<leader>n', vim.diagnostic.goto_next)
+vim.keymap.set('n', '<leader>n', function() vim.diagnostic.jump({count=1, float=true}) end)
+vim.keymap.set('n', '<leader>p', function() vim.diagnostic.jump({count=-1, float=true}) end)
 
 -- Neovide
 vim.o.guifont = "FiraCode Nerd Font Ret:h14"
