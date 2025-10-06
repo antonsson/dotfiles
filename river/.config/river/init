@@ -62,12 +62,12 @@ riverctl map normal Super+Shift Comma send-to-output previous
 riverctl map normal Super+Shift Return zoom
 
 # Super+H and Super+L to decrease/increase the main ratio of rivertile(1)
-riverctl map normal Super+Alt H send-layout-cmd filetile "main-ratio -0.05"
-riverctl map normal Super+Alt L send-layout-cmd filetile "main-ratio +0.05"
+riverctl map normal Super+Alt H send-layout-cmd filtile "main-ratio -0.05"
+riverctl map normal Super+Alt L send-layout-cmd filtile "main-ratio +0.05"
 
 # Super+Shift+H and Super+Shift+L to increment/decrement the main count of rivertile(1)
-riverctl map normal Super+Shift H send-layout-cmd filetile "main-count +1"
-riverctl map normal Super+Shift L send-layout-cmd filetile "main-count -1"
+riverctl map normal Super+Shift H send-layout-cmd filtile "main-count +1"
+riverctl map normal Super+Shift L send-layout-cmd filtile "main-count -1"
 
 # Super+Alt+Control+{H,J,K,L} to snap views to screen edges
 riverctl map normal Super+Alt+Control H snap left
@@ -133,10 +133,10 @@ riverctl map normal Super Space toggle-float
 riverctl map normal Super F toggle-fullscreen
 
 # Super+{Up,Right,Down,Left} to change layout orientation
-riverctl map normal Super Up    send-layout-cmd rivertile "main-location top"
-riverctl map normal Super Right send-layout-cmd rivertile "main-location right"
-riverctl map normal Super Down  send-layout-cmd rivertile "main-location bottom"
-riverctl map normal Super Left  send-layout-cmd rivertile "main-location left"
+riverctl map normal Super Up    send-layout-cmd filtile "main-location top"
+riverctl map normal Super Right send-layout-cmd filtile "main-location right"
+riverctl map normal Super Down  send-layout-cmd filtile "main-location bottom"
+riverctl map normal Super Left  send-layout-cmd filtile "main-location left"
 
 # Declare a passthrough mode. This mode has only a single mapping to return to
 # normal mode. This makes it useful for testing a nested wayland compositor
