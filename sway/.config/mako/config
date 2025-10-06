@@ -1,4 +1,13 @@
-background-color=#121212FF
-text-color=#f8f8f8FF
-default-timeout=5000
 font=Noto Sans 10
+background-color=#121212
+text-color=#f8f8f8
+default-timeout=5000
+layer=overlay
+
+[urgency=low]
+background-color=#313244
+border-color=#585b70
+
+[urgency=critical]
+background-color=#f38ba8
+border-color=#f38ba8
