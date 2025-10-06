@@ -5,6 +5,7 @@ riverctl spawn "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG
 riverctl spawn "systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=river"
 
 # Lock
+riverctl map normal Super Escape spawn "swaylock -f -c 000000"
 pkill swayidle 2>/dev/null
 swayidle -w \
     timeout 300 'swaylock -f -c 000000' \
