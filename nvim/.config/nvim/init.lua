@@ -493,14 +493,13 @@ require("lazy").setup({
         },
         lazy = false,
         config = function()
-            local nvim_lsp = require("lspconfig")
             local client_caps = vim.lsp.protocol.make_client_capabilities()
             local capabilities = require('cmp_nvim_lsp').default_capabilities(client_caps)
             local runtime_path = vim.split(package.path, ";")
             table.insert(runtime_path, "lua/?.lua")
             table.insert(runtime_path, "lua/?/init.lua")
 
-            nvim_lsp.lua_ls.setup {
+            vim.lsp.config("lua_ls", {
                 cmd = {
                     "/usr/bin/lua-language-server", "-E",
                     "/usr/share/lua-language-server/main.lua"
@@ -526,19 +525,21 @@ require("lazy").setup({
                     }
                 },
                 capabilities = capabilities
-            }
-            nvim_lsp.clangd.setup {}
-            nvim_lsp.jedi_language_server.setup{}
-            nvim_lsp.texlab.setup {}
-            nvim_lsp.jsonls.setup {}
-            nvim_lsp.html.setup {
+            })
+            vim.lsp.enable("lua_ls")
+            vim.lsp.enable("clangd")
+            vim.lsp.enable("jedi_language_server")
+            vim.lsp.enable("texlab")
+            vim.lsp.enable("jsonls")
+            vim.lsp.config("html", {
                 cmd = {"vscode-html-languageserver", "--stdio"},
                 init_options = {configurationSection = {"html", "css"}}
-            }
-            nvim_lsp.bashls.setup {}
-            nvim_lsp.ts_ls.setup {}
-            nvim_lsp.vimls.setup {}
-            nvim_lsp.gopls.setup {}
+            })
+            vim.lsp.enable("html")
+            vim.lsp.enable("bashls")
+            vim.lsp.enable("ts_ls")
+            vim.lsp.enable("vimls")
+            vim.lsp.enable("gopls")
 
             vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
                 vim.lsp.handlers.hover, {
