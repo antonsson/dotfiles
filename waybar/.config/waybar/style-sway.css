@@ -21,6 +21,10 @@ window#waybar {
     background-color: #333333;
 }
 
+#workspaces button.urgent {
+    color: #ff6b6b;
+}
+
 #workspaces button:hover {
     background-color: #2a2a2a;
 }
@@ -35,26 +39,19 @@ window#waybar {
 #network,
 #pulseaudio,
 #tray {
-    padding: 0 10px;
+    padding: 0 6px;
     color: #ffffff;
 }
 
 #clock {
-    background-color: #2a2a2a;
+    padding: 0 10px;
+    color: #ffffff;
 }
 
-#cpu {
-    color: #88c0d0;
-}
-
-#memory {
-    color: #a3be8c;
-}
-
-#network {
+#memory.warning {
     color: #ebcb8b;
 }
 
-#pulseaudio {
-    color: #d08770;
+#memory.critical {
+    color: #bf616a;
 }

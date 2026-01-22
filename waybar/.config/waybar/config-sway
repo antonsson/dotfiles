@@ -23,16 +23,23 @@
     },
 
     "clock": {
-        "format": "{:%Y-%m-%d %H:%M}",
-        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
+        "format": "{:%H:%M}",
+        "tooltip-format": "<big>{:%d %B}</big>\n<tt><small>{calendar}</small></tt>"
     },
 
     "cpu": {
-        "format": "󰻠 {usage}%"
+        "format": "󰻠"
     },
 
     "memory": {
-        "format": "󰍛 {}%"
+        "interval": 5,
+        "format": "󰍛",
+        "format-icons": ["󰍛", "󰍛", "󰍛", "󰍛", ""],
+        "states": {
+            "warning": 70,
+            "critical": 90
+        },
+        "tooltip-format": "RAM: {used:0.1f}G / {total:0.1f}G"
     },
 
     "network": {
