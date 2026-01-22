@@ -13,7 +13,9 @@ set $fg #f8f8f2
 
 default_border pixel 1
 smart_borders on
-gaps inner 10
+smart_gaps on
+gaps inner 6
+gaps outer 6
 
 ### Output configuration
 output * bg #000000 solid_color
@@ -22,10 +24,12 @@ output HDMI-A-1 scale 1 pos 0 0 transform 270 subpixel rgb
 output DP-1 scale 1.4 pos 1440 0 transform 0 subpixel rgb
 
 # Input configuration
-input * {
+input type:keyboard {
     xkb_layout "se"
     xkb_options caps:super
     xkb_numlock enable
+    repeat_delay 200
+    repeat_rate 40
 }
 
 input type:touchpad {
