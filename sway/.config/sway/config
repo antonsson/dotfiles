@@ -14,8 +14,8 @@ set $fg #f8f8f2
 default_border pixel 1
 smart_borders on
 smart_gaps on
-gaps inner 6
-gaps outer 6
+gaps inner 0
+gaps outer 0
 
 ### Output configuration
 output * bg #000000 solid_color
@@ -39,15 +39,12 @@ input type:touchpad {
 
 
 ### Idle configuration
-exec_always {
-    pkill swayidle
-    swayidle -w \
+exec_always pkill swayidle; swayidle -w \
         timeout 300 'swaylock -f -c 000000' \
         timeout 600 'swaymsg "output * dpms off"' \
         timeout 900 'systemctl suspend' \
         resume 'swaymsg "output * dpms on"' \
         before-sleep 'swaylock -f -c 000000'
-}
 
 # Warpd
 bindsym $mod+f exec warpd --hint
@@ -59,7 +56,7 @@ bindsym $mod+Return exec $term
 bindsym $mod+Shift+r reload
 bindsym $mod+Shift+c kill
 bindsym $mod+Shift+e exit
-bindsym $mod+d exec wofi --show run
+bindsym $mod+d exec wofi --show drun
 bindsym $mod+o exec killall -SIGUSR1 waybar
 
 # Drag floating windows by holding down $mod and left mouse button.
@@ -197,10 +194,7 @@ bar {
     swaybar_command waybar
 }
 
-exec_always {
-    pkill mako
-    mako
-}
+exec_always pkill mako; mako
 
 # Gtk setup
 set $gnome-schema org.gnome.desktop.interface
