@@ -1,3 +1,4 @@
-buttons: "m , ."
+buttons: u i o
+oneshot_buttons: m , .
 hint_font: "JetBrainsMono Nerd Font"
 hint_size: 16

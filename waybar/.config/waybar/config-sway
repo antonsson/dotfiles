@@ -28,7 +28,12 @@
     },
 
     "cpu": {
-        "format": "󰻠"
+        "interval": 5,
+        "format": "󰻠",
+        "states": {
+            "warning": 50,
+            "critical": 80
+        },
     },
 
     "memory": {

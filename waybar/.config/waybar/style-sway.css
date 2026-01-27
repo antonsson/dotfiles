@@ -1,6 +1,6 @@
 * {
-    font-family: "JetBrainsMono Nerd Font", monospace;
-    font-size: 14px;
+    font-family: "Ubuntu Nerd Font", "JetBrainsMono Nerd Font", monospace;
+    font-size: 16px;
 }
 
 window#waybar {
@@ -39,19 +39,19 @@ window#waybar {
 #network,
 #pulseaudio,
 #tray {
-    padding: 0 6px;
+    padding: 0 4px;
     color: #ffffff;
 }
 
 #clock {
-    padding: 0 10px;
+    padding: 0 6px;
     color: #ffffff;
 }
 
-#memory.warning {
+#memory.warning, #cpu.warning {
     color: #ebcb8b;
 }
 
-#memory.critical {
+#memory.critical, #cpu.critical {
     color: #bf616a;
 }
