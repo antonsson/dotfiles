@@ -39,12 +39,7 @@ input type:touchpad {
 
 
 ### Idle configuration
-exec_always pkill swayidle; swayidle -w \
-        timeout 300 'swaylock -f -c 000000' \
-        timeout 600 'swaymsg "output * dpms off"' \
-        timeout 900 'systemctl suspend' \
-        resume 'swaymsg "output * dpms on"' \
-        before-sleep 'swaylock -f -c 000000'
+exec swayidle -w timeout 300 'swaylock -f -c 000000' timeout 900 'systemctl suspend' before-sleep 'swaylock -f -c 000000'
 
 # Warpd
 bindsym $mod+f exec warpd --hint
@@ -194,7 +189,7 @@ bar {
     swaybar_command waybar
 }
 
-exec_always pkill mako; mako
+exec mako
 
 # Gtk setup
 set $gnome-schema org.gnome.desktop.interface
