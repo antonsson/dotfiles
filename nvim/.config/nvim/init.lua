@@ -171,7 +171,6 @@ telescope.setup({
 require("neoclip").setup()
 telescope.load_extension("neoclip")
 telescope.load_extension("ui-select")
-telescope.load_extension("file_browser")
 
 -- Formatter
 vim.g.neoformat_enabled_javascript = {
@@ -183,7 +182,7 @@ vim.g.neoformat_enabled_python = {"autopep8", "yapf", "docformatter"}
 require("ibl").setup({enabled = false})
 
 -- LSP progress indicator
-require("fidget").setup()
+require("fidget").setup({})
 
 -- LSP
 require("lspconfig.ui.windows").default_options.border = "single"
@@ -255,12 +254,6 @@ vim.keymap.set("n", "<leader>c",
 --------------------------------------------------------------------------------
 -- Keymaps
 --------------------------------------------------------------------------------
--- Terminal
-vim.keymap.set("n", "<leader>t", ":FloatermToggle<cr>")
-vim.keymap.set("n", "<F8>", ":FloatermToggle<cr>")
-
--- Workspaces
-vim.keymap.set("n", "<F7>", ":Telescope workspaces<cr>")
 
 -- Telescope
 vim.keymap.set("n", "<leader>f",
@@ -275,8 +268,6 @@ vim.keymap.set("n", "<leader>h",
                ":lua require('telescope.builtin').help_tags()<cr>")
 vim.keymap.set("n", "<leader>s",
                ":lua require('telescope.builtin').current_buffer_fuzzy_find()<cr>")
-vim.keymap.set("n", "<leader>e",
-               ":Telescope file_browser path=%:p:h select_buffer=true<CR>")
 
 -- Formatter
 vim.keymap.set("n", "<leader>cf", ":Neoformat<CR>")
@@ -324,11 +315,20 @@ vim.keymap.set("n", "<leader>n",
 vim.keymap.set("n", "<leader>p",
                function() vim.diagnostic.jump({count = -1, float = true}) end)
 
+
+vim.keymap.set("n", "<leader>e", ":Explore<CR>")
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "netrw",
+  callback = function()
+    vim.keymap.set("n", "h", "-", { buffer = true, remap = true })
+    vim.keymap.set("n", "l", "<CR>", { buffer = true, remap = true })
+  end,
+})
+
 --------------------------------------------------------------------------------
 -- Autocommands
 --------------------------------------------------------------------------------
 vim.cmd [[autocmd TextYankPost * silent! lua require"vim.highlight".on_yank()]]
-vim.cmd [[tnoremap <silent> <F8> <C-\><C-n>:FloatermToggle<CR>]]
 
 --------------------------------------------------------------------------------
 -- GUI (Neovide)
