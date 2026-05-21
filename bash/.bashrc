@@ -30,3 +30,24 @@ eval "$(fzf --bash)"
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+x509-info() {
+  local input="$*"
+
+  # Strip brackets [], quotes (' and "), and whitespace
+  input="${input//[\[\]]/}"        # remove [ and ]
+  input="${input//\"/}"            # remove "
+  input="${input//\'/}"            # remove '
+  input="$(printf '%s' "$input" | tr -d '[:space:]')"  # remove spaces/newlines
+
+  IFS=',' read -ra certs <<< "$input"
+  local i=1
+  for cert in "${certs[@]}"; do
+    [ -z "$cert" ] && continue
+    echo "----- CERTIFICATE $i -----"
+    printf '%s' "$cert" | base64 -d 2>/dev/null \
+      | openssl x509 -inform DER -text || echo "Error: failed to decode certificate #$i" >&2
+    echo
+    i=$((i+1))
+  done
+}
