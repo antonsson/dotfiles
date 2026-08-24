@@ -35,6 +35,7 @@ hl.on("hyprland.start", function()
     hl.exec_cmd("systemctl --user start hyprpolkitagent")
     hl.exec_cmd("systemctl --user start ssh-agent.service")
     hl.exec_cmd("systemctl --user start hyprland-session.target")
+    hl.exec_cmd("systemctl --user start gnome-keyring-daemon.target")
 end)
 
 hl.on("hyprland.shutdown", function()
@@ -189,21 +190,21 @@ hl.animation({
     enabled = true,
     speed = 1.94,
     bezier = "almostLinear",
-    style = "fade"
+    style = "slide"
 })
 hl.animation({
     leaf = "workspacesIn",
     enabled = true,
     speed = 1.21,
     bezier = "almostLinear",
-    style = "fade"
+    style = "slide"
 })
 hl.animation({
     leaf = "workspacesOut",
     enabled = true,
     speed = 1.94,
     bezier = "almostLinear",
-    style = "fade"
+    style = "slide"
 })
 hl.animation({leaf = "zoomFactor", enabled = true, speed = 7, bezier = "quick"})
 
@@ -402,9 +403,10 @@ hl.window_rule({
 local ipc = "noctalia msg "
 
 -- Core binds
-hl.bind(mainMod .. "+Space", hl.dsp.exec_cmd(ipc .. "panel-toggle launcher"))
-hl.bind(mainMod .. "+S", hl.dsp.exec_cmd(ipc .. "panel-toggle control-center"))
-hl.bind(mainMod .. "+comma", hl.dsp.exec_cmd(ipc .. "settings-toggle"))
+hl.bind(mainMod .. "+ D", hl.dsp.exec_cmd(ipc .. "panel-toggle launcher"))
+hl.bind(mainMod .. "+ Space", hl.dsp.exec_cmd(ipc .. "panel-toggle control-center"))
+hl.bind(mainMod .. "+ comma", hl.dsp.exec_cmd(ipc .. "settings-toggle"))
+hl.bind(mainMod .. " + Escape", hl.dsp.exec_cmd("noctalia msg session lock"))
 
 -- Media keys
 hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd(ipc .. "volume-up"))
@@ -412,6 +414,10 @@ hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd(ipc .. "volume-down"))
 hl.bind("XF86AudioMute", hl.dsp.exec_cmd(ipc .. "volume-mute"))
 hl.bind("XF86MonBrightnessUp", hl.dsp.exec_cmd(ipc .. "brightness-up"))
 hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd(ipc .. "brightness-down"))
+hl.bind("XF86AudioNext", hl.dsp.exec_cmd(ipc .. "media next"))
+hl.bind("XF86AudioPrev", hl.dsp.exec_cmd(ipc .. "media previous"))
+hl.bind("XF86AudioPause", hl.dsp.exec_cmd(ipc .. "media toggle"))
+hl.bind("XF86AudioPlay", hl.dsp.exec_cmd(ipc .. "media toggle"))
 
 -- Noctalia Settings
 hl.window_rule({
